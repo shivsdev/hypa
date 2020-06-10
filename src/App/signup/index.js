@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import hypaiq from './../../exportables/hypaiq.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { FaEyeSlash } from "react-icons/fa";
+import { IconContext } from 'react-icons';
+import axios from 'axios';
 
 let emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-let PasswordLength = /^(?=.{8,})$/;
 
 export default class Signup extends Component {
 	constructor(props) {
@@ -24,22 +26,30 @@ export default class Signup extends Component {
 			specialColor: "#b3b3b3",
 			numberColor: "#b3b3b3",
 			uppColor: "#b3b3b3",
-			showpassword:false
-
+			showpassword: false,
+			checked: false
 		}
-		// this.handleEmail = this.handleEmail.bind(this);
-		// this.handlePassword = this.handlePassword.bind(this);
 	}
+
 	componentDidUpdate() {
 		this.state.emailRef.current.value = this.state.email;
 		this.state.passwordRef.current.value = this.state.password;
-		// document.getElementById("email").value = this.state.email;
-
-
+	}
+	showpassword = () => {
+		this.setState({
+			showpassword: !this.state.showpassword,
+			password: this.state.passwordRef.current.value,
+			email: this.state.emailRef.current.value,
+		})
+	}
+	check = () => {
+		this.setState({
+			checked: !this.state.checked
+		})
 	}
 	handleSubmit = (event) => {
 		event.preventDefault();
-
+		var err = false
 		this.setState({
 			email: this.state.emailRef.current.value,
 			password: this.state.passwordRef.current.value
@@ -48,6 +58,7 @@ export default class Signup extends Component {
 			this.setState({
 				emailError: true
 			})
+			err = true;
 		} else {
 			this.setState({
 				emailError: false
@@ -58,6 +69,7 @@ export default class Signup extends Component {
 				lengthError: true,
 				charColor: "#ff0000"
 			})
+			err = true;
 		} else {
 
 			this.setState({
@@ -70,6 +82,7 @@ export default class Signup extends Component {
 				numberError: true,
 				numberColor: "#ff0000"
 			})
+			err = true;
 		} else {
 
 			this.setState({
@@ -82,6 +95,7 @@ export default class Signup extends Component {
 				uppError: true,
 				uppColor: "#ff0000"
 			})
+			err = true;
 		} else {
 
 			this.setState({
@@ -94,6 +108,7 @@ export default class Signup extends Component {
 				SpecialError: true,
 				specialColor: "#ff0000"
 			})
+			err = true;
 		} else {
 
 			this.setState({
@@ -101,8 +116,15 @@ export default class Signup extends Component {
 				specialColor: "#33cc33"
 			})
 		}
-
-
+		if (!err & this.state.checked) {
+			axios.post('http://34.253.224.180:18306/register/index', {
+				email: this.state.email,
+				password: this.state.password
+			})
+				.then(function (response) {
+					console.log(response);
+				})
+		}
 
 
 
@@ -139,7 +161,7 @@ export default class Signup extends Component {
 		})
 
 		const Button = styled.button({
-			width: "80%",
+			width: "90%",
 			height: "40px",
 			borderRadius: 5,
 			backgroundColor: " #009999",
@@ -147,7 +169,7 @@ export default class Signup extends Component {
 			marginTop: 5,
 			marginBottom: 20
 		})
-		const Buttontext = styled.text({
+		const Buttontext = styled.p({
 			color: "#FFFFFF"
 		})
 		const BlueH1 = styled.h1({
@@ -162,16 +184,17 @@ export default class Signup extends Component {
 			fontWeight: "bolder",
 			color: "#009999"
 		})
-		const AgreeText = styled.text({
+		const AgreeText = styled.p({
 			fontSize: 12,
-			marginTop: 0,
+			margin: 0,
 			color: "#090909"
 		})
 		const Checkbox = styled.input({
 			borderColor: "#009999"
 		})
 
-		const Label = styled.text({
+		const Label = styled.p({
+			margin: 0,
 		})
 		const Mediumtext = styled.text({
 			fontSize: 20
@@ -208,8 +231,9 @@ export default class Signup extends Component {
 			borderRadius: 5,
 			marginLeft: "12px"
 		})
-		const Errortext = styled.div({
-			color: "#ff0000"
+		const Errortext = styled.p({
+			color: "#ff0000",
+			margin: 0
 		})
 		return (
 			< Body className="body-div">
@@ -218,10 +242,9 @@ export default class Signup extends Component {
 					<Container className="sadad">
 						<BlueH1 >Create a</BlueH1>
 						<GreenH1 >Free Account</GreenH1>
-						<text>
+						<p>
 							Hypal is a - multi line invitation text goes here
-	</text>
-
+						</p>
 						<form
 							onSubmit={this.handleSubmit}
 							id="SIGINFORM"
@@ -236,17 +259,22 @@ export default class Signup extends Component {
 							<div style={{ flexDirection: "row", display: "flex", justifyContent: "space-between", width: "90%" }}>
 								<Label >Password</Label>
 								{this.state.uppError || this.state.numberError || this.state.SpecialError || this.state.lengthError ? <Errortext>Strong password required</Errortext> : null}
+								<IconContext.Provider value={{ style: { fontSize: '15px', color: "#000000" } }}>
+									<div>
+										<FaEyeSlash onClick={this.showpassword} />
+									</div>
+								</IconContext.Provider>
 							</div>
-							<Input id="password" ref={this.state.passwordRef} name="password" className="" type={this.state.showpassword?'text':'password'}/><br />
+							<Input id="password" ref={this.state.passwordRef} name="password" className="" type={this.state.showpassword ? 'text' : 'password'} /><br />
 
-							<AgreeText>At least:</AgreeText><br />
-							<AgreeText>8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1 uppercase,&nbsp;&nbsp;&nbsp;1 special character</AgreeText><br />
+							<AgreeText>At least:</AgreeText>
+							<AgreeText>8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1 uppercase,&nbsp;&nbsp;&nbsp;1 special character</AgreeText>
 							<div style={{ flexDirection: "row", display: "flex" }}>
 								<Chardiv /> <Numdiv /> <Uppdiv /><Spcldiv />
 							</div>
 							<br />
-							<div style={{ alignItems: "baseline" }}>
-								<Checkbox type="checkbox"></Checkbox>
+							<div style={{ alignItems: "baseline", flexDirection: "row", display: "flex" }}>
+								<Checkbox type="checkbox" checked={this.state.checked} onChange={this.check}></Checkbox>
 								<AgreeText > I have read and agree to the </AgreeText>
 								<Link style={{ fontSize: 12, color: "#009999", textDecoration: "none" }} to="/agreement">HypalQ User Agreement</Link><br />
 							</div>

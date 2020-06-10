@@ -115,7 +115,7 @@ class Signin extends Component {
 							<Label>Password</Label><br />
 							<Input type="text" className="password" /><br />
 
-							<ForgotPass>Forgot password?</ForgotPass><br />
+							<Link style={{ fontSize: 15, color: "#009999", textDecoration: "underline", justifyContent: "flex-end", display: "flex", marginRight: "30%" }} to="/reset"> Forgot password?</Link><br />
 
 							<br /><br />
 							<Button className="button" title="Log in"  >
@@ -123,7 +123,7 @@ class Signin extends Component {
 							</Button>
 							<br />
 							<Mediumtext>Don't have an account?</Mediumtext>
-							<Link style={{ fontSize: 20, color: "#009999",textDecoration:"none" }} to="/signup"> Sign up</Link>
+							<Link style={{ fontSize: 20, color: "#009999", textDecoration: "none" }} to="/signup"> Sign up</Link>
 
 
 						</form>
