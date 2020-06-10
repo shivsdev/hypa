@@ -320,7 +320,7 @@ export default class Signup extends Component {
 										color: '#009999',
 										textDecoration: 'none',
 									}}
-									to="/agreement"
+									to="/user-agreement"
 								>
 									HypalQ User Agreement
 								</Link>

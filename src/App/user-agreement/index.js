@@ -14,7 +14,7 @@ class UserAgreement extends Component {
 						<br />
 						<br />
 						<ScrollableContent>
-						<p>
+							<p>
 								This document provides a top level specification for Version 3.x
 								of the HypaIQ Software Suit. This version of the document should
 								be considered a very early draft and whilst its overall format
@@ -351,18 +351,9 @@ class UserAgreement extends Component {
 								terminology be thoroughly reviewed and revised in ord
 							</p>
 						</ScrollableContent>
-						<Button className="button" title="Log in">
-							<Link
-								style={{
-									color: '#FFFFFF',
-									fontWeight: 'bolder',
-									textDecoration: 'none',
-								}}
-								to="/signup"
-							>
-								Return to SIGN UP
-							</Link>
-						</Button>
+						<Link to="/signup">
+							<ButtonLink>Return to SIGN UP</ButtonLink>
+						</Link>
 					</Container>
 				</ContainerBox>
 			</Body>
@@ -373,7 +364,7 @@ class UserAgreement extends Component {
 export default UserAgreement;
 
 const ScrollableContent = styled.div`
-	max-height: 70vh;
+	max-height: 85vh;
 	overflow: auto;
 	width: 100%;
 	padding-right: 5%;
@@ -384,10 +375,10 @@ const ScrollableContent = styled.div`
 		box-shadow: inset 0 0 5px #999999;
 		border-radius: 20px;
 		background: #999999;
-		padding: 6px
+		padding: 6px;
 	}
 	::-webkit-scrollbar-thumb {
-		background: #0F1662;
+		background: #0f1662;
 		border-radius: 20px;
 		background-clip: content-box;
 	}
@@ -396,53 +387,58 @@ const ScrollableContent = styled.div`
 	}
 `;
 
-const Body = styled.div({
-	width: '100%',
-});
+const Body = styled.div`
+	width: 100%;
+`;
 const Container = styled.div`
-	width: 97%
-`
+	width: 97%;
+`;
 
-const ContainerBox = styled.div({
-	width: '90%',
-	height: '100%',
-	margin: 'auto',
-	// borderColor: '#000000',
-	// borderWidth: 1,
-	verticalAlign: 'middle',
-	// borderStyle: 'solid',
-	marginTop: '2%',
-});
-const Hypa = styled.p({
-	fontSize: 80,
-	marginLeft: '3%',
-	paddingLeft: '5%',
-});
-const Iq = styled.p({
-	fontSize: 80,
-	color: ' #00e6e6',
-});
-const Button = styled.button({
-	width: '25%',
-	height: '40px',
-	borderRadius: 5,
-	backgroundColor: ' #009999',
-	borderWidth: 0,
-	marginTop: 5,
-	marginBottom: 20,
-	right: 0,
-	marginLeft: '70%',
-});
-const Buttontext = styled.p({
-	color: '#FFFFFF',
-	fontWeight: 'bolder',
-});
-const BlueH1 = styled.h1({
-	margin: 0,
-	fontSize: 50,
-	color: '#000066',
-	fontWeight: 'bolder',
-	textAlign: 'center',
-});
+const ContainerBox = styled.div`
+	width: 90%;
+	height: 100%;
+	margin: auto;
+	margin-top: 2%;
+`;
+
+const Hypa = styled.p`
+	font-size: 80px;
+	margin-left: 3%;
+	padding-left: 5%;
+`;
+
+const Iq = styled.p`
+	font-size: 80px;
+	color: #00e6e6;
+`;
+
+const ButtonLink = styled.button`
+	color: #ffffff;
+	font-weight: bolder;
+	text-decoration: none;
+	width: 25%;
+	height: 40px;
+	border-radius: 5px;
+	background-color: #009999;
+	border-width: 0px;
+	margin-top: 5px;
+	margin-bottom: 20px;
+	right: 0px;
+	margin-left: 70%;
+	cursor: pointer;
+`;
+
+const Buttontext = styled.p`
+	color: #ffffff;
+	font-weight: bolder;
+`;
+
+const BlueH1 = styled.h1`
+	margin: 0px;
+	font-size: 50px;
+	color: #000066;
+	font-weight: bolder;
+	text-align: center;
+`;
 
 const Logo = styled.img``;
