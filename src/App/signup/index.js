@@ -34,9 +34,8 @@ export default class Signup extends Component {
 		this.state.emailRef.current.value = this.state.email;
 		this.state.passwordRef.current.value = this.state.password;
 		// document.getElementById("email").value = this.state.email;
-
-
 	}
+
 	handleSubmit = (event) => {
 		event.preventDefault();
 
@@ -44,6 +43,7 @@ export default class Signup extends Component {
 			email: this.state.emailRef.current.value,
 			password: this.state.passwordRef.current.value
 		})
+
 		if (emailValidate.test(this.state.emailRef.current.value) === false) {
 			this.setState({
 				emailError: true
@@ -247,29 +247,11 @@ export default class Signup extends Component {
 							<br />
 							<div style={{ alignItems: 'baseline' }}>
 								<Checkbox type="checkbox"></Checkbox>
-<<<<<<< HEAD
-								<AgreeText> I have read and agree to the </AgreeText>
-								<Link
-									style={{
-										fontSize: 12,
-										color: '#009999',
-										textDecoration: 'none',
-									}}
-									to="/agreement"
-								>
-									HypalQ User Agreement
-								</Link>
-								<br />
-							</div>
-							<Button className="button" title="Log in">
-								<Buttontext>Sign Up</Buttontext>
-=======
 								<AgreeText > I have read and agree to the </AgreeText>
 								<Link style={{ fontSize: 12, color: "#009999", textDecoration: "none" }} to="/agreement">HypalQ User Agreement</Link><br />
 							</div>
 							<Button className="button" title="Log in" type={"submit"} >
 								<Buttontext >Sign Up</Buttontext>
->>>>>>> 8c700b7066601c52da74b223b0f11f831a126096
 							</Button>
 							<br />
 							<Mediumtext>Already have an account?</Mediumtext>
