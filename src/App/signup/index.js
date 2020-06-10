@@ -332,7 +332,6 @@ export default class Signup extends Component {
 							<br />
 							<Mediumtext>Already have an account?</Mediumtext>
 							<Link style={{ fontSize: 20, color: '#009999' }} to="/">
-								{' '}
 								Sign in
 							</Link>
 						</form>
