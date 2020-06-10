@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import hypaiq from './../../exportables/hypaiq.png';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
@@ -8,7 +9,7 @@ import axios from 'axios';
 
 let emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-export default class Signup extends Component {
+class Signup extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -45,6 +46,8 @@ export default class Signup extends Component {
 	check = () => {
 		this.setState({
 			checked: !this.state.checked,
+			password: this.state.passwordRef.current.value,
+			email: this.state.emailRef.current.value,
 		});
 	};
 	handleSubmit = event => {
@@ -120,7 +123,13 @@ export default class Signup extends Component {
 				})
 				.then(function (response) {
 					console.log(response);
-				});
+					this.props.history.push("/home")
+				}).catch(
+					function (error) {
+						console.log('Show error notification!')
+						alert(error)
+					}
+				);
 		}
 	};
 
@@ -145,7 +154,7 @@ export default class Signup extends Component {
 		});
 		const ContainerBox = styled.div({
 			width: '63%',
-			height: '100%',
+			minHeight: '100%',
 			margin: 'auto',
 			borderColor: '#000000',
 			borderWidth: 1,
@@ -189,8 +198,9 @@ export default class Signup extends Component {
 		const Label = styled.p({
 			margin: 0,
 		});
-		const Mediumtext = styled.text({
-			fontSize: 20,
+		const Mediumtext = styled.p({
+			fontSize: 15,
+			margin: 0
 		});
 
 		const Logo = styled.img({
@@ -269,11 +279,11 @@ export default class Signup extends Component {
 							>
 								<Label>Password</Label>
 								{this.state.uppError ||
-								this.state.numberError ||
-								this.state.SpecialError ||
-								this.state.lengthError ? (
-									<Errortext>Strong password required</Errortext>
-								) : null}
+									this.state.numberError ||
+									this.state.SpecialError ||
+									this.state.lengthError ? (
+										<Errortext>Strong password required</Errortext>
+									) : null}
 								<IconContext.Provider
 									value={{ style: { fontSize: '15px', color: '#000000' } }}
 								>
@@ -322,7 +332,7 @@ export default class Signup extends Component {
 									}}
 									to="/user-agreement"
 								>
-									HypalQ User Agreement
+									&nbsp;HypalQ User Agreement
 								</Link>
 								<br />
 							</div>
@@ -341,3 +351,4 @@ export default class Signup extends Component {
 		);
 	}
 }
+export default withRouter(Signup)
