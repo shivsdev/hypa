@@ -2,13 +2,135 @@ import React, { Component } from 'react';
 import hypaiq from './../../exportables/hypaiq.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { FaEyeSlash } from "react-icons/fa";
+import { IconContext } from 'react-icons';
+import axios from 'axios';
+
+let emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 export default class Signup extends Component {
-	state = {
-		email: '',
-		password: '',
-	};
-	signin() {}
+	constructor(props) {
+		super(props);
+		this.state = {
+			email: "",
+			password: "",
+			emailRef: React.createRef(),
+			passwordRef: React.createRef(),
+			emailError: null,
+			lengthError: null,
+			SpecialError: null,
+			numberError: null,
+			uppError: null,
+			charColor: "#b3b3b3",
+			lengthColor: "#b3b3b3",
+			specialColor: "#b3b3b3",
+			numberColor: "#b3b3b3",
+			uppColor: "#b3b3b3",
+			showpassword: false,
+			checked: false
+		}
+	}
+
+	componentDidUpdate() {
+		this.state.emailRef.current.value = this.state.email;
+		this.state.passwordRef.current.value = this.state.password;
+	}
+	showpassword = () => {
+		this.setState({
+			showpassword: !this.state.showpassword,
+			password: this.state.passwordRef.current.value,
+			email: this.state.emailRef.current.value,
+		})
+	}
+	check = () => {
+		this.setState({
+			checked: !this.state.checked
+		})
+	}
+	handleSubmit = (event) => {
+		event.preventDefault();
+		var err = false
+		this.setState({
+			email: this.state.emailRef.current.value,
+			password: this.state.passwordRef.current.value
+		})
+		if (emailValidate.test(this.state.emailRef.current.value) === false) {
+			this.setState({
+				emailError: true
+			})
+			err = true;
+		} else {
+			this.setState({
+				emailError: false
+			})
+		}
+		if (this.state.passwordRef.current.value.length < 8) {
+			this.setState({
+				lengthError: true,
+				charColor: "#ff0000"
+			})
+			err = true;
+		} else {
+
+			this.setState({
+				lengthError: false,
+				charColor: "#33cc33"
+			})
+		}
+		if (this.state.passwordRef.current.value.search(/[0-9]/) < 0) {
+			this.setState({
+				numberError: true,
+				numberColor: "#ff0000"
+			})
+			err = true;
+		} else {
+
+			this.setState({
+				numberError: false,
+				numberColor: "#33cc33"
+			})
+		}
+		if (this.state.passwordRef.current.value.search(/[A-Z]/) < 0) {
+			this.setState({
+				uppError: true,
+				uppColor: "#ff0000"
+			})
+			err = true;
+		} else {
+
+			this.setState({
+				uppError: false,
+				uppColor: "#33cc33"
+			})
+		}
+		if (this.state.passwordRef.current.value.search(/[!#$%&@? ]/) < 0) {
+			this.setState({
+				SpecialError: true,
+				specialColor: "#ff0000"
+			})
+			err = true;
+		} else {
+
+			this.setState({
+				SpecialError: false,
+				specialColor: "#33cc33"
+			})
+		}
+		if (!err & this.state.checked) {
+			axios.post('http://34.253.224.180:18306/register/index', {
+				email: this.state.email,
+				password: this.state.password
+			})
+				.then(function (response) {
+					console.log(response);
+				})
+		}
+
+
+
+	}
+
+
 	render() {
 		const Body = styled.div({
 			width: '100%',
@@ -39,17 +161,17 @@ export default class Signup extends Component {
 			color: ' #00e6e6',
 		});
 		const Button = styled.button({
-			width: '100%',
-			height: '40px',
+			width: "90%",
+			height: "40px",
 			borderRadius: 5,
 			backgroundColor: ' #009999',
 			borderWidth: 0,
 			marginTop: 5,
-			marginBottom: 20,
-		});
-		const Buttontext = styled.text({
-			color: '#FFFFFF',
-		});
+			marginBottom: 20
+		})
+		const Buttontext = styled.p({
+			color: "#FFFFFF"
+		})
 		const BlueH1 = styled.h1({
 			margin: 0,
 			fontSize: 60,
@@ -59,30 +181,21 @@ export default class Signup extends Component {
 		const GreenH1 = styled.h1({
 			fontSize: 40,
 			margin: 0,
-			fontWeight: 'bolder',
-			color: '#009999',
-		});
-		const Input = styled.input({
-			width: '100%',
-			borderRadius: 5,
-			height: '40px',
-			borderWidth: 1,
-			padding: 0,
-		});
-
-		const AgreeText = styled.text({
+			fontWeight: "bolder",
+			color: "#009999"
+		})
+		const AgreeText = styled.p({
 			fontSize: 12,
-			marginTop: 0,
-			color: '#090909',
-		});
+			margin: 0,
+			color: "#090909"
+		})
 		const Checkbox = styled.input({
-			borderColor: '#009999',
-		});
-		const Greentext = styled.text({
-			fontSize: 12,
-			color: '#009999',
-		});
-		const Label = styled.text({});
+			borderColor: "#009999"
+		})
+
+		const Label = styled.p({
+			margin: 0,
+		})
 		const Mediumtext = styled.text({
 			fontSize: 20,
 		});
@@ -119,17 +232,26 @@ export default class Signup extends Component {
 			height: '1vh',
 			width: '60px',
 			borderRadius: 5,
-			marginLeft: '12px',
-		});
+			marginLeft: "12px"
+		})
+		const Errortext = styled.p({
+			color: "#ff0000",
+			margin: 0
+		})
 		return (
 			<Body>
 				<ContainerBox>
 					<Logo src={hypaiq} />
-					<Container>
-						<BlueH1>Create a</BlueH1>
-						<GreenH1>Free Account</GreenH1>
-						<text>Hypal is a - multi line invitation text goes here</text>
-						<form>
+					<Container className="sadad">
+						<BlueH1 >Create a</BlueH1>
+						<GreenH1 >Free Account</GreenH1>
+						<p>
+							Hypal is a - multi line invitation text goes here
+						</p>
+						<form
+							onSubmit={this.handleSubmit}
+							id="SIGINFORM"
+						>
 							<br />
 							<Label>Email</Label>
 							<Input type="text" className="email" Label="Email" />
@@ -138,32 +260,27 @@ export default class Signup extends Component {
 							<Label>Password</Label>
 							<Input type="text" className="password" />
 							<br />
+							<div style={{ flexDirection: "row", display: "flex", justifyContent: "space-between", width: "90%" }}>
+								<Label >Password</Label>
+								{this.state.uppError || this.state.numberError || this.state.SpecialError || this.state.lengthError ? <Errortext>Strong password required</Errortext> : null}
+								<IconContext.Provider value={{ style: { fontSize: '15px', color: "#000000" } }}>
+									<div>
+										<FaEyeSlash onClick={this.showpassword} />
+									</div>
+								</IconContext.Provider>
+							</div>
+							<Input id="password" ref={this.state.passwordRef} name="password" className="" type={this.state.showpassword ? 'text' : 'password'} /><br />
 
 							<AgreeText>At least:</AgreeText>
-							<br />
-							<AgreeText>
-								8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1
-								uppercase,&nbsp;&nbsp;&nbsp;1 special character
-							</AgreeText>
-							<br />
-							<div style={{ flexDirection: 'row', display: 'flex' }}>
-								<Chardiv /> <Numdiv /> <Spcldiv /> <Uppdiv />
+							<AgreeText>8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1 uppercase,&nbsp;&nbsp;&nbsp;1 special character</AgreeText>
+							<div style={{ flexDirection: "row", display: "flex" }}>
+								<Chardiv /> <Numdiv /> <Uppdiv /><Spcldiv />
 							</div>
 							<br />
-							<div style={{ alignItems: 'baseline' }}>
-								<Checkbox type="checkbox"></Checkbox>
-								<AgreeText> I have read and agree to the </AgreeText>
-								<Link
-									style={{
-										fontSize: 12,
-										color: '#009999',
-										textDecoration: 'none',
-									}}
-									to="/user-agreement"
-								>
-									HypalQ User Agreement
-								</Link>
-								<br />
+							<div style={{ alignItems: "baseline", flexDirection: "row", display: "flex" }}>
+								<Checkbox type="checkbox" checked={this.state.checked} onChange={this.check}></Checkbox>
+								<AgreeText > I have read and agree to the </AgreeText>
+								<Link style={{ fontSize: 12, color: "#009999", textDecoration: "none" }} to="/agreement">HypalQ User Agreement</Link><br />
 							</div>
 							<Button className="button" title="Log in">
 								<Buttontext>Sign Up</Buttontext>
