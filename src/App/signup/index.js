@@ -116,14 +116,11 @@ class Signup extends Component {
 			});
 		}
 		if (!err & this.state.checked) {
-			var config = {
-				headers: { 'Access-Control-Allow-Origin': '*' }
-			};
 			axios
 				.post('http://34.253.224.180:18306/register/index', {
 					email: this.state.email,
 					password: this.state.password,
-				}, config)
+				})
 				.then(function (response) {
 					console.log(response);
 					this.props.history.push("/home")
@@ -262,6 +259,7 @@ class Signup extends Component {
 							name="email"
 							id="email"
 							className=""
+							required
 						/>
 						<br />
 						<br />
@@ -293,6 +291,7 @@ class Signup extends Component {
 							ref={this.state.passwordRef}
 							name="password"
 							className=""
+							required
 							type={this.state.showpassword ? 'text' : 'password'}
 						/>
 						<br />
