@@ -56,12 +56,12 @@ class Reset extends Component {
             height: "100vh",
         })
         const Container = styled.div({
-			width: '30%',
-			borderWidth: 1,
-			marginLeft: '40%',
-			flexDirection: 'row',
-			borderColor: 'black',
-		});
+            width: '30%',
+            borderWidth: 1,
+            marginLeft: '40%',
+            flexDirection: 'row',
+            borderColor: 'black',
+        });
         const Button = styled.button({
             width: "60%",
             height: "40px",
@@ -119,7 +119,7 @@ class Reset extends Component {
                             <Label >Email</Label>
                             {this.state.emailError ? <Errortext>invalid email format</Errortext> : null}
                         </div>
-                        <Input ref={this.state.emailRef} name="email" id="email" className="" /><br />
+                        <Input ref={this.state.emailRef} required name="email" id="email" className="" /><br />
                         <br />
 
                         <Button className="button" title="Log in" type={"submit"} >

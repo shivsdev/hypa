@@ -171,10 +171,10 @@ class Reset extends Component {
             padding: 0
         })
         const AgreeText = styled.p({
-			fontSize: ".6vw",
-			margin: 0,
-			color: '#090909',
-		});
+            fontSize: ".6vw",
+            margin: 0,
+            color: '#090909',
+        });
         const Label = styled.p({
             fontSize: ".9vw",
             margin: 0,
@@ -238,7 +238,7 @@ class Reset extends Component {
                                 </div>
                             </IconContext.Provider>
                         </div>
-                        <Input id="password" ref={this.state.passwordRef} name="password" className="" type={this.state.showpassword ? 'text' : 'password'} />
+                        <Input id="password" ref={this.state.passwordRef} name="password" required type={this.state.showpassword ? 'text' : 'password'} />
                         <AgreeText>At least:</AgreeText>
                         <AgreeText>8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1 uppercase,&nbsp;&nbsp;&nbsp;1 special character</AgreeText>
                         <div style={{ flexDirection: "row", display: "flex" }}>
