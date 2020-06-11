@@ -356,7 +356,7 @@ class Signup extends Component {
 							style={{ color: '#009999', textDecoration: 'none' }}
 							to="/"
 						>
-							Sign up
+							Sign in
 						</Link>
 					</form>
 				</Container>
