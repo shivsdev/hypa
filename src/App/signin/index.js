@@ -22,15 +22,41 @@ class Signin extends Component {
 			password: this.passwordRef.current.value,
 		};
 
-		if(data.email === 'demo@email.com' && data.password === 'Demo@123') {			
+		if (data.email === 'demo@email.com' && data.password === 'Demo@123') {
 			this.props.authObj.authenticate(true);
-			this.props.history.push('/dashboard')
+			var createCORSRequest = (method, url) => {
+				var xhr = new XMLHttpRequest();
+				if ("withCredentials" in xhr) {
+					// Most browsers.
+					xhr.open(method, url, true);
+				} else if (typeof window.XDomainRequest != "undefined") {
+					// IE8 & IE9
+					xhr = new window.XDomainRequest();
+					xhr.open(method, url);
+				} else {
+					// CORS not supported.
+					xhr = null;
+				}
+				return xhr;
+			};
+			var url = 'http://34.253.224.180:18306/register/index';
+			var method = 'POST';
+			var xhr = createCORSRequest(method, url);
+
+			xhr.onload = (res) => {
+				this.props.history.push("/dashboard")
+				console.log(res)
+			};
+
+			xhr.onerror = function () {
+				// Error code goes here.
+			};
+
+			xhr.send({ email: 'demo@gmail.com', password: 'Demo@123' });
 		}
-		// axios.post('http://34.253.224.180:18306/register/signin', data)
-		// .then(({data}) => {
-		// 	if(data.status === 200) {
-		// 	}
-		// })
+
+
+
 	};
 	render() {
 		const passwordFieldType = this.state.isPasswordVisible ? 'text' : 'password';

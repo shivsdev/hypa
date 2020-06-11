@@ -203,6 +203,7 @@ class Signup extends Component {
 		});
 		const Checkbox = styled.input({
 			borderColor: '#009999',
+			width:"3%"
 		});
 
 		const Label = styled.p({
