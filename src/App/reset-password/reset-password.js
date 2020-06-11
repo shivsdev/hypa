@@ -24,11 +24,16 @@ class Reset extends Component {
             specialColor: "#b3b3b3",
             numberColor: "#b3b3b3",
             uppColor: "#b3b3b3",
-            showpassword: false
+            showpassword: false,
+            passwordError: null,
+            focused: React.createRef(),
         }
     }
     componentDidUpdate() {
         this.state.passwordRef.current.value = this.state.password;
+        if (this.state.focused.current) {
+            this.state.focused.current.focus()
+        }
     }
     showpassword = () => {
         this.setState({
@@ -36,65 +41,75 @@ class Reset extends Component {
             password: this.state.passwordRef.current.value,
         })
     }
+    password = () => {
+        this.setState({
+			password: this.state.passwordRef.current.value,
+		});
+        if (this.state.passwordRef.current.value.length < 8) {
+            this.setState({
+                passwordError: true,
+                lengthError: true,
+                charColor: '#ff0000',
+            });
+
+        } else {
+            this.setState({
+                passwordError: false,
+                lengthError: false,
+                charColor: '#33cc33',
+            });
+        }
+        if (this.state.passwordRef.current.value.search(/[0-9]/) < 0) {
+            this.setState({
+                passwordError: true,
+                numberError: true,
+                numberColor: '#ff0000',
+            });
+
+        } else {
+            this.setState({
+                passwordError: false,
+                numberError: false,
+                numberColor: '#33cc33',
+            });
+        }
+        if (this.state.passwordRef.current.value.search(/[A-Z]/) < 0) {
+            this.setState({
+                passwordError: true,
+                uppError: true,
+                uppColor: '#ff0000',
+            });
+
+        } else {
+            this.setState({
+                passwordError: false,
+                uppError: false,
+                uppColor: '#33cc33',
+            });
+        }
+        if (this.state.passwordRef.current.value.search(/[!#$%&@? ]/) < 0) {
+            this.setState({
+                passwordError: true,
+                SpecialError: true,
+                specialColor: '#ff0000',
+            });
+
+        } else {
+            this.setState({
+                passwordError: false,
+                SpecialError: false,
+                specialColor: '#33cc33',
+            });
+        }
+    }
+
     handleSubmit = (event) => {
         event.preventDefault();
         var err = false;
         this.setState({
             password: this.state.passwordRef.current.value
         })
-        if (this.state.passwordRef.current.value.length < 8) {
-            err = true;
-            this.setState({
-                lengthError: true,
-                charColor: "#ff0000"
-            })
-        } else {
-
-            this.setState({
-                lengthError: false,
-                charColor: "#33cc33"
-            })
-        }
-        if (this.state.passwordRef.current.value.search(/[0-9]/) < 0) {
-            err = true;
-            this.setState({
-                numberError: true,
-                numberColor: "#ff0000"
-            })
-        } else {
-
-            this.setState({
-                numberError: false,
-                numberColor: "#33cc33"
-            })
-        }
-        if (this.state.passwordRef.current.value.search(/[A-Z]/) < 0) {
-            err = true;
-            this.setState({
-                uppError: true,
-                uppColor: "#ff0000"
-            })
-        } else {
-
-            this.setState({
-                uppError: false,
-                uppColor: "#33cc33"
-            })
-        }
-        if (this.state.passwordRef.current.value.search(/[!#$%&@? ]/) < 0) {
-            this.setState({
-                SpecialError: true,
-                specialColor: '#ff0000',
-            });
-            err = true;
-        } else {
-            this.setState({
-                SpecialError: false,
-                specialColor: '#33cc33',
-            });
-        }
         if (!err) {
-
             var createCORSRequest = (method, url) => {
                 var xhr = new XMLHttpRequest();
                 if ("withCredentials" in xhr) {
@@ -118,107 +133,43 @@ class Reset extends Component {
                 this.props.history.push("/")
                 console.log(res)
             };
-
             xhr.onerror = function () {
                 // Error code goes here.
             };
-
             xhr.send({ email: 'demo@gmail.com', password: 'Demo@123' });
-
-
         }
-
-
-
-
-
     }
-
     render() {
-
-        const Input = styled.input`
-	width: 100%;
-	border-radius: 5px;
-	height: 40px;
-	border: 1px solid #ccc;
-	padding: 0px;
-	outline: 0px;
-	font-size: 16px;
-	padding: 10px;
-	box-sizing: border-box;
-	margin-top: 3px;
-`;
-
-
-
-        const Button = styled.button({
-            width: "100%",
-            height: "40px",
-            borderRadius: 5,
-            backgroundColor: " #009999",
-            borderWidth: 0,
-            marginTop: 5,
-            marginBottom: 20
-        })
-        const Buttontext = styled.p({
-            color: "#FFFFFF"
-        })
-        const BlueH1 = styled.h1({
-            margin: 0,
-            fontSize: 50,
-            color: '#000066',
-            fontWeight: 'bolder',
-        });
-        const GreenH1 = styled.h1({
-            fontSize: 30,
-            margin: 0,
-            fontWeight: 'normal',
-            color: '#009999',
-        });
-
-        const AgreeText = styled.p({
-
-            margin: 0,
-            color: '#090909',
-        });
-        const Label = styled.p({
-
-            margin: 0,
-        });
-
-
         const Chardiv = styled.div({
             backgroundColor: this.state.charColor,
             height: '1vh',
-            width: '10%',
+            width: '60px',
             borderRadius: 5,
         });
+
         const Numdiv = styled.div({
             backgroundColor: this.state.numberColor,
             height: '1vh',
-            width: '10%',
+            width: '60px',
             borderRadius: 5,
             marginLeft: '12px',
         });
+
         const Spcldiv = styled.div({
             backgroundColor: this.state.specialColor,
             height: '1vh',
-            width: '10%',
+            width: '60px',
             borderRadius: 5,
             marginLeft: '12px',
         });
         const Uppdiv = styled.div({
             backgroundColor: this.state.uppColor,
             height: '1vh',
-            width: '10%',
+            width: '60px',
             borderRadius: 5,
             marginLeft: '12px',
         });
-        const Errortext = styled.p({
-            color: '#ff0000',
-            margin: 0,
 
-        });
         return (
             < Styles >
                 <div className="logo-holder">
@@ -242,7 +193,14 @@ class Reset extends Component {
                                 </div>
                             </IconContext.Provider>
                         </div>
-                        <Input id="password" ref={this.state.passwordRef} name="password" required type={this.state.showpassword ? 'text' : 'password'} />
+                        <Input
+                            id="password"
+                            ref={this.state.passwordRef}
+                            name="password" required
+                            type={this.state.showpassword ? 'text' : 'password'}
+                            onFocus={e => { this.state.focused = this.state.passwordRef }}
+                            onChange={this.password}
+                        />
                         <AgreeText>At least:</AgreeText>
                         <AgreeText>8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1 uppercase,&nbsp;&nbsp;&nbsp;1 special character</AgreeText>
                         <div style={{ flexDirection: "row", display: "flex" }}>
@@ -250,7 +208,7 @@ class Reset extends Component {
                         </div>
                         <br />
                         <Button className="button" title="Reset" type={"submit"}>
-                            <Buttontext >Reset Password</Buttontext>
+                            Reset Password
                         </Button>
                         <br />
                     </form>
@@ -286,7 +244,12 @@ const Styles = styled.div`
 			font-weight: bolder;
 		}
 		form {
-			margin: 100px 0;
+			margin-bottom: 50px;
+		}
+		.hypa-intro {
+			font-size: calc(1em + 0.3vw);
+			color: #777;
+			font-weight: 500;
 		}
 	}
 
@@ -304,20 +267,74 @@ const Styles = styled.div`
 			margin: auto;
 			margin-top: 2em;
 			.first-row-title {
-				font-size: 12vw;
+				font-size: 11vw;
 				margin: 0;
 				font-weight: normal;
 				color: #009999;
 			}
 			.second-row-title {
 				margin: 0;
-				font-size: 12vw;
+				font-size: 11vw;
 				color: #000066;
 				font-weight: bolder;
 			}
-			form {
-				margin: 50px 0;
+			.terms-link {
+				display: block;
+				margin-left: 20px;
 			}
 		}
 	}
 `;
+
+const Input = styled.input`
+	width: 100%;
+	border-radius: 5px;
+	height: 40px;
+	border: 1px solid #ccc;
+	padding: 0px;
+	outline: 0px;
+	font-size: 16px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 3px;
+`;
+
+const Button = styled.button({
+    width: '100%',
+    height: '40px',
+    borderRadius: 5,
+    backgroundColor: ' #009999',
+    borderWidth: 0,
+    marginTop: 5,
+    marginBottom: 20,
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+    cursor: 'pointer',
+});
+const BlueH1 = styled.h1({
+    margin: 0,
+    fontSize: 60,
+    color: '#000066',
+    fontWeight: 'bolder',
+});
+const GreenH1 = styled.h1({
+    fontSize: 50,
+    margin: 0,
+    fontWeight: 'bolder',
+    color: '#009999',
+});
+const AgreeText = styled.p({
+    fontSize: 12,
+    marginTop: 0,
+    color: '#090909',
+});
+
+const Label = styled.p({
+    margin: 0,
+});
+
+const Errortext = styled.p({
+    color: '#ff0000',
+    margin: 0,
+});
