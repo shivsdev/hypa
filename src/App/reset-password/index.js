@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import hypaiq from './../../exportables/hypaiq.png';
 import styled from 'styled-components';
 import { Redirect, withRouter } from 'react-router-dom';
+import { device } from '../../exportables/exportables'
 
 let emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -126,9 +127,11 @@ class Reset extends Component {
             margin: 0,
         })
         return (
-            < Body className="body-div">
-                <Logo src={hypaiq} />
-                <Container className="sadad">
+            < Styles>
+                <div className="logo-holder">
+                    <img src={hypaiq} alt="Hypaiq" />
+                </div>
+                <div className="content-box">
                     <BlueH1 >Enter your</BlueH1>
                     <GreenH1 >Email</GreenH1>
 
@@ -151,9 +154,69 @@ class Reset extends Component {
                         </Button>
 
                     </form>
-                </Container>
-            </Body >
+                </div>
+            </Styles >
         );
     }
 }
 export default withRouter(Reset);
+const Styles = styled.div`
+	padding: 2% 5%;
+	.logo-holder {
+		margin-bottom: 20px;
+		img {
+			width: 27.5%;
+			max-width: 250px;
+		}
+	}
+	.content-box {
+		max-width: 350px;
+		margin: 0px auto;
+		.first-row-title {
+			font-size: calc(1em + 2.5vw);
+			margin: 0;
+			font-weight: normal;
+			color: #009999;
+		}
+		.second-row-title {
+			margin: 0;
+			font-size: calc(1em + 2.5vw);
+			color: #000066;
+			font-weight: bolder;
+		}
+		form {
+			margin: 100px 0;
+		}
+	}
+
+	@media ${device.tablet} {
+		padding: 0;
+		.logo-holder {
+			text-align: center;
+			padding: 4% 0;
+			img {
+				width: 35%;
+			}
+		}
+		.content-box {
+			width: 85%;
+			margin: auto;
+			margin-top: 2em;
+			.first-row-title {
+				font-size: 12vw;
+				margin: 0;
+				font-weight: normal;
+				color: #009999;
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: 12vw;
+				color: #000066;
+				font-weight: bolder;
+			}
+			form {
+				margin: 50px 0;
+			}
+		}
+	}
+`;

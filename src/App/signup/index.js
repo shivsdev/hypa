@@ -328,7 +328,7 @@ const Styles = styled.div`
 			font-size: calc(1em + 0.3vw);
 			color: #777;
 			font-weight: bold;
-		}		
+		}
 	}
 
 	@media ${device.tablet} {
