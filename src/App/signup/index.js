@@ -150,36 +150,29 @@ class Signup extends Component {
 	};
 
 	render() {
-		const Input = styled.input({
-			width: '90%',
-			borderRadius: 5,
-			height: '30px',
-			borderWidth: 1,
-			padding: 0,
-		});
-		const Body = styled.div({
-			width: '100%',
-			height: '100vh',
-		});
+		const Input = styled.input`
+	width: 100%;
+	border-radius: 5px;
+	height: 40px;
+	border: 1px solid #ccc;
+	padding: 0px;
+	outline: 0px;
+	font-size: 16px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 3px;
+`;
+
 		const Container = styled.div({
-			width: '30%',
+			width: '40%',
+			maxWidth: 376,
 			borderWidth: 1,
 			margin: 'auto',
 			flexDirection: 'row',
 			borderColor: 'black',
 		});
-		const ContainerBox = styled.div({
-			width: '63%',
-			minHeight: '100%',
-			margin: 'auto',
-			borderColor: '#000000',
-			borderWidth: 1,
-			verticalAlign: 'middle',
-			borderStyle: 'solid',
-		});
-
 		const Button = styled.button({
-			width: '60%',
+			width: '100%',
 			borderRadius: 5,
 			backgroundColor: ' #009999',
 			borderWidth: 0,
@@ -188,36 +181,34 @@ class Signup extends Component {
 		});
 		const Buttontext = styled.p({
 			color: '#FFFFFF',
-			fontSize: '1vw',
 		});
 		const BlueH1 = styled.h1({
 			margin: 0,
-			fontSize: 60,
-			fontWeight: 'bolder',
+			fontSize: 50,
 			color: '#000066',
+			fontWeight: 'bolder',
 		});
 		const GreenH1 = styled.h1({
-			fontSize: 40,
+			fontSize: 60,
 			margin: 0,
-			fontWeight: 'bolder',
+			fontWeight: 'normal',
 			color: '#009999',
 		});
 		const AgreeText = styled.p({
 			fontSize: 12,
-			margin: 0,
+			marginTop: 0,
 			color: '#090909',
 		});
 		const Checkbox = styled.input({
 			borderColor: '#009999',
-			width: '3%',
+			width: "15%"
 		});
 
 		const Label = styled.p({
 			margin: 0,
 		});
 		const Mediumtext = styled.p({
-			fontSize: 15,
-			margin: 0,
+			margin: 0
 		});
 
 		const Logo = styled.img({
@@ -256,51 +247,68 @@ class Signup extends Component {
 			margin: 0,
 		});
 		return (
-			<Body className="body-div">
-				<ContainerBox className="asdad">
-					<Logo src={hypaiq} />
-					<Container className="sadad">
-						<BlueH1>Create a</BlueH1>
-						<GreenH1>Free Account</GreenH1>
-						<p>Hypal is a - multi line invitation text goes here</p>
-						<form onSubmit={this.handleSubmit} id="SIGINFORM">
-							<br />
-							<div
-								style={{
-									flexDirection: 'row',
-									display: 'flex',
-									justifyContent: 'space-between',
-									width: '90%',
-								}}
-							>
-								<Label>Email</Label>
-								{this.state.emailError ? (
-									<Errortext>invalid email format</Errortext>
-								) : null}
-								<Label>Password</Label>
-								{this.state.uppError ||
+			<div>
+				<Logo src={hypaiq} />
+				<Container className="sadad">
+					<BlueH1>Create a</BlueH1>
+					<GreenH1>Free Account</GreenH1>
+					<p >Hypal is a - multi line invitation text goes here</p>
+					<form onSubmit={this.handleSubmit} id="SIGINFORM">
+						<br />
+						<div
+							style={{
+								flexDirection: 'row',
+								display: 'flex',
+								justifyContent: 'space-between',
+								width: '90%',
+							}}
+						>
+							<Label>Email</Label>
+							{this.state.emailError ? (
+								<Errortext>invalid email format</Errortext>
+							) : null}
+						</div>
+						<Input
+							ref={this.state.emailRef}
+							name="email"
+							id="email"
+							className=""
+							required
+						/>
+						<br />
+						<br />
+						<div
+							style={{
+								flexDirection: 'row',
+								display: 'flex',
+								justifyContent: 'space-between',
+								width: '100%',
+							}}
+						>
+							<Label>Password</Label>
+							{this.state.uppError ||
 								this.state.numberError ||
 								this.state.SpecialError ||
 								this.state.lengthError ? (
 									<Errortext>Strong password required</Errortext>
 								) : null}
-								<IconContext.Provider
-									value={{ style: { fontSize: '15px', color: '#000000' } }}
-								>
-									<div>
-										<FaEyeSlash onClick={this.showpassword} />
-									</div>
-								</IconContext.Provider>
-							</div>
-
-							<Input
-								id="password"
-								ref={this.state.passwordRef}
-								name="password"
-								className=""
-								type={this.state.showpassword ? 'text' : 'password'}
-							/>
-							<br />
+							<IconContext.Provider
+								value={{ style: { fontSize: '15', color: '#000000' } }}
+							>
+								<div>
+									<FaEyeSlash onClick={this.showpassword} />
+								</div>
+							</IconContext.Provider>
+						</div>
+						<Input
+							id="password"
+							ref={this.state.passwordRef}
+							name="password"
+							className=""
+							required
+							type={this.state.showpassword ? 'text' : 'password'}
+						/>
+						<br />
 
 							<AgreeText>At least:</AgreeText>
 							<AgreeText>
@@ -314,9 +322,8 @@ class Signup extends Component {
 							<br />
 							<div
 								style={{
-									alignItems: 'baseline',
-									flexDirection: 'row',
-									display: 'flex',
+									color: '#009999',
+									textDecoration: 'none',
 								}}
 							>
 								<Checkbox
@@ -341,14 +348,21 @@ class Signup extends Component {
 								<Buttontext>Sign Up</Buttontext>
 							</Button>
 							<br />
-							<Mediumtext>Already have an account?</Mediumtext>
-							<Link style={{ fontSize: 20, color: '#009999' }} to="/">
-								Sign in
-							</Link>
-						</form>
-					</Container>
-				</ContainerBox>
-			</Body>
+						
+						<Button className="button" title="Log in" type={'submit'}>
+							<Buttontext>Sign Up</Buttontext>
+						</Button>
+						<br />
+						
+						Already have an account?  <Link
+							style={{ color: '#009999', textDecoration: 'none' }}
+							to="/"
+						>
+							Sign up
+						</Link>
+					</form>
+				</Container>
+			</div>
 		);
 	}
 }
