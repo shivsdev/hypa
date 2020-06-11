@@ -6,6 +6,7 @@ import hypaiq from './../../exportables/hypaiq.png';
 import { FaEyeSlash } from "react-icons/fa";
 import { IconContext } from 'react-icons';
 import axios from 'axios';
+import {device} from '../../exportables/exportables'
 
 class Reset extends Component {
     constructor(props) {
@@ -170,32 +171,32 @@ class Reset extends Component {
             color: "#FFFFFF"
         })
         const BlueH1 = styled.h1({
-			margin: 0,
-			fontSize: 50,
-			color: '#000066',
-			fontWeight: 'bolder',
-		});
-		const GreenH1 = styled.h1({
-			fontSize: 30,
-			margin: 0,
-			fontWeight: 'normal',
-			color: '#009999',
-		});
+            margin: 0,
+            fontSize: 50,
+            color: '#000066',
+            fontWeight: 'bolder',
+        });
+        const GreenH1 = styled.h1({
+            fontSize: 30,
+            margin: 0,
+            fontWeight: 'normal',
+            color: '#009999',
+        });
 
         const AgreeText = styled.p({
-            
+
             margin: 0,
             color: '#090909',
         });
         const Label = styled.p({
-           
+
             margin: 0,
         });
 
         const Logo = styled.img({
             marginLeft: '55px',
             marginTop: '52px',
-            
+
         });
         const Chardiv = styled.div({
             backgroundColor: this.state.charColor,
@@ -227,12 +228,14 @@ class Reset extends Component {
         const Errortext = styled.p({
             color: '#ff0000',
             margin: 0,
-           
+
         });
         return (
-            < Body >
-                <Logo src={hypaiq} />
-                <Container >
+            < Styles >
+                <div className="logo-holder">
+                    <img src={hypaiq} alt="Hypaiq" />
+                </div>
+                <div className="content-box">
                     <BlueH1 >Password reset for</BlueH1>
                     <GreenH1 >{this.state.email}</GreenH1>
                     <br /> <br />  <br /> <br /> <br /><br />
@@ -262,10 +265,70 @@ class Reset extends Component {
                         </Button>
                         <br />
                     </form>
-                </Container>
-            </Body >
+                </div>
+            </Styles >
         );
     }
 }
 
 export default withRouter(Reset);
+const Styles = styled.div`
+	padding: 2% 5%;
+	.logo-holder {
+		margin-bottom: 20px;
+		img {
+			width: 27.5%;
+			max-width: 250px;
+		}
+	}
+	.content-box {
+		max-width: 350px;
+		margin: 0px auto;
+		.first-row-title {
+			font-size: calc(1em + 2.5vw);
+			margin: 0;
+			font-weight: normal;
+			color: #009999;
+		}
+		.second-row-title {
+			margin: 0;
+			font-size: calc(1em + 2.5vw);
+			color: #000066;
+			font-weight: bolder;
+		}
+		form {
+			margin: 100px 0;
+		}
+	}
+
+	@media ${device.tablet} {
+		padding: 0;
+		.logo-holder {
+			text-align: center;
+			padding: 4% 0;
+			img {
+				width: 35%;
+			}
+		}
+		.content-box {
+			width: 85%;
+			margin: auto;
+			margin-top: 2em;
+			.first-row-title {
+				font-size: 12vw;
+				margin: 0;
+				font-weight: normal;
+				color: #009999;
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: 12vw;
+				color: #000066;
+				font-weight: bolder;
+			}
+			form {
+				margin: 50px 0;
+			}
+		}
+	}
+`;
