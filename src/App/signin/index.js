@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import styled from 'styled-components';
 import hypaiq from './../../exportables/hypaiq.png';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios';
 
@@ -20,10 +20,12 @@ class Signin extends Component {
 		let data = {
 			email: this.emailRef.current.value,
 			password: this.passwordRef.current.value,
-		};		
+		};
 
-		this.props.tempAuth.authenticate()
-		this.props.history.push('/dashboard')
+		if(data.email === 'demo@email.com' && data.password === 'Demo@123') {			
+			this.props.authObj.authenticate(true);
+			this.props.history.push('/dashboard')
+		}
 		// axios.post('http://34.253.224.180:18306/register/signin', data)
 		// .then(({data}) => {
 		// 	if(data.status === 200) {
