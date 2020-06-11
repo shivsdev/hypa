@@ -116,11 +116,14 @@ class Signup extends Component {
 			});
 		}
 		if (!err & this.state.checked) {
+			var config = {
+				headers: { 'Access-Control-Allow-Origin': '*' }
+			};
 			axios
 				.post('http://34.253.224.180:18306/register/index', {
 					email: this.state.email,
 					password: this.state.password,
-				})
+				}, config)
 				.then(function (response) {
 					console.log(response);
 					this.props.history.push("/home")
@@ -187,7 +190,7 @@ class Signup extends Component {
 		});
 
 		const Label = styled.p({
-			fontSize:".9vw",
+			fontSize: ".9vw",
 			margin: 0,
 		});
 		const Mediumtext = styled.p({
@@ -198,6 +201,7 @@ class Signup extends Component {
 		const Logo = styled.img({
 			marginLeft: '55px',
 			marginTop: '52px',
+			width: "15%"
 		});
 		const Chardiv = styled.div({
 			backgroundColor: this.state.charColor,
@@ -229,14 +233,15 @@ class Signup extends Component {
 		const Errortext = styled.p({
 			color: '#ff0000',
 			margin: 0,
+			fontSize: ".9vw",
 		});
 		return (
 			<Body className="body-div">
-				<Logo src={hypaiq} style={{width:"15%"}}/>
+				<Logo src={hypaiq} />
 				<Container className="sadad">
 					<BlueH1>Create a</BlueH1>
 					<GreenH1>Free Account</GreenH1>
-					<p style={{fontSize:"1vw"}}>Hypal is a - multi line invitation text goes here</p>
+					<p style={{ fontSize: "1vw" }}>Hypal is a - multi line invitation text goes here</p>
 					<form onSubmit={this.handleSubmit} id="SIGINFORM">
 						<br />
 						<div
