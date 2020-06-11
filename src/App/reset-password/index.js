@@ -45,7 +45,7 @@ class Reset extends Component {
 
     render() {
         const Input = styled.input({
-            width: "90%",
+            width: "60%",
             borderRadius: 5,
             height: "40px",
             borderWidth: 1,
@@ -56,24 +56,14 @@ class Reset extends Component {
             height: "100vh",
         })
         const Container = styled.div({
-            width: "30%",
-            borderWidth: 1,
-            margin: "auto",
-            flexDirection: "row",
-            borderColor: "black"
-        })
-        const ContainerBox = styled.div({
-            width: "63%",
-            minHeight: "100%",
-            margin: "auto",
-            borderColor: "#000000",
-            borderWidth: 1,
-            verticalAlign: "middle",
-            borderStyle: "solid"
-        })
-
+			width: '30%',
+			borderWidth: 1,
+			marginLeft: '40%',
+			flexDirection: 'row',
+			borderColor: 'black',
+		});
         const Button = styled.button({
-            width: "90%",
+            width: "60%",
             height: "40px",
             borderRadius: 5,
             backgroundColor: " #009999",
@@ -86,61 +76,58 @@ class Reset extends Component {
         })
         const BlueH1 = styled.h1({
             margin: 0,
-            fontSize: 60,
-            fontWeight: "bolder",
-            color: "#000066"
-        })
+            fontSize: "4vw",
+            fontWeight: 'bolder',
+            color: '#000066',
+        });
         const GreenH1 = styled.h1({
-            fontSize: 40,
+            fontSize: "3vw",
             margin: 0,
-            fontWeight: "bolder",
-            color: "#009999"
-        })
-
+            fontWeight: 'bolder',
+            color: '#009999',
+        });
         const Label = styled.p({
+            fontSize: ".9vw",
             margin: 0,
-        })
-
-
+        });
         const Logo = styled.img({
-            marginLeft: "55px",
-            marginTop: "52px"
-        })
-
+            marginLeft: '55px',
+            marginTop: '52px',
+            width: "15%"
+        });
         const Errortext = styled.p({
             color: "#ff0000",
-            margin: 0
+            margin: 0,
+            fontSize: ".9vw",
         })
         return (
             < Body className="body-div">
-                <ContainerBox className="asdad" >
-                    <Logo src={hypaiq} />
-                    <Container className="sadad">
-                        <BlueH1 >Enter your</BlueH1>
-                        <GreenH1 >Email</GreenH1>
+                <Logo src={hypaiq} />
+                <Container className="sadad">
+                    <BlueH1 >Enter your</BlueH1>
+                    <GreenH1 >Email</GreenH1>
 
-                        <form
-                            onSubmit={this.handleSubmit}
-                            id="SIGINFORM"
-                        >
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <div style={{ flexDirection: "row", display: "flex", justifyContent: "space-between", width: "90%" }}>
-                                <Label >Email</Label>
-                                {this.state.emailError ? <Errortext>invalid email format</Errortext> : null}
-                            </div>
-                            <Input ref={this.state.emailRef} name="email" id="email" className="" /><br />
-                            <br />
+                    <form
+                        onSubmit={this.handleSubmit}
+                        id="SIGINFORM"
+                    >
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div style={{ flexDirection: "row", display: "flex", justifyContent: "space-between", width: "60%" }}>
+                            <Label >Email</Label>
+                            {this.state.emailError ? <Errortext>invalid email format</Errortext> : null}
+                        </div>
+                        <Input ref={this.state.emailRef} name="email" id="email" className="" /><br />
+                        <br />
 
-                            <Button className="button" title="Log in" type={"submit"} >
-                                <Buttontext >Next</Buttontext>
-                            </Button>
+                        <Button className="button" title="Log in" type={"submit"} >
+                            <Buttontext >Next</Buttontext>
+                        </Button>
 
-                        </form>
-                    </Container>
-                </ContainerBox>
+                    </form>
+                </Container>
             </Body >
         );
     }

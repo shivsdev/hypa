@@ -122,7 +122,7 @@ class Reset extends Component {
             height: "100vh",
         })
         const Container = styled.div({
-            width: "40%",
+            width: "30%",
             borderWidth: 1,
             margin: "auto",
             paddingLeft: "12%",
@@ -140,7 +140,7 @@ class Reset extends Component {
             marginTop: "40px"
         })
         const Button = styled.button({
-            width: "70%",
+            width: "60%",
             height: "40px",
             borderRadius: 5,
             backgroundColor: " #009999",
@@ -153,102 +153,104 @@ class Reset extends Component {
         })
         const BlueH1 = styled.h1({
             margin: 0,
-            fontSize: 50,
-            color: "#000066",
-            fontWeight: "normal"
-        })
+            fontSize: "3vw",
+            fontWeight: 'bolder',
+            color: '#000066',
+        });
         const GreenH1 = styled.h1({
-            fontSize: 40,
+            fontSize: "2vw",
             margin: 0,
-            fontWeight: "normal",
-            color: "#009999",
-        })
+            fontWeight: 'bolder',
+            color: '#009999',
+        });
         const Input = styled.input({
-            width: "70%",
+            width: "60%",
             borderRadius: 5,
             height: "40px",
             borderWidth: 1,
             padding: 0
         })
         const AgreeText = styled.p({
-            fontSize: 12,
-            margin: 0,
-            color: "#090909"
-        })
+			fontSize: ".6vw",
+			margin: 0,
+			color: '#090909',
+		});
         const Label = styled.p({
+            fontSize: ".9vw",
             margin: 0,
-        })
+        });
+
+        const Logo = styled.img({
+            marginLeft: '55px',
+            marginTop: '52px',
+            width: "15%"
+        });
         const Chardiv = styled.div({
             backgroundColor: this.state.charColor,
-            height: "1vh",
-            width: "60px",
-            borderRadius: 5
-        })
+            height: '1vh',
+            width: '10%',
+            borderRadius: 5,
+        });
         const Numdiv = styled.div({
             backgroundColor: this.state.numberColor,
-            height: "1vh",
-            width: "60px",
+            height: '1vh',
+            width: '10%',
             borderRadius: 5,
-            marginLeft: "12px"
-        })
+            marginLeft: '12px',
+        });
         const Spcldiv = styled.div({
             backgroundColor: this.state.specialColor,
-            height: "1vh",
-            width: "60px",
+            height: '1vh',
+            width: '10%',
             borderRadius: 5,
-            marginLeft: "12px"
-        })
+            marginLeft: '12px',
+        });
         const Uppdiv = styled.div({
             backgroundColor: this.state.uppColor,
-            height: "1vh",
-            width: "60px",
+            height: '1vh',
+            width: '10%',
             borderRadius: 5,
-            marginLeft: "12px"
-        })
-        const Logo = styled.img({
-            marginLeft: "55px",
-            marginTop: "52px"
-        })
+            marginLeft: '12px',
+        });
         const Errortext = styled.p({
-            color: "#ff0000",
-            margin: 0
-        })
+            color: '#ff0000',
+            margin: 0,
+            fontSize: ".9vw",
+        });
         return (
             < Body >
-                <ContainerBox >
-                    <Logo src={hypaiq} />
-                    <Container >
-                        <BlueH1 >Password reset for</BlueH1>
-                        <GreenH1 >{this.state.email}</GreenH1>
-                        <br /> <br />  <br /> <br /> <br /><br /><br /><br /><br />
-                        <form
-                            onSubmit={this.handleSubmit}
-                            id="RESTFORM"
-                        >
+                <Logo src={hypaiq} />
+                <Container >
+                    <BlueH1 >Password reset for</BlueH1>
+                    <GreenH1 >{this.state.email}</GreenH1>
+                    <br /> <br />  <br /> <br /> <br /><br /><br /><br /><br />
+                    <form
+                        onSubmit={this.handleSubmit}
+                        id="RESTFORM"
+                    >
 
-                            <div style={{ flexDirection: "row", display: "flex", justifyContent: "space-between", width: "70%" }}>
-                                <Label >Password</Label>
-                                {this.state.uppError || this.state.numberError || this.state.SpecialError || this.state.lengthError ? <Errortext>Strong password required</Errortext> : null}
-                                <IconContext.Provider value={{ style: { fontSize: '15px', color: "#000000" } }}>
-                                    <div>
-                                        <FaEyeSlash onClick={this.showpassword} />
-                                    </div>
-                                </IconContext.Provider>
-                            </div>
-                            <Input id="password" ref={this.state.passwordRef} name="password" className="" type={this.state.showpassword ? 'text' : 'password'} />
-                            <AgreeText>At least:</AgreeText>
-                            <AgreeText>8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1 uppercase,&nbsp;&nbsp;&nbsp;1 special character</AgreeText>
-                            <div style={{ flexDirection: "row", display: "flex" }}>
-                                <Chardiv /> <Numdiv /> <Uppdiv /> <Spcldiv />
-                            </div>
-                            <br />
-                            <Button className="button" title="Reset" type={"submit"}>
-                                <Buttontext >Reset Password</Buttontext>
-                            </Button>
-                            <br />
-                        </form>
-                    </Container>
-                </ContainerBox>
+                        <div style={{ flexDirection: "row", display: "flex", justifyContent: "space-between", width: "60%" }}>
+                            <Label >Password</Label>
+                            {this.state.uppError || this.state.numberError || this.state.SpecialError || this.state.lengthError ? <Errortext>Strong password required</Errortext> : null}
+                            <IconContext.Provider value={{ style: { fontSize: '15px', color: "#000000" } }}>
+                                <div>
+                                    <FaEyeSlash onClick={this.showpassword} />
+                                </div>
+                            </IconContext.Provider>
+                        </div>
+                        <Input id="password" ref={this.state.passwordRef} name="password" className="" type={this.state.showpassword ? 'text' : 'password'} />
+                        <AgreeText>At least:</AgreeText>
+                        <AgreeText>8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1 uppercase,&nbsp;&nbsp;&nbsp;1 special character</AgreeText>
+                        <div style={{ flexDirection: "row", display: "flex" }}>
+                            <Chardiv /> <Numdiv /> <Uppdiv /> <Spcldiv />
+                        </div>
+                        <br />
+                        <Button className="button" title="Reset" type={"submit"}>
+                            <Buttontext >Reset Password</Buttontext>
+                        </Button>
+                        <br />
+                    </form>
+                </Container>
             </Body >
         );
     }

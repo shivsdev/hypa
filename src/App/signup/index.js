@@ -116,11 +116,14 @@ class Signup extends Component {
 			});
 		}
 		if (!err & this.state.checked) {
+			var config = {
+				headers: { 'Access-Control-Allow-Origin': '*' }
+			};
 			axios
 				.post('http://34.253.224.180:18306/register/index', {
 					email: this.state.email,
 					password: this.state.password,
-				})
+				}, config)
 				.then(function (response) {
 					console.log(response);
 					this.props.history.push("/home")
@@ -135,7 +138,7 @@ class Signup extends Component {
 
 	render() {
 		const Input = styled.input({
-			width: '90%',
+			width: '60%',
 			borderRadius: 5,
 			height: '40px',
 			borderWidth: 1,
@@ -148,22 +151,13 @@ class Signup extends Component {
 		const Container = styled.div({
 			width: '30%',
 			borderWidth: 1,
-			margin: 'auto',
+			marginLeft: '40%',
 			flexDirection: 'row',
 			borderColor: 'black',
 		});
-		const ContainerBox = styled.div({
-			width: '63%',
-			minHeight: '100%',
-			margin: 'auto',
-			borderColor: '#000000',
-			borderWidth: 1,
-			verticalAlign: 'middle',
-			borderStyle: 'solid',
-		});
 
 		const Button = styled.button({
-			width: '90%',
+			width: '60%',
 			height: '40px',
 			borderRadius: 5,
 			backgroundColor: ' #009999',
@@ -176,18 +170,18 @@ class Signup extends Component {
 		});
 		const BlueH1 = styled.h1({
 			margin: 0,
-			fontSize: 60,
+			fontSize: "4vw",
 			fontWeight: 'bolder',
 			color: '#000066',
 		});
 		const GreenH1 = styled.h1({
-			fontSize: 40,
+			fontSize: "3vw",
 			margin: 0,
 			fontWeight: 'bolder',
 			color: '#009999',
 		});
 		const AgreeText = styled.p({
-			fontSize: 12,
+			fontSize: ".6vw",
 			margin: 0,
 			color: '#090909',
 		});
@@ -196,157 +190,161 @@ class Signup extends Component {
 		});
 
 		const Label = styled.p({
+			fontSize: ".9vw",
 			margin: 0,
 		});
 		const Mediumtext = styled.p({
-			fontSize: 15,
+			fontSize: "1vw",
 			margin: 0
 		});
 
 		const Logo = styled.img({
 			marginLeft: '55px',
 			marginTop: '52px',
+			width: "15%"
 		});
 		const Chardiv = styled.div({
 			backgroundColor: this.state.charColor,
 			height: '1vh',
-			width: '60px',
+			width: '11%',
 			borderRadius: 5,
 		});
 		const Numdiv = styled.div({
 			backgroundColor: this.state.numberColor,
 			height: '1vh',
-			width: '60px',
+			width: '11%',
 			borderRadius: 5,
 			marginLeft: '12px',
 		});
 		const Spcldiv = styled.div({
 			backgroundColor: this.state.specialColor,
 			height: '1vh',
-			width: '60px',
+			width: '11%',
 			borderRadius: 5,
 			marginLeft: '12px',
 		});
 		const Uppdiv = styled.div({
 			backgroundColor: this.state.uppColor,
 			height: '1vh',
-			width: '60px',
+			width: '11%',
 			borderRadius: 5,
 			marginLeft: '12px',
 		});
 		const Errortext = styled.p({
 			color: '#ff0000',
 			margin: 0,
+			fontSize: ".9vw",
 		});
 		return (
 			<Body className="body-div">
-				<ContainerBox className="asdad">
-					<Logo src={hypaiq} />
-					<Container className="sadad">
-						<BlueH1>Create a</BlueH1>
-						<GreenH1>Free Account</GreenH1>
-						<p>Hypal is a - multi line invitation text goes here</p>
-						<form onSubmit={this.handleSubmit} id="SIGINFORM">
-							<br />
-							<div
-								style={{
-									flexDirection: 'row',
-									display: 'flex',
-									justifyContent: 'space-between',
-									width: '90%',
-								}}
-							>
-								<Label>Email</Label>
-								{this.state.emailError ? (
-									<Errortext>invalid email format</Errortext>
+				<Logo src={hypaiq} />
+				<Container className="sadad">
+					<BlueH1>Create a</BlueH1>
+					<GreenH1>Free Account</GreenH1>
+					<p style={{ fontSize: "1vw" }}>Hypal is a - multi line invitation text goes here</p>
+					<form onSubmit={this.handleSubmit} id="SIGINFORM">
+						<br />
+						<div
+							style={{
+								flexDirection: 'row',
+								display: 'flex',
+								justifyContent: 'space-between',
+								width: '90%',
+							}}
+						>
+							<Label>Email</Label>
+							{this.state.emailError ? (
+								<Errortext>invalid email format</Errortext>
+							) : null}
+						</div>
+						<Input
+							ref={this.state.emailRef}
+							name="email"
+							id="email"
+							className=""
+						/>
+						<br />
+						<br />
+						<div
+							style={{
+								flexDirection: 'row',
+								display: 'flex',
+								justifyContent: 'space-between',
+								width: '60%',
+							}}
+						>
+							<Label>Password</Label>
+							{this.state.uppError ||
+								this.state.numberError ||
+								this.state.SpecialError ||
+								this.state.lengthError ? (
+									<Errortext>Strong password required</Errortext>
 								) : null}
-							</div>
-							<Input
-								ref={this.state.emailRef}
-								name="email"
-								id="email"
-								className=""
-							/>
-							<br />
-							<br />
-							<div
-								style={{
-									flexDirection: 'row',
-									display: 'flex',
-									justifyContent: 'space-between',
-									width: '90%',
-								}}
+							<IconContext.Provider
+								value={{ style: { fontSize: '15px', color: '#000000' } }}
 							>
-								<Label>Password</Label>
-								{this.state.uppError ||
-									this.state.numberError ||
-									this.state.SpecialError ||
-									this.state.lengthError ? (
-										<Errortext>Strong password required</Errortext>
-									) : null}
-								<IconContext.Provider
-									value={{ style: { fontSize: '15px', color: '#000000' } }}
-								>
-									<div>
-										<FaEyeSlash onClick={this.showpassword} />
-									</div>
-								</IconContext.Provider>
-							</div>
-							<Input
-								id="password"
-								ref={this.state.passwordRef}
-								name="password"
-								className=""
-								type={this.state.showpassword ? 'text' : 'password'}
-							/>
-							<br />
+								<div>
+									<FaEyeSlash onClick={this.showpassword} />
+								</div>
+							</IconContext.Provider>
+						</div>
+						<Input
+							id="password"
+							ref={this.state.passwordRef}
+							name="password"
+							className=""
+							type={this.state.showpassword ? 'text' : 'password'}
+						/>
+						<br />
 
-							<AgreeText>At least:</AgreeText>
-							<AgreeText>
-								8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1
-								uppercase,&nbsp;&nbsp;&nbsp;1 special character
+						<AgreeText>At least:</AgreeText>
+						<AgreeText>
+							8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1
+							uppercase,&nbsp;&nbsp;&nbsp;1 special character
 							</AgreeText>
-							<div style={{ flexDirection: 'row', display: 'flex' }}>
-								<Chardiv /> <Numdiv /> <Uppdiv />
-								<Spcldiv />
-							</div>
-							<br />
-							<div
+						<div style={{ flexDirection: 'row', display: 'flex' }}>
+							<Chardiv /> <Numdiv /> <Uppdiv />
+							<Spcldiv />
+						</div>
+						<br />
+						<div
+							style={{
+								alignItems: 'baseline',
+								flexDirection: 'row',
+								display: 'flex',
+							}}
+						>
+							<Checkbox
+								type="checkbox"
+								checked={this.state.checked}
+								onChange={this.check}
+							></Checkbox>
+							<AgreeText> I have read and agree to the </AgreeText>
+							<Link
 								style={{
-									alignItems: 'baseline',
-									flexDirection: 'row',
-									display: 'flex',
+									fontSize: ".6vw",
+									color: '#009999',
+									textDecoration: 'none',
 								}}
+								to="/user-agreement"
 							>
-								<Checkbox
-									type="checkbox"
-									checked={this.state.checked}
-									onChange={this.check}
-								></Checkbox>
-								<AgreeText> I have read and agree to the </AgreeText>
-								<Link
-									style={{
-										fontSize: 12,
-										color: '#009999',
-										textDecoration: 'none',
-									}}
-									to="/user-agreement"
-								>
-									&nbsp;HypalQ User Agreement
+								&nbsp;HypalQ User Agreement
 								</Link>
-								<br />
-							</div>
-							<Button className="button" title="Log in" type={'submit'}>
-								<Buttontext>Sign Up</Buttontext>
-							</Button>
 							<br />
+						</div>
+						<Button className="button" title="Log in" type={'submit'}>
+							<Buttontext>Sign Up</Buttontext>
+						</Button>
+						<br />
+						<div style={{ flexDirection: "row", display: "flex" }}>
 							<Mediumtext>Already have an account?</Mediumtext>
-							<Link style={{ fontSize: 20, color: '#009999' }} to="/">
+							<Link style={{ fontSize: "1vw", color: '#009999' }} to="/">
+								{' '}
 								Sign in
 							</Link>
-						</form>
-					</Container>
-				</ContainerBox>
+						</div>
+					</form>
+				</Container>
 			</Body>
 		);
 	}
