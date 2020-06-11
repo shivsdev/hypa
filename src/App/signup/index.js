@@ -247,11 +247,11 @@ class Signup extends Component {
 			margin: 0,
 		});
 		return (
-			<div>
+			<Styles>
 				<Logo src={hypaiq} />
-				<Container className="sadad">
-					<BlueH1>Create a</BlueH1>
-					<GreenH1>Free Account</GreenH1>
+				<div className="content-box">
+					<BlueH1 className="second-row-title">Create a</BlueH1>
+					<GreenH1 className="first-row-title">Free Account</GreenH1>
 					<p >Hypal is a - multi line invitation text goes here</p>
 					<form onSubmit={this.handleSubmit} id="SIGINFORM">
 						<br />
@@ -359,9 +359,69 @@ class Signup extends Component {
 							Sign in
 						</Link>
 					</form>
-				</Container>
-			</div>
+				</div>
+			</Styles>
 		);
 	}
 }
 export default withRouter(Signup);
+const Styles = styled.div`
+	padding: 2% 5%;
+	.logo-holder {
+		margin-bottom: 20px;
+		img {
+			width: 27.5%;
+			max-width: 250px;
+		}
+	}
+	.content-box {
+		max-width: 350px;
+		margin: 0px auto;
+		.first-row-title {
+			font-size: calc(1em + 2.5vw);
+			margin: 0;
+			font-weight: normal;
+			color: #009999;
+		}
+		.second-row-title {
+			margin: 0;
+			font-size: calc(1em + 2.5vw);
+			color: #000066;
+			font-weight: bolder;
+		}
+		form {
+			margin: 100px 0;
+		}
+	}
+
+	@media ${device.tablet} {
+		padding: 0;
+		.logo-holder {
+			text-align: center;
+			padding: 4% 0;
+			img {
+				width: 35%;
+			}
+		}
+		.content-box {
+			width: 85%;
+			margin: auto;
+			margin-top: 2em;
+			.first-row-title {
+				font-size: 12vw;
+				margin: 0;
+				font-weight: normal;
+				color: #009999;
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: 12vw;
+				color: #000066;
+				font-weight: bolder;
+			}
+			form {
+				margin: 50px 0;
+			}
+		}
+	}
+`;
