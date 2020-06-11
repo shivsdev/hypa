@@ -4,7 +4,7 @@ import hypaiq from './../../exportables/hypaiq.png';
 import { Link, Redirect } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios';
-import {device} from '../../exportables/exportables'
+import { device } from '../../exportables/exportables';
 
 class Signin extends Component {
 	constructor(props) {
@@ -22,14 +22,10 @@ class Signin extends Component {
 			email: this.emailRef.current.value,
 			password: this.passwordRef.current.value,
 		};
-
-		axios
-			.post('http://34.253.224.180:18306/register/signin', data)
-			.then(({ data }) => {
-				console.log(data);
-				// this.props.authObj.authenticate(true);
-				// this.props.history.push('/dashboard')
-			});
+		if (data.email === 'demo@mail.com' && data.password === 'Demo@mail') {
+			this.props.authObj.authenticate(true);
+			this.props.history.push('/dashboard');
+		}
 	};
 
 	render() {
@@ -52,7 +48,15 @@ class Signin extends Component {
 						<br />
 						<br />
 						<PasswordLabel>
-							<span>Password</span> <FaEyeSlash />
+							<span>Password</span>{' '}
+							<FaEyeSlash
+								color={this.state.isPasswordVisible ? '#ccc' : ''}
+								onClick={() =>
+									this.setState({
+										isPasswordVisible: !this.state.isPasswordVisible,
+									})
+								}
+							/>
 						</PasswordLabel>
 						<Input
 							type={passwordFieldName}
@@ -65,11 +69,11 @@ class Signin extends Component {
 							style={{
 								fontSize: 15,
 								color: '#009999',
+								color: '#888',
+								cursor: 'not-allowed',
 								textDecoration: 'underline',
-								justifyContent: 'flex-end',
-								display: 'flex',
+								float: 'right',
 							}}
-							to="/reset"
 						>
 							Forgot password?
 						</Link>
@@ -184,18 +188,6 @@ const Button = styled.button({
 	fontSize: 18,
 	fontWeight: 'bold',
 	cursor: 'pointer',
-});
-const BlueH1 = styled.h1({
-	margin: 0,
-	fontSize: 50,
-	color: '#000066',
-	fontWeight: 'bolder',
-});
-const GreenH1 = styled.h1({
-	fontSize: 60,
-	margin: 0,
-	fontWeight: 'normal',
-	color: '#009999',
 });
 
 const Input = styled.input`
