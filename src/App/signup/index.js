@@ -30,12 +30,17 @@ class Signup extends Component {
 			uppColor: '#b3b3b3',
 			showpassword: false,
 			checked: false,
+			focused: React.createRef(),
+			passwordError: false
 		};
 	}
 
 	componentDidUpdate() {
 		this.state.emailRef.current.value = this.state.email;
 		this.state.passwordRef.current.value = this.state.password;
+		if (this.state.focused.current) {
+			this.state.focused.current.focus()
+		}
 	}
 	showpassword = () => {
 		this.setState({
@@ -51,6 +56,68 @@ class Signup extends Component {
 			email: this.state.emailRef.current.value,
 		});
 	};
+	password = () => {
+		this.setState({
+			password: this.state.passwordRef.current.value,
+			email: this.state.emailRef.current.value,
+		});
+		if (this.state.passwordRef.current.value.length < 8) {
+			this.setState({
+				passwordError: true,
+				lengthError: true,
+				charColor: '#ff0000',
+			});
+
+		} else {
+			this.setState({
+				passwordError: false,
+				lengthError: false,
+				charColor: '#33cc33',
+			});
+		}
+		if (this.state.passwordRef.current.value.search(/[0-9]/) < 0) {
+			this.setState({
+				passwordError: true,
+				numberError: true,
+				numberColor: '#ff0000',
+			});
+
+		} else {
+			this.setState({
+				passwordError: false,
+				numberError: false,
+				numberColor: '#33cc33',
+			});
+		}
+		if (this.state.passwordRef.current.value.search(/[A-Z]/) < 0) {
+			this.setState({
+				passwordError: true,
+				uppError: true,
+				uppColor: '#ff0000',
+			});
+
+		} else {
+			this.setState({
+				passwordError: false,
+				uppError: false,
+				uppColor: '#33cc33',
+			});
+		}
+		if (this.state.passwordRef.current.value.search(/[!#$%&@? ]/) < 0) {
+			this.setState({
+				passwordError: true,
+				SpecialError: true,
+				specialColor: '#ff0000',
+			});
+
+		} else {
+			this.setState({
+				passwordError: false,
+				SpecialError: false,
+				specialColor: '#33cc33',
+			});
+		}
+	}
 
 	handleSubmit = event => {
 		event.preventDefault();
@@ -69,55 +136,7 @@ class Signup extends Component {
 				emailError: false,
 			});
 		}
-		if (this.state.passwordRef.current.value.length < 8) {
-			this.setState({
-				lengthError: true,
-				charColor: '#ff0000',
-			});
-			err = true;
-		} else {
-			this.setState({
-				lengthError: false,
-				charColor: '#33cc33',
-			});
-		}
-		if (this.state.passwordRef.current.value.search(/[0-9]/) < 0) {
-			this.setState({
-				numberError: true,
-				numberColor: '#ff0000',
-			});
-			err = true;
-		} else {
-			this.setState({
-				numberError: false,
-				numberColor: '#33cc33',
-			});
-		}
-		if (this.state.passwordRef.current.value.search(/[A-Z]/) < 0) {
-			this.setState({
-				uppError: true,
-				uppColor: '#ff0000',
-			});
-			err = true;
-		} else {
-			this.setState({
-				uppError: false,
-				uppColor: '#33cc33',
-			});
-		}
-		if (this.state.passwordRef.current.value.search(/[!#$%&@? ]/) < 0) {
-			this.setState({
-				SpecialError: true,
-				specialColor: '#ff0000',
-			});
-			err = true;
-		} else {
-			this.setState({
-				SpecialError: false,
-				specialColor: '#33cc33',
-			});
-		}
-		if (!err & this.state.checked) {
+		if (!err & this.state.checked & !this.state.passwordError) {
 			var createCORSRequest = (method, url) => {
 				var xhr = new XMLHttpRequest();
 				if ('withCredentials' in xhr) {
@@ -213,7 +232,7 @@ class Signup extends Component {
 							name="email"
 							id="email"
 							className=""
-							required
+
 						/>
 						<br />
 						<br />
@@ -227,11 +246,11 @@ class Signup extends Component {
 						>
 							<Label>Password</Label>
 							{this.state.uppError ||
-							this.state.numberError ||
-							this.state.SpecialError ||
-							this.state.lengthError ? (
-								<Errortext>Strong password required</Errortext>
-							) : null}
+								this.state.numberError ||
+								this.state.SpecialError ||
+								this.state.lengthError ? (
+									<Errortext>Strong password required</Errortext>
+								) : null}
 							<IconContext.Provider
 								value={{ style: { fontSize: '15', color: '#000000' } }}
 							>
@@ -244,8 +263,9 @@ class Signup extends Component {
 							id="password"
 							ref={this.state.passwordRef}
 							name="password"
-							className=""
-							required
+							onFocus={e => { this.state.focused = this.state.passwordRef }}
+							onChange={this.password}
+
 							type={this.state.showpassword ? 'text' : 'password'}
 						/>
 						<br />

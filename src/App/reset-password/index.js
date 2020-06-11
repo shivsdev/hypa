@@ -81,15 +81,7 @@ class Reset extends Component {
             borderWidth: 1,
             padding: 0
         })
-        const Body = styled.div({
-        })
-        const Container = styled.div({
-            width: '40%',
-            borderWidth: 1,
-            margin: 'auto',
-            flexDirection: 'row',
-            borderColor: 'black',
-        });
+
         const Button = styled.button({
             width: "100%",
             height: "40px",
@@ -117,11 +109,7 @@ class Reset extends Component {
         const Label = styled.p({
             margin: 0,
         });
-        const Logo = styled.img({
-            marginLeft: '55px',
-            marginTop: '52px',
 
-        });
         const Errortext = styled.p({
             color: "#ff0000",
             margin: 0,

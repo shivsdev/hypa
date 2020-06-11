@@ -6,7 +6,7 @@ import hypaiq from './../../exportables/hypaiq.png';
 import { FaEyeSlash } from "react-icons/fa";
 import { IconContext } from 'react-icons';
 import axios from 'axios';
-import {device} from '../../exportables/exportables'
+import { device } from '../../exportables/exportables'
 
 class Reset extends Component {
     constructor(props) {
@@ -135,9 +135,7 @@ class Reset extends Component {
     }
 
     render() {
-        const Body = styled.div({
 
-        })
         const Input = styled.input`
 	width: 100%;
 	border-radius: 5px;
@@ -151,12 +149,7 @@ class Reset extends Component {
 	margin-top: 3px;
 `;
 
-        const Container = styled.div({
-            width: '30%',
-            maxWidth: 376,
-            margin: 'auto',
-            flexDirection: 'row',
-        });
+
 
         const Button = styled.button({
             width: "100%",
@@ -193,11 +186,7 @@ class Reset extends Component {
             margin: 0,
         });
 
-        const Logo = styled.img({
-            marginLeft: '55px',
-            marginTop: '52px',
 
-        });
         const Chardiv = styled.div({
             backgroundColor: this.state.charColor,
             height: '1vh',
