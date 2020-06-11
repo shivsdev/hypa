@@ -7,7 +7,7 @@ import axios from 'axios';
 
 class Signin extends Component {
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			isPasswordVisible: false,
 		};
@@ -22,32 +22,31 @@ class Signin extends Component {
 			password: this.passwordRef.current.value,
 		};
 
-		if(data.email === 'demo@email.com' && data.password === 'Demo@123') {			
-			this.props.authObj.authenticate(true);
-			this.props.history.push('/dashboard')
-		}
-		// axios.post('http://34.253.224.180:18306/register/signin', data)
-		// .then(({data}) => {
-		// 	if(data.status === 200) {
-		// 	}
-		// })
+		axios
+			.post('http://34.253.224.180:18306/register/signin', data)
+			.then(({ data }) => {
+				console.log(data);
+				// this.props.authObj.authenticate(true);
+				// this.props.history.push('/dashboard')
+			});
 	};
-	render() {
-		const passwordFieldType = this.state.isPasswordVisible ? 'text' : 'password';
-		return (
-			<div>
-				<Logo src={hypaiq} />
-				<Container>
-					<GreenH1>Sign into your</GreenH1>
-					<BlueH1>Account</BlueH1>
 
-					<form
-						onSubmit={this.handleSubmit}
-						style={{ marginTop: 100, marginBottom: 100 }}
-					>
+	render() {
+		const passwordFieldName = this.state.isPasswordVisible
+			? 'text'
+			: 'password';
+
+		return (
+			<Styles>
+				<div className="logo-holder">
+					<img src={hypaiq} alt="Hypaiq" />
+				</div>
+				<div className="content-box">
+					<h1 className="first-row-title">Sign into your</h1>
+					<h1 className="second-row-title">Account</h1>
+					<form onSubmit={this.handleSubmit}>
 						<br />
 						<Label>Email</Label>
-
 						<Input type="text" name="email" required ref={this.emailRef} />
 						<br />
 						<br />
@@ -55,13 +54,12 @@ class Signin extends Component {
 							<span>Password</span> <FaEyeSlash />
 						</PasswordLabel>
 						<Input
-							type={passwordFieldType}
+							type={passwordFieldName}
 							name="password"
 							ref={this.passwordRef}
 							required
 						/>
 						<br />
-
 						<Link
 							style={{
 								fontSize: 15,
@@ -79,20 +77,103 @@ class Signin extends Component {
 						<br />
 						<Button>SIGN IN</Button>
 						<br />
-						Don't have an account ?  <Link
+						Don't have an account ?{' '}
+						<Link
 							style={{ color: '#009999', textDecoration: 'none' }}
 							to="/signup"
 						>
 							Sign up
 						</Link>
 					</form>
-				</Container>
-			</div>
+				</div>
+			</Styles>
 		);
 	}
 }
 
 export default Signin;
+
+const size = {
+	mobileS: '320px',
+	mobileM: '375px',
+	mobileL: '425px',
+	tablet: '768px',
+	laptop: '1024px',
+	laptopL: '1440px',
+	desktop: '2560px',
+};
+
+const device = {
+	mobileS: `(max-width: ${size.mobileS})`,
+	mobileM: `(max-width: ${size.mobileM})`,
+	mobileL: `(max-width: ${size.mobileL})`,
+	tablet: `(max-width: ${size.tablet})`,
+	laptop: `(max-width: ${size.laptop})`,
+	laptopL: `(max-width: ${size.laptopL})`,
+	desktop: `(max-width: ${size.desktop})`,
+	desktopL: `(max-width: ${size.desktop})`,
+};
+
+const Styles = styled.div`
+	padding: 2% 5%;
+	.logo-holder {
+		margin-bottom: 20px;
+		img {
+			width: 27.5%;
+			max-width: 250px;
+		}
+	}
+	.content-box {
+		max-width: 350px;
+		margin: 0px auto;
+		.first-row-title {
+			font-size: calc(1em + 2.5vw);
+			margin: 0;
+			font-weight: normal;
+			color: #009999;
+		}
+		.second-row-title {
+			margin: 0;
+			font-size: calc(1em + 2.5vw);
+			color: #000066;
+			font-weight: bolder;
+		}
+		form {
+			margin: 100px 0;
+		}
+	}
+
+	@media ${device.mobileL} {
+		padding: 0;
+		.logo-holder {
+			text-align: center;
+			padding: 4% 0;
+			img {
+				width: 35%;
+			}
+		}
+		.content-box {
+			width: 85%;
+			margin: auto;
+			margin-top: 2em;
+			.first-row-title {
+				font-size: 12vw;
+				margin: 0;
+				font-weight: normal;
+				color: #009999;
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: 12vw;
+				color: #000066;
+				font-weight: bolder;
+			}
+			form {
+				margin: 50px 0;
+			}
+		}
+	}
+`;
 
 const Container = styled.div({
 	width: '40%',
@@ -122,7 +203,7 @@ const Button = styled.button({
 	color: '#FFFFFF',
 	fontSize: 18,
 	fontWeight: 'bold',
-	cursor: 'pointer'
+	cursor: 'pointer',
 });
 const BlueH1 = styled.h1({
 	margin: 0,
