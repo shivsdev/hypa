@@ -4,6 +4,7 @@ import hypaiq from './../../exportables/hypaiq.png';
 import { Link, Redirect } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios';
+import {device} from '../../exportables/exportables'
 
 class Signin extends Component {
 	constructor(props) {
@@ -93,27 +94,6 @@ class Signin extends Component {
 
 export default Signin;
 
-const size = {
-	mobileS: '320px',
-	mobileM: '375px',
-	mobileL: '425px',
-	tablet: '768px',
-	laptop: '1024px',
-	laptopL: '1440px',
-	desktop: '2560px',
-};
-
-const device = {
-	mobileS: `(max-width: ${size.mobileS})`,
-	mobileM: `(max-width: ${size.mobileM})`,
-	mobileL: `(max-width: ${size.mobileL})`,
-	tablet: `(max-width: ${size.tablet})`,
-	laptop: `(max-width: ${size.laptop})`,
-	laptopL: `(max-width: ${size.laptopL})`,
-	desktop: `(max-width: ${size.desktop})`,
-	desktopL: `(max-width: ${size.desktop})`,
-};
-
 const Styles = styled.div`
 	padding: 2% 5%;
 	.logo-holder {
@@ -143,7 +123,7 @@ const Styles = styled.div`
 		}
 	}
 
-	@media ${device.mobileL} {
+	@media ${device.tablet} {
 		padding: 0;
 		.logo-holder {
 			text-align: center;

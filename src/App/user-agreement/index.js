@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import hypaiq from './../../exportables/hypaiq.png';
 import { Link } from 'react-router-dom';
+import {device} from '../../exportables/exportables'
 
 class UserAgreement extends Component {
 	render() {
 		return (
-			<Body>
+			<Styles>
 				<ContainerBox>
-					<Logo src={hypaiq} />
+					<img src={hypaiq} alt="hypaiq" />
 					<Container>
 						<BlueH1>User Agreement</BlueH1>
 						<br />
 						<br />
-						<ScrollableContent>
+						<div className="scrollable-content">
 							<p>
 								This document provides a top level specification for Version 3.x
 								of the HypaIQ Software Suit. This version of the document should
@@ -350,45 +351,53 @@ class UserAgreement extends Component {
 								documentation it is intended that naming convention and
 								terminology be thoroughly reviewed and revised in ord
 							</p>
-						</ScrollableContent>
+						</div>
 						<Link to="/signup">
-							<ButtonLink>Return to SIGN UP</ButtonLink>
+							<ButtonLink>RETURN to SIGN UP</ButtonLink>
 						</Link>
 					</Container>
 				</ContainerBox>
-			</Body>
+			</Styles>
 		);
 	}
 }
 
 export default UserAgreement;
 
-const ScrollableContent = styled.div`
-	max-height: 85vh;
-	overflow: auto;
-	width: 100%;
-	padding-right: 5%;
-	::-webkit-scrollbar {
-		width: 10px;
+const Styles = styled.div`
+	padding: 2% 5%;
+	.logo-holder {
+		margin-bottom: 20px;		
+		img {
+			width: 27.5%;
+			max-width: 250px;
+		}
 	}
-	::-webkit-scrollbar-track {
-		box-shadow: inset 0 0 5px #999999;
-		border-radius: 20px;
-		background: #999999;
-		padding: 6px;
+	.scrollable-content {
+		max-height: 85vh;
+		overflow: auto;
+		width: 100%;
+		padding-right: 5%;
+		font-size: 14px;
+		font-weight: bold;
+		::-webkit-scrollbar {
+			width: 10px;
+		}
+		::-webkit-scrollbar-track {
+			box-shadow: inset 0 0 5px #999999;
+			border-radius: 20px;
+			background: #999999;
+			padding: 6px;
+		}
+		::-webkit-scrollbar-thumb {
+			background: #0f1662;
+			border-radius: 20px;
+			background-clip: content-box;
+		}
+		::-webkit-scrollbar-thumb:hover {
+			background: #4e5384;
+		}
 	}
-	::-webkit-scrollbar-thumb {
-		background: #0f1662;
-		border-radius: 20px;
-		background-clip: content-box;
-	}
-	::-webkit-scrollbar-thumb:hover {
-		background: #4e5384;
-	}
-`;
-
-const Body = styled.div`
-	width: 100%;
 `;
 const Container = styled.div`
 	width: 97%;

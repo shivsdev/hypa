@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import axios from 'axios';
+import {device} from '../../exportables/exportables'
 
 let emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -118,10 +119,10 @@ class Signup extends Component {
 		if (!err & this.state.checked) {
 			var createCORSRequest = (method, url) => {
 				var xhr = new XMLHttpRequest();
-				if ("withCredentials" in xhr) {
+				if ('withCredentials' in xhr) {
 					// Most browsers.
 					xhr.open(method, url, true);
-				} else if (typeof window.XDomainRequest != "undefined") {
+				} else if (typeof window.XDomainRequest != 'undefined') {
 					// IE8 & IE9
 					xhr = new window.XDomainRequest();
 					xhr.open(method, url);
@@ -135,9 +136,9 @@ class Signup extends Component {
 			var method = 'POST';
 			var xhr = createCORSRequest(method, url);
 
-			xhr.onload = (res) => {
-				this.props.history.push("/dashboard")
-				console.log(res)
+			xhr.onload = res => {
+				this.props.history.push('/dashboard');
+				console.log(res);
 			};
 
 			xhr.onerror = function () {
@@ -145,10 +146,6 @@ class Signup extends Component {
 			};
 
 			xhr.send({ email: 'demo@gmail.com', password: 'Demo@123' });
-
-
-
-
 		}
 	};
 
@@ -191,7 +188,7 @@ class Signup extends Component {
 		});
 		const Buttontext = styled.p({
 			color: '#FFFFFF',
-			fontSize:"1vw"
+			fontSize: '1vw',
 		});
 		const BlueH1 = styled.h1({
 			margin: 0,
@@ -212,7 +209,7 @@ class Signup extends Component {
 		});
 		const Checkbox = styled.input({
 			borderColor: '#009999',
-			width:"3%"
+			width: '3%',
 		});
 
 		const Label = styled.p({
@@ -220,7 +217,7 @@ class Signup extends Component {
 		});
 		const Mediumtext = styled.p({
 			fontSize: 15,
-			margin: 0
+			margin: 0,
 		});
 
 		const Logo = styled.img({
@@ -280,16 +277,13 @@ class Signup extends Component {
 								{this.state.emailError ? (
 									<Errortext>invalid email format</Errortext>
 								) : null}
-							<IconContext.Provider
-								value={{ style: { fontSize: '1vw', color: '#000000' } }}
-							>
 								<Label>Password</Label>
 								{this.state.uppError ||
-									this.state.numberError ||
-									this.state.SpecialError ||
-									this.state.lengthError ? (
-										<Errortext>Strong password required</Errortext>
-									) : null}
+								this.state.numberError ||
+								this.state.SpecialError ||
+								this.state.lengthError ? (
+									<Errortext>Strong password required</Errortext>
+								) : null}
 								<IconContext.Provider
 									value={{ style: { fontSize: '15px', color: '#000000' } }}
 								>
@@ -298,6 +292,7 @@ class Signup extends Component {
 									</div>
 								</IconContext.Provider>
 							</div>
+
 							<Input
 								id="password"
 								ref={this.state.passwordRef}
@@ -357,4 +352,4 @@ class Signup extends Component {
 		);
 	}
 }
-export default withRouter(Signup)
+export default withRouter(Signup);
