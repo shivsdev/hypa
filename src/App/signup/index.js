@@ -31,7 +31,7 @@ class Signup extends Component {
 			showpassword: false,
 			checked: false,
 			focused: React.createRef(),
-			passwordError: false
+			passwordError: false,
 		};
 	}
 
@@ -39,7 +39,7 @@ class Signup extends Component {
 		this.state.emailRef.current.value = this.state.email;
 		this.state.passwordRef.current.value = this.state.password;
 		if (this.state.focused.current) {
-			this.state.focused.current.focus()
+			this.state.focused.current.focus();
 		}
 	}
 	showpassword = () => {
@@ -67,7 +67,6 @@ class Signup extends Component {
 				lengthError: true,
 				charColor: '#ff0000',
 			});
-
 		} else {
 			this.setState({
 				passwordError: false,
@@ -81,7 +80,6 @@ class Signup extends Component {
 				numberError: true,
 				numberColor: '#ff0000',
 			});
-
 		} else {
 			this.setState({
 				passwordError: false,
@@ -95,7 +93,6 @@ class Signup extends Component {
 				uppError: true,
 				uppColor: '#ff0000',
 			});
-
 		} else {
 			this.setState({
 				passwordError: false,
@@ -109,7 +106,6 @@ class Signup extends Component {
 				SpecialError: true,
 				specialColor: '#ff0000',
 			});
-
 		} else {
 			this.setState({
 				passwordError: false,
@@ -117,7 +113,7 @@ class Signup extends Component {
 				specialColor: '#33cc33',
 			});
 		}
-	}
+	};
 
 	handleSubmit = event => {
 		event.preventDefault();
@@ -172,14 +168,14 @@ class Signup extends Component {
 	render() {
 		const Chardiv = styled.div({
 			backgroundColor: this.state.charColor,
-			height: '1vh',
+			height: '10px',
 			width: '60px',
 			borderRadius: 5,
 		});
 
 		const Numdiv = styled.div({
 			backgroundColor: this.state.numberColor,
-			height: '1vh',
+			height: '10px',
 			width: '60px',
 			borderRadius: 5,
 			marginLeft: '12px',
@@ -187,14 +183,14 @@ class Signup extends Component {
 
 		const Spcldiv = styled.div({
 			backgroundColor: this.state.specialColor,
-			height: '1vh',
+			height: '10px',
 			width: '60px',
 			borderRadius: 5,
 			marginLeft: '12px',
 		});
 		const Uppdiv = styled.div({
 			backgroundColor: this.state.uppColor,
-			height: '1vh',
+			height: '10px',
 			width: '60px',
 			borderRadius: 5,
 			marginLeft: '12px',
@@ -232,7 +228,6 @@ class Signup extends Component {
 							name="email"
 							id="email"
 							className=""
-
 						/>
 						<br />
 						<br />
@@ -246,11 +241,11 @@ class Signup extends Component {
 						>
 							<Label>Password</Label>
 							{this.state.uppError ||
-								this.state.numberError ||
-								this.state.SpecialError ||
-								this.state.lengthError ? (
-									<Errortext>Strong password required</Errortext>
-								) : null}
+							this.state.numberError ||
+							this.state.SpecialError ||
+							this.state.lengthError ? (
+								<Errortext>Strong password required</Errortext>
+							) : null}
 							<IconContext.Provider
 								value={{ style: { fontSize: '15', color: '#000000' } }}
 							>
@@ -263,9 +258,10 @@ class Signup extends Component {
 							id="password"
 							ref={this.state.passwordRef}
 							name="password"
-							onFocus={e => { this.state.focused = this.state.passwordRef }}
+							onFocus={e => {
+								this.state.focused = this.state.passwordRef;
+							}}
 							onChange={this.password}
-
 							type={this.state.showpassword ? 'text' : 'password'}
 						/>
 						<br />
@@ -281,33 +277,37 @@ class Signup extends Component {
 							<Spcldiv />
 						</div>
 						<br />
-						<div className="">
+						<div className="terms-content">
 							<Checkbox
 								type="checkbox"
 								checked={this.state.checked}
 								onChange={this.check}
+								id="checkbox"
 							></Checkbox>
-							<span style={{ fontSize: '90%', marginLeft: 5 }}>
+							<label htmlFor="checkbox" style={{ fontSize: '80%', marginLeft: 5 }}>
 								I have read and agree to the
-							</span>
-							<Link
-								className="terms-link"
-								style={{
-									fontSize: 12,
-									color: '#009999',
-									textDecoration: 'none',
-								}}
-								to="/user-agreement"
-							>
-								&nbsp;HypalQ User Agreement
-							</Link>
+								<Link
+									className="terms-link"
+									style={{
+										color: '#009999',
+										textDecoration: 'none',
+									}}
+									to="/user-agreement"
+								>
+									&nbsp;HypalQ User Agreement
+								</Link>
+							</label>
+
 							<br />
 						</div>
 						<Button type="submit">Sign Up</Button>
 						<br />
-						Already have an account ?
-						<Link style={{ color: '#009999', textDecoration: 'none' }} to="/">
-							Sign up
+						<span>Already have an account ? </span>
+						<Link
+							style={{ color: '#009999', textDecoration: 'underline' }}
+							to="/"
+						>
+							Sign in
 						</Link>
 					</form>
 				</div>
@@ -318,6 +318,7 @@ class Signup extends Component {
 export default withRouter(Signup);
 const Styles = styled.div`
 	padding: 2% 5%;
+	color: #676767;
 	.logo-holder {
 		margin-bottom: 20px;
 		img {
@@ -342,6 +343,13 @@ const Styles = styled.div`
 		}
 		form {
 			margin-bottom: 50px;
+			.terms-content {
+				display: flex;
+				align-items: center;
+				input {
+					margin: 0;
+				}
+			}
 		}
 		.hypa-intro {
 			font-size: calc(1em + 0.3vw);
@@ -412,7 +420,6 @@ const Button = styled.button({
 const AgreeText = styled.p({
 	fontSize: 12,
 	marginTop: 0,
-	color: '#090909',
 });
 const Checkbox = styled.input({
 	borderColor: '#009999',
@@ -420,6 +427,7 @@ const Checkbox = styled.input({
 
 const Label = styled.p({
 	margin: 0,
+	color: '#676767'
 });
 
 const Errortext = styled.p({

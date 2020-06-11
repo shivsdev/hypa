@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import styled from 'styled-components';
 import hypaiq from './../../exportables/hypaiq.png';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios';
 import { device } from '../../exportables/exportables';
@@ -44,11 +44,11 @@ class Signin extends Component {
 					<form onSubmit={this.handleSubmit}>
 						<br />
 						<Label>Email</Label>
-						<Input type="text" name="email" required ref={this.emailRef} />
+						<Input type="text" name="email" ref={this.emailRef} />
 						<br />
 						<br />
 						<PasswordLabel>
-							<span>Password</span>{' '}
+							<span>Password</span>
 							<FaEyeSlash
 								color={this.state.isPasswordVisible ? '#ccc' : ''}
 								onClick={() =>
@@ -62,31 +62,16 @@ class Signin extends Component {
 							type={passwordFieldName}
 							name="password"
 							ref={this.passwordRef}
-							required
 						/>
 						<br />
-						<Link
-							style={{
-								fontSize: 15,
-								color: '#009999',
-								color: '#888',
-								cursor: 'not-allowed',
-								textDecoration: 'underline',
-								float: 'right',
-							}}
-						>
-							Forgot password?
-						</Link>
+						<p className="reset-password-button">Forgot password ?</p>
 						<br />
 						<br />
 						<br />
 						<Button>SIGN IN</Button>
 						<br />
 						Don't have an account ?{' '}
-						<Link
-							style={{ color: '#009999', textDecoration: 'none' }}
-							to="/signup"
-						>
+						<Link style={{ color: '#009999', marginLeft: 5 }} to="/signup">
 							Sign up
 						</Link>
 					</form>
@@ -99,7 +84,11 @@ class Signin extends Component {
 export default Signin;
 
 const Styles = styled.div`
+	color: #676767;
 	padding: 2% 5%;
+	button {
+		outline: 0;
+	}
 	.logo-holder {
 		margin-bottom: 20px;
 		img {
@@ -124,6 +113,18 @@ const Styles = styled.div`
 		}
 		form {
 			margin: 100px 0;
+			.reset-password-button {
+				display: inline-block;
+				padding: 0;
+				float: right;
+				margin: 0;
+				background: transparent;
+				cursor: pointer;
+				color: #479a99;
+				font-size: 100%;
+				margin-top: 2px;
+				text-decoration: underline;
+			}
 		}
 	}
 
@@ -159,23 +160,6 @@ const Styles = styled.div`
 	}
 `;
 
-const Container = styled.div({
-	width: '40%',
-	maxWidth: 376,
-	borderWidth: 1,
-	margin: 'auto',
-	flexDirection: 'row',
-	borderColor: 'black',
-});
-
-const Hypa = styled.p({
-	fontSize: 80,
-	marginLeft: '3%',
-});
-const Iq = styled.p({
-	fontSize: 80,
-	color: ' #00e6e6',
-});
 const Button = styled.button({
 	width: '100%',
 	height: '40px',
@@ -202,18 +186,7 @@ const Input = styled.input`
 	box-sizing: border-box;
 	margin-top: 3px;
 `;
-const AgreeText = styled.p({
-	fontSize: 12,
-	marginTop: 0,
-	color: '#090909',
-});
-const Checkbox = styled.input({
-	borderColor: '#009999',
-});
-const Greentext = styled.p({
-	fontSize: 12,
-	color: '#009999',
-});
+
 const Label = styled.label`
 	display: flex;
 	color: #676767;
@@ -223,17 +196,3 @@ const PasswordLabel = styled.label`
 	justify-content: space-between;
 	color: #676767;
 `;
-const Mediumtext = styled.p({
-	fontSize: 20,
-});
-const ForgotPass = styled.p({
-	fontSize: 18,
-	color: '#009999',
-	textDecoration: 'underline',
-	alignItems: 'flex-end',
-	display: 'flex',
-});
-const Logo = styled.img({
-	marginLeft: '55px',
-	marginTop: '52px',
-});
