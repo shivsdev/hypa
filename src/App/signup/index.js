@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import axios from 'axios';
-import {device} from '../../exportables/exportables'
+import { device } from '../../exportables/exportables'
 
 let emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -196,12 +196,12 @@ class Signup extends Component {
 		});
 		const AgreeText = styled.p({
 			fontSize: 12,
-			marginTop: 0,
+			margin: 0,
 			color: '#090909',
 		});
 		const Checkbox = styled.input({
 			borderColor: '#009999',
-			width: "15%"
+			width: "15px"
 		});
 
 		const Label = styled.p({
@@ -310,50 +310,48 @@ class Signup extends Component {
 						/>
 						<br />
 
-							<AgreeText>At least:</AgreeText>
-							<AgreeText>
-								8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1
-								uppercase,&nbsp;&nbsp;&nbsp;1 special character
+						<AgreeText>At least:</AgreeText>
+						<AgreeText>
+							8 characters,&nbsp;&nbsp;&nbsp;1 number,&nbsp;&nbsp;&nbsp;1
+							uppercase,&nbsp;&nbsp;&nbsp;1 special character
 							</AgreeText>
-							<div style={{ flexDirection: 'row', display: 'flex' }}>
-								<Chardiv /> <Numdiv /> <Uppdiv />
-								<Spcldiv />
-							</div>
-							<br />
-							<div
+						<div style={{ flexDirection: 'row', display: 'flex' }}>
+							<Chardiv /> <Numdiv /> <Uppdiv />
+							<Spcldiv />
+						</div>
+						<br />
+						<div
+							style={{
+								color: '#009999',
+								textDecoration: 'none',
+								flexDirection: "row",
+								display: "flex"
+							}}
+						>
+							<Checkbox
+								type="checkbox"
+								checked={this.state.checked}
+								onChange={this.check}
+							></Checkbox>
+							<AgreeText>I have read and agree to the </AgreeText>
+							<Link
 								style={{
+									fontSize: 12,
 									color: '#009999',
 									textDecoration: 'none',
 								}}
+								to="/user-agreement"
 							>
-								<Checkbox
-									type="checkbox"
-									checked={this.state.checked}
-									onChange={this.check}
-								></Checkbox>
-								<AgreeText> I have read and agree to the </AgreeText>
-								<Link
-									style={{
-										fontSize: 12,
-										color: '#009999',
-										textDecoration: 'none',
-									}}
-									to="/user-agreement"
-								>
-									&nbsp;HypalQ User Agreement
+								&nbsp;HypalQ User Agreement
 								</Link>
-								<br />
-							</div>
-							<Button className="button" title="Log in" type={'submit'}>
-								<Buttontext>Sign Up</Buttontext>
-							</Button>
 							<br />
-						
+						</div>
+
 						<Button className="button" title="Log in" type={'submit'}>
 							<Buttontext>Sign Up</Buttontext>
 						</Button>
 						<br />
-						
+
 						Already have an account?  <Link
 							style={{ color: '#009999', textDecoration: 'none' }}
 							to="/"
