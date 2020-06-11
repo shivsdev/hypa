@@ -39,31 +39,58 @@ class Reset extends Component {
         }
 
         if (!err) {
-            this.props.history.push("/reset-password/" + this.state.emailRef.current.value)
+            var createCORSRequest = (method, url) => {
+                var xhr = new XMLHttpRequest();
+                if ("withCredentials" in xhr) {
+                    // Most browsers.
+                    xhr.open(method, url, true);
+                } else if (typeof window.XDomainRequest != "undefined") {
+                    // IE8 & IE9
+                    xhr = new window.XDomainRequest();
+                    xhr.open(method, url);
+                } else {
+                    // CORS not supported.
+                    xhr = null;
+                }
+                return xhr;
+            };
+            var url = 'http://34.253.224.180:18306/register/index';
+            var method = 'POST';
+            var xhr = createCORSRequest(method, url);
+
+            xhr.onload = (res) => {
+                this.props.history.push("/reset-password/" + this.state.emailRef.current.value)
+                console.log(res)
+            };
+
+            xhr.onerror = function () {
+                // Error code goes here.
+            };
+
+            xhr.send({ email: 'demo@gmail.com', password: 'Demo@123' });
+
         }
     }
 
     render() {
         const Input = styled.input({
-            width: "60%",
+            width: "100%",
             borderRadius: 5,
             height: "40px",
             borderWidth: 1,
             padding: 0
         })
         const Body = styled.div({
-            width: "100%",
-            height: "100vh",
         })
         const Container = styled.div({
-            width: '30%',
+            width: '40%',
             borderWidth: 1,
-            marginLeft: '40%',
+            margin: 'auto',
             flexDirection: 'row',
             borderColor: 'black',
         });
         const Button = styled.button({
-            width: "60%",
+            width: "100%",
             height: "40px",
             borderRadius: 5,
             backgroundColor: " #009999",
@@ -76,29 +103,27 @@ class Reset extends Component {
         })
         const BlueH1 = styled.h1({
             margin: 0,
-            fontSize: "4vw",
-            fontWeight: 'bolder',
+            fontSize: 60,
             color: '#000066',
+            fontWeight: 'bolder',
         });
         const GreenH1 = styled.h1({
-            fontSize: "3vw",
+            fontSize: 50,
             margin: 0,
             fontWeight: 'bolder',
             color: '#009999',
         });
         const Label = styled.p({
-            fontSize: ".9vw",
             margin: 0,
         });
         const Logo = styled.img({
             marginLeft: '55px',
             marginTop: '52px',
-            width: "15%"
+
         });
         const Errortext = styled.p({
             color: "#ff0000",
             margin: 0,
-            fontSize: ".9vw",
         })
         return (
             < Body className="body-div">
@@ -121,7 +146,6 @@ class Reset extends Component {
                         </div>
                         <Input ref={this.state.emailRef} required name="email" id="email" className="" /><br />
                         <br />
-
                         <Button className="button" title="Log in" type={"submit"} >
                             <Buttontext >Next</Buttontext>
                         </Button>

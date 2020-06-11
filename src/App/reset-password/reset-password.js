@@ -94,20 +94,37 @@ class Reset extends Component {
         }
         if (!err) {
 
-            axios
-                .post('http://34.253.224.180:18306/register/forgotpassword', {
-                    email: this.state.email,
-                    password: this.state.password,
-                })
-                .then(function (response) {
-                    console.log(response);
-                    this.props.history.push("/")
-                }).catch(
-                    function (error) {
-                        console.log('Show error notification!')
-                        alert(error)
-                    }
-                );
+            var createCORSRequest = (method, url) => {
+                var xhr = new XMLHttpRequest();
+                if ("withCredentials" in xhr) {
+                    // Most browsers.
+                    xhr.open(method, url, true);
+                } else if (typeof window.XDomainRequest != "undefined") {
+                    // IE8 & IE9
+                    xhr = new window.XDomainRequest();
+                    xhr.open(method, url);
+                } else {
+                    // CORS not supported.
+                    xhr = null;
+                }
+                return xhr;
+            };
+            var url = 'http://34.253.224.180:18306/register/index';
+            var method = 'POST';
+            var xhr = createCORSRequest(method, url);
+
+            xhr.onload = (res) => {
+                this.props.history.push("/")
+                console.log(res)
+            };
+
+            xhr.onerror = function () {
+                // Error code goes here.
+            };
+
+            xhr.send({ email: 'demo@gmail.com', password: 'Demo@123' });
+
+
         }
 
 
@@ -118,29 +135,30 @@ class Reset extends Component {
 
     render() {
         const Body = styled.div({
-            width: "100%",
-            height: "100vh",
+
         })
+        const Input = styled.input`
+	width: 100%;
+	border-radius: 5px;
+	height: 40px;
+	border: 1px solid #ccc;
+	padding: 0px;
+	outline: 0px;
+	font-size: 16px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 3px;
+`;
+
         const Container = styled.div({
-            width: "30%",
-            borderWidth: 1,
-            margin: "auto",
-            paddingLeft: "12%",
-            flexDirection: "row",
-            borderColor: "black"
-        })
-        const ContainerBox = styled.div({
-            width: "63%",
-            minHeight: "100%",
-            margin: "auto",
-            borderColor: "#000000",
-            borderWidth: 1,
-            verticalAlign: "middle",
-            borderStyle: "solid",
-            marginTop: "40px"
-        })
+            width: '30%',
+            maxWidth: 376,
+            margin: 'auto',
+            flexDirection: 'row',
+        });
+
         const Button = styled.button({
-            width: "60%",
+            width: "100%",
             height: "40px",
             borderRadius: 5,
             backgroundColor: " #009999",
@@ -152,38 +170,32 @@ class Reset extends Component {
             color: "#FFFFFF"
         })
         const BlueH1 = styled.h1({
-            margin: 0,
-            fontSize: "3vw",
-            fontWeight: 'bolder',
-            color: '#000066',
-        });
-        const GreenH1 = styled.h1({
-            fontSize: "2vw",
-            margin: 0,
-            fontWeight: 'bolder',
-            color: '#009999',
-        });
-        const Input = styled.input({
-            width: "60%",
-            borderRadius: 5,
-            height: "40px",
-            borderWidth: 1,
-            padding: 0
-        })
+			margin: 0,
+			fontSize: 50,
+			color: '#000066',
+			fontWeight: 'bolder',
+		});
+		const GreenH1 = styled.h1({
+			fontSize: 30,
+			margin: 0,
+			fontWeight: 'normal',
+			color: '#009999',
+		});
+
         const AgreeText = styled.p({
-            fontSize: ".6vw",
+            
             margin: 0,
             color: '#090909',
         });
         const Label = styled.p({
-            fontSize: ".9vw",
+           
             margin: 0,
         });
 
         const Logo = styled.img({
             marginLeft: '55px',
             marginTop: '52px',
-            width: "15%"
+            
         });
         const Chardiv = styled.div({
             backgroundColor: this.state.charColor,
@@ -215,7 +227,7 @@ class Reset extends Component {
         const Errortext = styled.p({
             color: '#ff0000',
             margin: 0,
-            fontSize: ".9vw",
+           
         });
         return (
             < Body >
@@ -223,13 +235,13 @@ class Reset extends Component {
                 <Container >
                     <BlueH1 >Password reset for</BlueH1>
                     <GreenH1 >{this.state.email}</GreenH1>
-                    <br /> <br />  <br /> <br /> <br /><br /><br /><br /><br />
+                    <br /> <br />  <br /> <br /> <br /><br />
                     <form
                         onSubmit={this.handleSubmit}
                         id="RESTFORM"
                     >
 
-                        <div style={{ flexDirection: "row", display: "flex", justifyContent: "space-between", width: "60%" }}>
+                        <div style={{ flexDirection: "row", display: "flex", justifyContent: "space-between", width: "100%" }}>
                             <Label >Password</Label>
                             {this.state.uppError || this.state.numberError || this.state.SpecialError || this.state.lengthError ? <Errortext>Strong password required</Errortext> : null}
                             <IconContext.Provider value={{ style: { fontSize: '15px', color: "#000000" } }}>
