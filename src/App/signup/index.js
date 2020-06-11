@@ -340,10 +340,13 @@ class Signup extends Component {
 								<Buttontext>Sign Up</Buttontext>
 							</Button>
 							<br />
-							<Mediumtext>Already have an account?</Mediumtext>
-							<Link style={{ fontSize: 20, color: '#009999' }} to="/">
+							<div style={{ flexDirection: "row", display: "flex" }}>
+								<Mediumtext>Already have an account?</Mediumtext>
+								<Link style={{ fontSize: 15, color: '#009999' }} to="/">
+									{' '}
 								Sign in
 							</Link>
+							</div>
 						</form>
 					</Container>
 				</ContainerBox>
