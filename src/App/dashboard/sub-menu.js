@@ -1,108 +1,119 @@
 import React, { Component } from 'react';
 import { device } from '../../exportables/exportables';
 import styled from 'styled-components';
-import Nav from "@rsuite/responsive-nav";
+import Nav from '@rsuite/responsive-nav';
 import ResponsiveNav from '@rsuite/responsive-nav';
-import 'rsuite/dist/styles/rsuite-default.css'
-
+import 'rsuite/dist/styles/rsuite-default.css';
 
 const items = [
-    { eventKey: 'Settings', label: 'Settings' },
-    { eventKey: 'Predefined', label: 'Predefined tags' },
-    { eventKey: 'People', label: 'People' },
-    { eventKey: 'Roles', label: 'Roles' },
-    { eventKey: 'Profile', label: 'Profile' },
-    { eventKey: 'Patients', label: 'Patients' },
+	{ eventKey: 'Settings', label: 'Settings' },
+	{ eventKey: 'Predefined', label: 'Predefined tags' },
+	{ eventKey: 'People', label: 'People' },
+	{ eventKey: 'Roles', label: 'Roles' },
+	{ eventKey: 'Profile', label: 'Profile' },
+	{ eventKey: 'Patients', label: 'Patients' },
 ];
 
+class SubMenu extends Component {
+	state = {
+		activeKey: 'Settings',
+	};
+	setActiveKey = event => {
+		this.setState({
+			activeKey: event,
+		});
+	};
 
+	render() {
+		return (
+			<Styles>
+				<div className="body">
+					<ResponsiveNav
+						activeKey={this.state.activeKey}
+						appearance="tabs"
+						onSelect={this.setActiveKey}
+					>
+						{items.map(item => (
+							<ResponsiveNav.Item key={item.eventKey} eventKey={item.eventKey}>
+								{item.label}
+							</ResponsiveNav.Item>
+						))}
+					</ResponsiveNav>
+				</div>
+			</Styles>
+		);
+	}
+}
 
-class SubMenu extends Component {s
-
-    state = {
-        activeKey: 'Settings'
-    }
-    setActiveKey = (event) => {
-       this.setState({
-           activeKey:event
-       })
-    }
-
-    render() {
-        return (
-            < Styles >
-                <div className="body">
-                    <ResponsiveNav
-                        activeKey={this.state.activeKey}
-                        appearance="tabs"
-                        onSelect={this.setActiveKey}
-                    >
-                        {items.map(item => (
-                            <ResponsiveNav.Item key={item.eventKey} eventKey={item.eventKey} >
-                                {item.label}
-                            </ResponsiveNav.Item>
-                        ))}
-                    </ResponsiveNav>
-                </div>
-
-            </Styles >
-        );
-    }
-};
 export default SubMenu;
+
 const Styles = styled.div`
-.rs-nav-tabs.rs-nav-horizontal .rs-nav-item.rs-nav-item-active > .rs-nav-item-content {
-    border: 2px solid #000066;
-    border-bottom-color: #fff;
-}
-.rs-nav-tabs.rs-nav-horizontal .rs-nav-item > .rs-nav-item-content {
-    border-radius: 0 0 0 0;
-}
-.rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle, .rs-nav .rs-nav-item-active > .rs-nav-item-content, .rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle:hover, .rs-nav .rs-nav-item-active > .rs-nav-item-content:hover, .rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle:focus, .rs-nav .rs-nav-item-active > .rs-nav-item-content:focus, .rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle:active, .rs-nav .rs-nav-item-active > .rs-nav-item-content:active {
-    color: #009999;
-    background: #ffffff;
-    margin-left:10px
-    
-}
-.rs-nav-item > a.rs-nav-item-content {
-    outline: none;
-    margin-left:10px;
-    width:150px;
-    text-align:center;
-}
-.rs-nav-tabs.rs-nav-horizontal .rs-nav-waterline {
-    border-top: 2px solid #000066;
-    
-}
-.rs-nav-item > .rs-nav-item-content {
-    font-size: 14px;
-    color: #ffffff;
-}
-a {
-    background-color: #009999;
-}
-.rs-dropdown-menu {
-    margin: 0;
-    font-size: 14px;
-    text-align: center;
-    background-color: #fff;
-    border-radius: 0;
-    padding: 0;
-    width:150px;
-    margin-left:10px
-}
-.rs-btn {
-    border-radius: 0px;
-}
-.rs-dropdown-toggle, .rs-dropdown-toggle.rs-btn {
-    margin-left:10px;
-    width:150px;
-    color:#fff
-}
-.rs-dropdown-menu > .rs-dropdown-item-active > .rs-dropdown-item-content, .rs-dropdown-menu > .rs-dropdown-item-active > .rs-dropdown-item-content:hover, .rs-dropdown-menu > .rs-dropdown-item-active > .rs-dropdown-item-content:focus {
-    color: #009999;
-}
-.rs-dropdown-menu .rs-dropdown-item-content {
-    color: #ffffff;
-}
+	.rs-nav-tabs.rs-nav-horizontal
+		.rs-nav-item.rs-nav-item-active
+		> .rs-nav-item-content {
+		border: 2px solid #000066;
+		border-bottom-color: #fff;
+	}
+	.rs-nav-tabs.rs-nav-horizontal .rs-nav-item > .rs-nav-item-content {
+		border-radius: 0 0 0 0;
+	}
+	.rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle,
+	.rs-nav .rs-nav-item-active > .rs-nav-item-content,
+	.rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle:hover,
+	.rs-nav .rs-nav-item-active > .rs-nav-item-content:hover,
+	.rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle:focus,
+	.rs-nav .rs-nav-item-active > .rs-nav-item-content:focus,
+	.rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle:active,
+	.rs-nav .rs-nav-item-active > .rs-nav-item-content:active {
+		color: #009999;
+		background: #ffffff;
+		margin-left: 10px;
+	}
+	.rs-nav-item > a.rs-nav-item-content {
+		outline: none;
+		margin-left: 10px;
+		width: 150px;
+		text-align: center;
+	}
+	.rs-nav-tabs.rs-nav-horizontal .rs-nav-waterline {
+		border-top: 2px solid #000066;
+	}
+	.rs-nav-item > .rs-nav-item-content {
+		font-size: 14px;
+		color: #ffffff;
+	}
+	a {
+		background-color: #009999;
+	}
+	.rs-dropdown-menu {
+		margin: 0;
+		font-size: 14px;
+		text-align: center;
+		background-color: #fff;
+		border-radius: 0;
+		padding: 0;
+		width: 150px;
+		margin-left: 10px;
+	}
+	.rs-btn {
+		border-radius: 0px;
+	}
+	.rs-dropdown-toggle,
+	.rs-dropdown-toggle.rs-btn {
+		margin-left: 10px;
+		width: 150px;
+		color: #fff;
+	}
+	.rs-dropdown-menu > .rs-dropdown-item-active > .rs-dropdown-item-content,
+	.rs-dropdown-menu
+		> .rs-dropdown-item-active
+		> .rs-dropdown-item-content:hover,
+	.rs-dropdown-menu
+		> .rs-dropdown-item-active
+		> .rs-dropdown-item-content:focus {
+		color: #009999;
+	}
+	.rs-dropdown-menu .rs-dropdown-item-content {
+		color: #ffffff;
+	}
 `;
