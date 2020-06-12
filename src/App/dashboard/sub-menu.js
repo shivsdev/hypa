@@ -105,4 +105,8 @@ a {
 .rs-dropdown-menu .rs-dropdown-item-content {
     color: #ffffff;
 }
+.rs-nav-tabs .rs-nav-item:not(.rs-nav-item-active):not(.rs-nav-item-disabled) > .rs-nav-item-content:hover, .rs-nav-tabs .rs-nav-item:not(.rs-nav-item-active):not(.rs-nav-item-disabled) > .rs-nav-item-content:focus {
+    background: #009999; 
+    color: #fff;
+}
 `;

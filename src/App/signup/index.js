@@ -31,6 +31,7 @@ class Signup extends Component {
 			checked: false,
 			focused: React.createRef(),
 			passwordError: false,
+			checkedError: false,
 		};
 		if (this.props.authObj.isAuthenticated)
 			this.props.history.push('/dashboard');
@@ -137,36 +138,49 @@ class Signup extends Component {
 				emailError: false,
 			});
 		}
-		if (!err & this.state.checked & !this.state.passwordError) {
-			var createCORSRequest = (method, url) => {
-				var xhr = new XMLHttpRequest();
-				if ('withCredentials' in xhr) {
-					// Most browsers.
-					xhr.open(method, url, true);
-				} else if (typeof window.XDomainRequest != 'undefined') {
-					// IE8 & IE9
-					xhr = new window.XDomainRequest();
-					xhr.open(method, url);
-				} else {
-					// CORS not supported.
-					xhr = null;
-				}
-				return xhr;
-			};
-			var url = 'http://34.253.224.180:18306/register/index';
-			var method = 'POST';
-			var xhr = createCORSRequest(method, url);
+		this.password();
 
-			xhr.onload = res => {
-				this.props.history.push('/dashboard');
-				console.log(res);
-			};
+		if (!err & !this.state.passwordError) {
+			if (this.state.checked === false) {
+				this.setState({
+					checkedError: true
+				})
+			} else {
+				this.setState({
+					checkedError: false
+				})
+			}
+			if (this.state.checked) {
+				var createCORSRequest = (method, url) => {
+					var xhr = new XMLHttpRequest();
+					if ('withCredentials' in xhr) {
+						// Most browsers.
+						xhr.open(method, url, true);
+					} else if (typeof window.XDomainRequest != 'undefined') {
+						// IE8 & IE9
+						xhr = new window.XDomainRequest();
+						xhr.open(method, url);
+					} else {
+						// CORS not supported.
+						xhr = null;
+					}
+					return xhr;
+				};
+				var url = 'http://34.253.224.180:18306/register/index';
+				var method = 'POST';
+				var xhr = createCORSRequest(method, url);
 
-			xhr.onerror = function () {
-				// Error code goes here.
-			};
+				xhr.onload = res => {
+					this.props.history.push('/dashboard');
+					console.log(res);
+				};
 
-			xhr.send({ email: 'demo@gmail.com', password: 'Demo@123' });
+				xhr.onerror = function () {
+					// Error code goes here.
+				};
+
+				xhr.send({ email: 'demo@gmail.com', password: 'Demo@123' });
+			}
 		}
 	};
 
@@ -282,6 +296,9 @@ class Signup extends Component {
 							<Spcldiv />
 						</div>
 						<br />
+						{this.state.checkedError ? (
+							<Errortext>Please agree to User agreement</Errortext>
+						) : null}
 						<div className="terms-content">
 							<Checkbox
 								type="checkbox"
