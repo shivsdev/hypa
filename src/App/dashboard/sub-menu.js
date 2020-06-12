@@ -109,4 +109,13 @@ a {
     background: #009999; 
     color: #fff;
 }
+.rs-btn-subtle:focus, .rs-btn-subtle.rs-btn-focus, .rs-btn-subtle:hover {
+    color: #fff;
+    background: #009999; 
+}
+.rs-dropdown-menu > .rs-dropdown-item > .rs-dropdown-item-content:hover, .rs-dropdown-menu > .rs-dropdown-item > .rs-dropdown-item-content:focus {
+    text-decoration: none;
+    color: #fff;
+    background-color: #009999;
+}
 `;
