@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import hypaiq from './../../exportables/hypaiq.png';
-import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
-import axios from 'axios';
+
+import hypaiq from './../../exportables/hypaiq.png';
 import { device } from '../../exportables/exportables';
 
 let emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -33,9 +32,15 @@ class Signup extends Component {
 			focused: React.createRef(),
 			passwordError: false,
 		};
+		if (this.props.authObj.isAuthenticated)
+			this.props.history.push('/dashboard');
 	}
 
-	componentDidUpdate() {
+	componentDidMount() {
+		window.scrollTo(0, 0);
+	}
+
+	componentDidUpdate(prevProps) {
 		this.state.emailRef.current.value = this.state.email;
 		this.state.passwordRef.current.value = this.state.password;
 		if (this.state.focused.current) {
@@ -284,7 +289,10 @@ class Signup extends Component {
 								onChange={this.check}
 								id="checkbox"
 							></Checkbox>
-							<label htmlFor="checkbox" style={{ fontSize: '80%', marginLeft: 5 }}>
+							<label
+								htmlFor="checkbox"
+								style={{ fontSize: '80%', marginLeft: 5 }}
+							>
 								I have read and agree to the
 								<Link
 									className="terms-link"
@@ -427,7 +435,7 @@ const Checkbox = styled.input({
 
 const Label = styled.p({
 	margin: 0,
-	color: '#676767'
+	color: '#676767',
 });
 
 const Errortext = styled.p({

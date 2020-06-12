@@ -5,6 +5,11 @@ import { Link } from 'react-router-dom';
 import { device } from '../../exportables/exportables';
 
 class UserAgreement extends Component {
+
+	componentDidMount() {
+		window.scrollTo(0, 0);
+	}
+
 	render() {
 		return (
 			<Styles>

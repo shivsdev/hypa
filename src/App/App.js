@@ -39,7 +39,7 @@ export default function App() {
 				path="/"
 				render={props => <Signin {...props} authObj={authObj} />}
 			/>
-			<Route exact path="/signup" component={Signup} />
+			<Route exact path="/signup" render={props => <Signup {...props} authObj={authObj} />} />
 			<Route exact path="/reset" component={Resetpassword} />
 			<Route exact path="/user-agreement" component={UserAgreement} />
 			<Route exact path="/reset-password/:email" component={Reset} />

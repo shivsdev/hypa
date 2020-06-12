@@ -1,38 +1,138 @@
 import React, { Component, createRef } from 'react';
 import styled from 'styled-components';
 import hypaiq from './../../exportables/hypaiq.png';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
-import axios from 'axios';
 import { device } from '../../exportables/exportables';
-
 class Signin extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			isPasswordVisible: false,
+			errors: {
+				emailErrMsg: null,
+				passwordErrMsg: null,
+				loginErrMsg: null,
+				nAttempt: 0,
+			},
 		};
 		this.emailRef = createRef();
 		this.passwordRef = createRef();
+		if (this.props.authObj.isAuthenticated)
+			this.props.history.push('/dashboard');
+	}
+
+	componentDidMount() {
+		window.scrollTo(0, 0);
+	}
+
+	validateEmail(mail) {
+		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+			return true;
+		}
+		return false;
 	}
 
 	handleSubmit = e => {
 		e.preventDefault();
-		let data = {
-			email: this.emailRef.current.value,
-			password: this.passwordRef.current.value,
-		};
-		if (data.email === 'demo@mail.com' && data.password === 'Demo@mail') {
+		const email = this.emailRef.current.value;
+		const password = this.passwordRef.current.value;
+
+		// temp email and password for server kind mock
+		let serverEmail = 'demo@mail.com';
+		let serverPassword = 'Demo@mail';
+
+		/**
+		 * Two scenario for email validation.
+		 * - no email provided
+		 * - invalid email format
+		 */
+		if (!email.length) {
+			this.setState({
+				errors: { ...this.state.errors, emailErrMsg: 'Email required' },
+			});
+			return;
+		}
+		if (!this.validateEmail(email)) {
+			this.setState({
+				errors: { ...this.state.errors, emailErrMsg: 'Invalid email address' },
+			});
+			return;
+		}
+		// Validate no password
+		if (!password.length) {
+			this.setState({
+				errors: {
+					...this.state.errors,
+					passwordErrMsg: 'Password required',
+					emailErrMsg: null,
+					loginErrMsg: null,
+				},
+			});
+			return;
+		}
+
+		if (email !== serverEmail || password !== serverPassword) {
+			if (this.state.errors.nAttempt < 5)
+				this.setState(prevState => {
+					let attempt = prevState.errors.nAttempt + 1;
+					return {
+						...prevState,
+						errors: {
+							...prevState.errors,
+							passwordErrMsg: null,
+							emailErrMsg: null,
+							nAttempt: attempt,
+							loginErrMsg: `Email or Password incorrect, ${attempt} of 5 attempts remaining`,
+						},
+					};
+				});
+			else
+				this.setState(prevState => {
+					return {
+						...prevState,
+						errors: {
+							...prevState.errors,
+							passwordErrMsg: null,
+							emailErrMsg: null,
+							loginErrMsg: `Your account blocked for 1 day`,
+						},
+					};
+				});
+		}
+
+		if (email === serverEmail && password === serverPassword) {			
+			this.setState(prevState => {
+				return {
+					...prevState,
+					errors: {
+						...prevState.errors,
+						passwordErrMsg: null,
+						emailErrMsg: null,
+						loginErrMsg: null,
+						nAttempt: 0,
+					},
+				};
+			});
+
+			let data = {
+				email,
+				password,
+			};
 			this.props.authObj.authenticate(true);
 			this.props.history.push('/dashboard');
 		}
 	};
 
-	render() {
-		const passwordFieldName = this.state.isPasswordVisible
-			? 'text'
-			: 'password';
+	renderErrorMessage = msg => {
+		if (!msg?.length) return null;
+		return <span style={{ color: 'red' }}>{msg}</span>;
+	};
 
+	render() {
+		const { handleSubmit, renderErrorMessage, emailRef, passwordRef } = this;
+		const { isPasswordVisible, errors } = this.state;
+		const passwordFieldName = isPasswordVisible ? 'text' : 'password';
 		return (
 			<Styles>
 				<div className="logo-holder">
@@ -41,36 +141,37 @@ class Signin extends Component {
 				<div className="content-box">
 					<h1 className="first-row-title">Sign into your</h1>
 					<h1 className="second-row-title">Account</h1>
-					<form onSubmit={this.handleSubmit}>
+					<form onSubmit={handleSubmit}>
 						<br />
-						<Label>Email</Label>
-						<Input type="text" name="email" ref={this.emailRef} />
+						<Label>Email {renderErrorMessage(errors.emailErrMsg)}</Label>
+						<Input type="text" name="email" ref={emailRef} />
 						<br />
 						<br />
 						<PasswordLabel>
-							<span>Password</span>
-							<FaEyeSlash
-								color={this.state.isPasswordVisible ? '#ccc' : ''}
-								onClick={() =>
-									this.setState({
-										isPasswordVisible: !this.state.isPasswordVisible,
-									})
-								}
-							/>
+							Password
+							<span>
+								{renderErrorMessage(errors.passwordErrMsg)}
+								<FaEyeSlash
+									style={{ marginLeft: 5 }}
+									color={isPasswordVisible ? '#ccc' : ''}
+									onClick={() =>
+										this.setState({
+											isPasswordVisible: !isPasswordVisible,
+										})
+									}
+								/>
+							</span>
 						</PasswordLabel>
-						<Input
-							type={passwordFieldName}
-							name="password"
-							ref={this.passwordRef}
-						/>
+						<Input type={passwordFieldName} name="password" ref={passwordRef} />
 						<br />
 						<p className="reset-password-button">Forgot password ?</p>
 						<br />
-						<br />
-						<br />
+						<p style={{ fontSize: '85%', textAlign: 'center' }}>
+							{renderErrorMessage(errors.loginErrMsg)}
+						</p>
 						<Button>SIGN IN</Button>
 						<br />
-						Don't have an account ?{' '}
+						Don't have an account ?
 						<Link style={{ color: '#009999', marginLeft: 5 }} to="/signup">
 							Sign up
 						</Link>
@@ -81,7 +182,7 @@ class Signin extends Component {
 	}
 }
 
-export default Signin;
+export default withRouter(Signin);
 
 const Styles = styled.div`
 	color: #676767;
@@ -190,6 +291,7 @@ const Input = styled.input`
 const Label = styled.label`
 	display: flex;
 	color: #676767;
+	justify-content: space-between;
 `;
 const PasswordLabel = styled.label`
 	display: flex;
