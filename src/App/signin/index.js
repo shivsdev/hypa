@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import hypaiq from './../../exportables/hypaiq.png';
 import { Link, withRouter } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
+
 import { device } from '../../exportables/exportables';
+import ResetPasswordPopup from './components/ResetPasswordPopup';
+
 class Signin extends Component {
 	constructor(props) {
 		super(props);
@@ -15,6 +18,7 @@ class Signin extends Component {
 				loginErrMsg: null,
 				nAttempt: 0,
 			},
+			isPopupVisible: false,
 		};
 		this.emailRef = createRef();
 		this.passwordRef = createRef();
@@ -101,7 +105,7 @@ class Signin extends Component {
 				});
 		}
 
-		if (email === serverEmail && password === serverPassword) {			
+		if (email === serverEmail && password === serverPassword) {
 			this.setState(prevState => {
 				return {
 					...prevState,
@@ -115,10 +119,11 @@ class Signin extends Component {
 				};
 			});
 
-			let data = {
-				email,
-				password,
-			};
+			// let data = {
+			// 	email,
+			// 	password,
+			// };
+
 			this.props.authObj.authenticate(true);
 			this.props.history.push('/dashboard');
 		}
@@ -129,10 +134,22 @@ class Signin extends Component {
 		return <span style={{ color: 'red' }}>{msg}</span>;
 	};
 
+	renderResetPasswordPopup = (isVisible, email) => {
+		if (!isVisible) return <></>;
+		return <ResetPasswordPopup email={email} isPopupVisible={isVisible} togglePopup={this.togglePopup} />;
+	};
+
+	togglePopup = () => {
+		this.setState({isPopupVisible: !this.state.isPopupVisible})
+	}
+
 	render() {
 		const { handleSubmit, renderErrorMessage, emailRef, passwordRef } = this;
 		const { isPasswordVisible, errors } = this.state;
 		const passwordFieldName = isPasswordVisible ? 'text' : 'password';
+		const email = emailRef?.current?.value ? emailRef.current.value : null;
+		const { isPopupVisible } = this.state;
+
 		return (
 			<Styles>
 				<div className="logo-holder">
@@ -152,7 +169,7 @@ class Signin extends Component {
 							<span>
 								{renderErrorMessage(errors.passwordErrMsg)}
 								<FaEyeSlash
-									style={{ marginLeft: 5 }}
+									style={{ marginLeft: 5, cursor: 'pointer' }}
 									color={isPasswordVisible ? '#ccc' : ''}
 									onClick={() =>
 										this.setState({
@@ -164,7 +181,7 @@ class Signin extends Component {
 						</PasswordLabel>
 						<Input type={passwordFieldName} name="password" ref={passwordRef} />
 						<br />
-						<p className="reset-password-button">Forgot password ?</p>
+						<p className="reset-password-button" onClick={this.togglePopup}>Forgot password ?</p>
 						<br />
 						<p style={{ fontSize: '85%', textAlign: 'center' }}>
 							{renderErrorMessage(errors.loginErrMsg)}
@@ -177,6 +194,8 @@ class Signin extends Component {
 						</Link>
 					</form>
 				</div>
+
+				{ this.renderResetPasswordPopup(isPopupVisible, email) }
 			</Styles>
 		);
 	}
@@ -187,8 +206,21 @@ export default withRouter(Signin);
 const Styles = styled.div`
 	color: #676767;
 	padding: 2% 5%;
+	position: relative;
 	button {
-		outline: 0;
+		border: 0;
+	}
+	input {
+		width: 100%;
+		border-radius: 5px;
+		height: 40px;
+		border: 1px solid #ccc;
+		padding: 0px;
+		outline: 0px;
+		font-size: 16px;
+		padding: 10px;
+		box-sizing: border-box;
+		margin-top: 3px;
 	}
 	.logo-holder {
 		margin-bottom: 20px;

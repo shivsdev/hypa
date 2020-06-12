@@ -353,7 +353,7 @@ class UserAgreement extends Component {
 						</p>
 					</div>
 					<Link to="/signup">
-						<button>RETURN to SIGN UP</button>
+						<button>RETURN TO SIGNUP</button>
 					</Link>
 				</div>
 			</Styles>
