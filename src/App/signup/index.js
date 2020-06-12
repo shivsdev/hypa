@@ -246,16 +246,16 @@ class Signup extends Component {
 						>
 							<Label>Password</Label>
 							{this.state.uppError ||
-							this.state.numberError ||
-							this.state.SpecialError ||
-							this.state.lengthError ? (
-								<Errortext>Strong password required</Errortext>
-							) : null}
+								this.state.numberError ||
+								this.state.SpecialError ||
+								this.state.lengthError ? (
+									<Errortext>Strong password required</Errortext>
+								) : null}
 							<IconContext.Provider
-								value={{ style: { fontSize: '15', color: '#000000' } }}
+								value={{ style: { fontSize: '15', } }}
 							>
 								<div>
-									<FaEyeSlash onClick={this.showpassword} />
+									<FaEyeSlash onClick={this.showpassword} color={this.state.showpassword ? '#ccc' : ''} />
 								</div>
 							</IconContext.Provider>
 						</div>

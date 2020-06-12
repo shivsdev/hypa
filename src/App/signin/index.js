@@ -162,9 +162,27 @@ class Signin extends Component {
 								/>
 							</span>
 						</PasswordLabel>
-						<Input type={passwordFieldName} name="password" ref={passwordRef} />
+						<Input
+							type={passwordFieldName}
+							name="password"
+							ref={this.passwordRef}
+							
+						/>
 						<br />
-						<p className="reset-password-button">Forgot password ?</p>
+						<Link
+							style={{
+								fontSize: 15,
+								color: '#009999',
+								color: '#888',
+								// cursor: 'not-allowed',
+								textDecoration: 'underline',
+								float: 'right',
+								
+							}}
+							to="/reset"
+						>
+							Forgot password?
+						</Link>
 						<br />
 						<p style={{ fontSize: '85%', textAlign: 'center' }}>
 							{renderErrorMessage(errors.loginErrMsg)}
