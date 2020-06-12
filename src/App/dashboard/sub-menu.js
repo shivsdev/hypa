@@ -116,4 +116,25 @@ const Styles = styled.div`
 	.rs-dropdown-menu .rs-dropdown-item-content {
 		color: #ffffff;
 	}
+	.rs-nav-tabs
+		.rs-nav-item:not(.rs-nav-item-active):not(.rs-nav-item-disabled)
+		> .rs-nav-item-content:hover,
+	.rs-nav-tabs
+		.rs-nav-item:not(.rs-nav-item-active):not(.rs-nav-item-disabled)
+		> .rs-nav-item-content:focus {
+		background: #009999;
+		color: #fff;
+	}
+	.rs-btn-subtle:focus,
+	.rs-btn-subtle.rs-btn-focus,
+	.rs-btn-subtle:hover {
+		color: #fff;
+		background: #009999;
+	}
+	.rs-dropdown-menu > .rs-dropdown-item > .rs-dropdown-item-content:hover,
+	.rs-dropdown-menu > .rs-dropdown-item > .rs-dropdown-item-content:focus {
+		text-decoration: none;
+		color: #fff;
+		background-color: #009999;
+	}
 `;
