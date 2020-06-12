@@ -179,7 +179,12 @@ class Signin extends Component {
 								/>
 							</span>
 						</PasswordLabel>
-						<Input type={passwordFieldName} name="password" ref={passwordRef} />
+						<Input
+							type={passwordFieldName}
+							name="password"
+							ref={this.passwordRef}
+							
+						/>
 						<br />
 						<p className="reset-password-button" onClick={this.togglePopup}>Forgot password ?</p>
 						<br />
