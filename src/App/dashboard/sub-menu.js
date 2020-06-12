@@ -77,6 +77,8 @@ const Styles = styled.div`
 .rs-nav-item > .rs-nav-item-content {
     font-size: 14px;
     color: #ffffff;
+    -webkit-transition: all 0s; 
+    transition: all 0s;
 }
 a {
     background-color: #009999;
@@ -117,5 +119,8 @@ a {
     text-decoration: none;
     color: #fff;
     background-color: #009999;
+}
+.rs-nav-default .rs-nav-item:not(.rs-nav-item-disabled) .rs-ripple-pond, .rs-nav-tabs .rs-nav-item:not(.rs-nav-item-disabled) .rs-ripple-pond {
+    display: none;
 }
 `;
