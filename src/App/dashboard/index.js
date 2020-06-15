@@ -72,10 +72,6 @@ export default function Dashboard({ history, authObj }) {
 						font-size: ${menu_text_size};
 						color: ${menu_font_color};
 						text-decoration: none;
-						:focus {
-							/* background: ${menu_font_color};
-							color: ${menu_bg_color}; */
-						}
 					}
 					.help-icon {
 						background: #5bb528;
@@ -102,7 +98,7 @@ export default function Dashboard({ history, authObj }) {
 			padding: 0 40px;
 			justify-content: space-between;
 			position: relative;
-			
+
 			.profile-info {
 				cursor: pointer;
 				p {
@@ -126,8 +122,8 @@ export default function Dashboard({ history, authObj }) {
 				box-sizing: border-box;
 				position: absolute;
 				top: 0;
-				left: 0;
-				width: 99%;
+				left: 2%;
+				width: 96%;
 				min-height: 350px;
 				background: white;
 				border: 2px solid #999;
@@ -136,10 +132,10 @@ export default function Dashboard({ history, authObj }) {
 				margin: auto;
 				color: #666;
 				font-size: 90%;
-				.profile-picture-block {				
+				.profile-picture-block {
 					display: flex;
 					justify-content: flex-end;
-					width: 100%;			
+					width: 100%;
 					span {
 						border-radius: 50%;
 						border: 3px solid #999;
@@ -157,8 +153,8 @@ export default function Dashboard({ history, authObj }) {
 						margin: 5px 0;
 					}
 				}
-				.current-persona-info {					
-					border-bottom: 2px solid #999;		
+				.current-persona-info {
+					border-bottom: 2px solid #999;
 					p {
 						margin: 5px 0;
 					}
@@ -173,18 +169,18 @@ export default function Dashboard({ history, authObj }) {
 							background: #eee;
 						}
 						.persona-item-image {
-						border-radius: 50%;
-						border: 3px solid #999;
-						width: 40px;
-						height: 40px;
-						overflow: hidden;
-						img {
-							width: 100%;
+							border-radius: 50%;
+							border: 3px solid #999;
+							width: 40px;
+							height: 40px;
+							overflow: hidden;
+							img {
+								width: 100%;
+							}
 						}
-					}
-					.persona-item-text {
-						padding-left: 10px;
-					}
+						.persona-item-text {
+							padding-left: 10px;
+						}
 					}
 				}
 				button {
@@ -192,7 +188,7 @@ export default function Dashboard({ history, authObj }) {
 					background: 0;
 					color: #666;
 					padding: 5px;
-					cursor: pointer;					
+					cursor: pointer;
 				}
 			}
 		}
