@@ -58,11 +58,21 @@ class Signup extends Component {
 	};
 
 	check = () => {
+		if (this.state.checked) {
+			this.setState({
+				checkedError: true
+			})
+		} else {
+			this.setState({
+				checkedError: false
+			})
+		}
 		this.setState({
 			checked: !this.state.checked,
 			password: this.state.passwordRef.current.value,
 			email: this.state.emailRef.current.value,
 		});
+		
 	};
 
 	password = () => {
