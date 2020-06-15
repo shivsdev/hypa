@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { device } from '../../exportables/exportables';
 import styled from 'styled-components';
-import Nav from '@rsuite/responsive-nav';
+
 import ResponsiveNav from '@rsuite/responsive-nav';
 import 'rsuite/dist/styles/rsuite-default.css';
 
@@ -120,4 +120,16 @@ a {
 .rs-nav-default .rs-nav-item:not(.rs-nav-item-disabled) .rs-ripple-pond, .rs-nav-tabs .rs-nav-item:not(.rs-nav-item-disabled) .rs-ripple-pond {
     display: none;
 }
+.rs-btn-default:not(.rs-btn-disabled) .rs-ripple-rippling,
+.rs-btn-primary:not(.rs-btn-disabled) .rs-ripple-rippling,
+.rs-btn-subtle:not(.rs-btn-disabled) .rs-ripple-rippling {
+  -webkit-transition: all 0s;
+  transition:  all 0s;
+  transition:  all 0s;
+  transition:  all 0s;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  opacity: 0;
+}
 `;
+
