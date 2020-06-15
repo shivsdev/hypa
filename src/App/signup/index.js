@@ -48,6 +48,7 @@ class Signup extends Component {
 			this.state.focused.current.focus();
 		}
 	}
+
 	showpassword = () => {
 		this.setState({
 			showpassword: !this.state.showpassword,
@@ -55,6 +56,7 @@ class Signup extends Component {
 			email: this.state.emailRef.current.value,
 		});
 	};
+
 	check = () => {
 		this.setState({
 			checked: !this.state.checked,
@@ -62,6 +64,7 @@ class Signup extends Component {
 			email: this.state.emailRef.current.value,
 		});
 	};
+
 	password = () => {
 		this.setState({
 			password: this.state.passwordRef.current.value,
@@ -143,12 +146,12 @@ class Signup extends Component {
 		if (!err & !this.state.passwordError) {
 			if (this.state.checked === false) {
 				this.setState({
-					checkedError: true
-				})
+					checkedError: true,
+				});
 			} else {
 				this.setState({
-					checkedError: false
-				})
+					checkedError: false,
+				});
 			}
 			if (this.state.checked) {
 				var createCORSRequest = (method, url) => {
@@ -260,16 +263,17 @@ class Signup extends Component {
 						>
 							<Label>Password</Label>
 							{this.state.uppError ||
-								this.state.numberError ||
-								this.state.SpecialError ||
-								this.state.lengthError ? (
-									<Errortext>Strong password required</Errortext>
-								) : null}
-							<IconContext.Provider
-								value={{ style: { fontSize: '15', } }}
-							>
+							this.state.numberError ||
+							this.state.SpecialError ||
+							this.state.lengthError ? (
+								<Errortext>Strong password required</Errortext>
+							) : null}
+							<IconContext.Provider value={{ style: { fontSize: '15' } }}>
 								<div>
-									<FaEyeSlash onClick={this.showpassword} color={this.state.showpassword ? '#ccc' : ''} />
+									<FaEyeSlash
+										onClick={this.showpassword}
+										color={this.state.showpassword ? '#ccc' : ''}
+									/>
 								</div>
 							</IconContext.Provider>
 						</div>
@@ -339,6 +343,7 @@ class Signup extends Component {
 			</Styles>
 		);
 	}
+	
 }
 export default withRouter(Signup);
 const Styles = styled.div`
