@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { GrHelp } from 'react-icons/gr';
 import logo from '../../assets/logo.png';
 
-import SubMenu from './sub-menu';
-
 export default function Dashboard({ history, authObj }) {
 	const [brandLinkWidth, setBrandLinkWidth] = React.useState(0);
 
@@ -17,7 +15,7 @@ export default function Dashboard({ history, authObj }) {
 	const TopMenu = styled.div`
 		display: flex;
 		nav {
-			width: 74%;
+			width: 80%;
 			background: ${menu_bg_color};
 			ul {
 				padding: 0;
@@ -71,9 +69,19 @@ export default function Dashboard({ history, authObj }) {
 						color: ${menu_font_color};
 						text-decoration: none;
 						:focus {
-							background: ${menu_font_color};
-							color: ${menu_bg_color};
+							/* background: ${menu_font_color};
+							color: ${menu_bg_color}; */
 						}
+					}
+					.help-icon {
+						background: #5bb528;
+						border-radius: 20px;
+						width: 25px;
+						height: 25px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						color: white;
 					}
 				}
 			}
@@ -83,7 +91,7 @@ export default function Dashboard({ history, authObj }) {
 		}
 		> .navbar-dropdown {
 			display: flex;
-			width: 25%;
+			width: 20%;
 			background: ${top_menu_dropdown_bg_color};
 			color: white;
 			align-items: center;
@@ -98,10 +106,10 @@ export default function Dashboard({ history, authObj }) {
 			.profile-picture {
 				position: absolute;
 				right: 40px;
-				bottom: -10px;
+				bottom: -15px;
 				img {
-					width: 65px;
-					height: 65px;
+					width: 55px;
+					height: 55px;
 					border-radius: 50%;
 					border: 4px solid ${top_menu_dropdown_bg_color};
 				}
@@ -144,7 +152,9 @@ export default function Dashboard({ history, authObj }) {
 						</li>
 						<li>
 							<a href="javascript:void(0)">
-								<span style={{background: '#5BB528', borderRadius: 20, width: 25, height: 25, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white'}}><GrHelp /></span>
+								<span className="help-icon">
+									<GrHelp />
+								</span>
 							</a>
 						</li>
 					</ul>
@@ -162,25 +172,15 @@ export default function Dashboard({ history, authObj }) {
 				</div>
 			</TopMenu>
 			<br />
-			{/* <SubMenu /> */}
-			<div
-				style={{
-					height: 200,
-					justifyContent: 'center',
-					display: 'flex',
-					alignItems: 'center',
+
+			<button
+				onClick={() => {
+					authObj.authenticate(false);
+					history.push('/');
 				}}
 			>
-				Dashboard view &nbsp;
-				<button
-					onClick={() => {
-						authObj.authenticate(false);
-						history.push('/');
-					}}
-				>
-					Logout
-				</button>
-			</div>
+				Logout
+			</button>
 		</>
 	);
 }
