@@ -31,7 +31,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 	/>
 );
 
-
 export default function App() {
 	return (
 		<div>
@@ -39,7 +38,7 @@ export default function App() {
 				exact
 				path="/"
 				render={props => <Signin {...props} authObj={authObj} />}
-			/>
+			/>			
 			<Route exact path="/signup" render={props => <Signup {...props} authObj={authObj} />} />
 			<Route exact path="/reset" component={Resetpassword} />
 			<Route exact path="/user-agreement" component={UserAgreement} />

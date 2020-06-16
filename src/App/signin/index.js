@@ -82,28 +82,32 @@ class Signin extends Component {
 			password,
 		};
 
-		apiUrl.post('/account/login', data).then(({data, status})=> {
-			if (status === 200 && data.token) {
-				this.setState(
-					prevState => {
-						return {
-							...prevState,
-							errors: {
-								...prevState.errors,
-								passwordErrMsg: null,
-								emailErrMsg: null,
-								loginErrMsg: null,
-								nAttempt: 0,
-							},
-						};
-					},
-					() => {					
-						this.saveAuthTokenInSession(data.token);
-						this.props.authObj.authenticate(true);
-						this.props.history.push('/dashboard');
-					}
-				);
-			} else {
+		apiUrl
+			.post('/account/login', data)
+			.then(({ data, status }) => {
+				if (status === 200 && data.token) {
+					this.setState(
+						prevState => {
+							return {
+								...prevState,
+								errors: {
+									...prevState.errors,
+									passwordErrMsg: null,
+									emailErrMsg: null,
+									loginErrMsg: null,
+									nAttempt: 0,
+								},
+							};
+						},
+						() => {
+							this.saveAuthTokenInSession(data.token);
+							this.props.authObj.authenticate(true);
+							this.props.history.push('/dashboard');
+						}
+					);
+				}
+			})
+			.catch(err => {
 				if (this.state.errors.nAttempt < 5)
 					this.setState(prevState => {
 						let attempt = prevState.errors.nAttempt + 1;
@@ -130,8 +134,7 @@ class Signin extends Component {
 							},
 						};
 					});
-			}
-		});
+			});
 	};
 
 	renderErrorMessage = msg => {
@@ -196,7 +199,14 @@ class Signin extends Component {
 							Forgot password ?
 						</p>
 						<br />
-						<p style={{ fontSize: '85%', textAlign: 'center' }}>
+						<p
+							style={{
+								fontSize: '85%',
+								textAlign: 'center',
+								marginTop: '20px',
+								marginBottom: '20px',
+							}}
+						>
 							{renderErrorMessage(errors.loginErrMsg)}
 						</p>
 						<Button>SIGN IN</Button>

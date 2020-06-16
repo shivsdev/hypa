@@ -19,13 +19,16 @@ export default function Dashboard({ history, authObj }) {
 	const top_menu_dropdown_text_color = 'white';
 
 	const handleLogout = () => {
-		apiUrlWithToken.post('/account/logout').then(res => {
-			if (res.status === 200 && res.data.status === 'success') {
-				window.sessionStorage.clear();
+		apiUrlWithToken
+			.post('/account/logout')
+			.then(res => {				
 				authObj.authenticate(false);
+				window.sessionStorage.clear();
 				history.push('/');
-			}
-		});
+			})
+			.catch(error => {
+				console.log(error.response);
+			});
 	};
 
 	React.useLayoutEffect(() => {}, [brandLinkWidth]);
@@ -125,7 +128,7 @@ export default function Dashboard({ history, authObj }) {
 				right: 40px;
 				bottom: -15px;
 				cursor: pointer;
-				
+
 				img {
 					width: 55px;
 					height: 55px;
@@ -211,12 +214,15 @@ export default function Dashboard({ history, authObj }) {
 			}
 		}
 	`;
-	let profileLetter = "";
+	let profileLetter = '';
 	const letter = () => {
-		let str = "Mark Wood";
-		let acronym = str.split(" ").slice(0, 2).reduce((response, word) => response += word.slice(0, 1), '')
+		let str = 'Mark Wood';
+		let acronym = str
+			.split(' ')
+			.slice(0, 2)
+			.reduce((response, word) => (response += word.slice(0, 1)), '');
 		profileLetter = acronym;
-	}
+	};
 	return (
 		<>
 			<TopMenu>
@@ -271,26 +277,41 @@ export default function Dashboard({ history, authObj }) {
 						className="profile-picture"
 						onClick={() => setIsDropdownVisible(true)}
 					>
-						<span >
-							{/* <img src={private_img} alt="..." /> */}
-							{letter()}
-							<p style={{ alignItems: "center", justifyContent: "center", display: "flex",color:"#000066" }}>{profileLetter}</p>
+						<span>
+							<img src={private_img} alt="..." />
+							{/* {letter()} */}
+							<p
+								style={{
+									alignItems: 'center',
+									justifyContent: 'center',
+									display: 'flex',
+									color: '#000066',
+								}}
+							>
+								{profileLetter}
+							</p>
 							<p></p>
 						</span>
 					</div>
 					{isDropdownVisible && (
 						<div
 							className="show-dropdown"
-						onMouseLeave={() => setIsDropdownVisible(false)}
+							onMouseLeave={() => setIsDropdownVisible(false)}
 						>
 							<div className="profile-picture-block">
-								{/* <span >
+								<span >
 									<img src={private_img} alt="..." />
-								</span> */}
-								<span style={{ alignItems: "center", justifyContent: "center", display: "flex" }}>
-									{letter()}
-									<p >{profileLetter}</p>
 								</span>
+								{/* <span
+									style={{
+										alignItems: 'center',
+										justifyContent: 'center',
+										display: 'flex',
+									}}
+								>
+									{letter()}
+									<p>{profileLetter}</p>
+								</span> */}
 							</div>
 							<div className="persona-name">
 								<p>Private</p>
