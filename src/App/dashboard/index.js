@@ -125,6 +125,7 @@ export default function Dashboard({ history, authObj }) {
 				right: 40px;
 				bottom: -15px;
 				cursor: pointer;
+				
 				img {
 					width: 55px;
 					height: 55px;
@@ -210,7 +211,12 @@ export default function Dashboard({ history, authObj }) {
 			}
 		}
 	`;
-	
+	let profileLetter = "";
+	const letter = () => {
+		let str = "Mark Wood";
+		let acronym = str.split(" ").slice(0, 2).reduce((response, word) => response += word.slice(0, 1), '')
+		profileLetter = acronym;
+	}
 	return (
 		<>
 			<TopMenu>
@@ -265,18 +271,25 @@ export default function Dashboard({ history, authObj }) {
 						className="profile-picture"
 						onClick={() => setIsDropdownVisible(true)}
 					>
-						<span>
-							<img src={private_img} alt="..." />
+						<span >
+							{/* <img src={private_img} alt="..." /> */}
+							{letter()}
+							<p style={{ alignItems: "center", justifyContent: "center", display: "flex",color:"#000066" }}>{profileLetter}</p>
+							<p></p>
 						</span>
 					</div>
 					{isDropdownVisible && (
 						<div
 							className="show-dropdown"
-							onMouseLeave={() => setIsDropdownVisible(false)}
+						onMouseLeave={() => setIsDropdownVisible(false)}
 						>
 							<div className="profile-picture-block">
-								<span>
+								{/* <span >
 									<img src={private_img} alt="..." />
+								</span> */}
+								<span style={{ alignItems: "center", justifyContent: "center", display: "flex" }}>
+									{letter()}
+									<p >{profileLetter}</p>
 								</span>
 							</div>
 							<div className="persona-name">
