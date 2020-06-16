@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { GrHelp } from 'react-icons/gr';
 import logo from '../../assets/logo.png';
 import { apiUrlWithToken } from '../calls/apis';
+import SubMenu from './sub-menu';
 
 const private_img = require('../../assets/user-profile.jpg');
 const workgroup_profile =
@@ -28,7 +29,7 @@ export default function Dashboard({ history, authObj }) {
 		});
 	};
 
-	React.useLayoutEffect(() => {}, [brandLinkWidth]);
+	React.useLayoutEffect(() => { }, [brandLinkWidth]);
 
 	const TopMenu = styled.div`
 		display: flex;
@@ -214,7 +215,51 @@ export default function Dashboard({ history, authObj }) {
 	let profileLetter = "";
 	const letter = () => {
 		let str = "Mark Wood";
-		let acronym = str.split(" ").slice(0, 2).reduce((response, word) => response += word.slice(0, 1), '')
+		let string = str.split(" ");
+		if (str.split(" ").length > 3) {
+			string = string.filter(value => { return value.length > 1 })
+
+
+		}
+		if (string.length > 3) {
+			string = string.map(value => { return value.replace("the", '') })
+			string = string.map(value => { return value.replace("NHS", '') })
+			string = string.filter(value => { return value != "" })
+		}
+		let arr = [];
+		string.forEach((value, index) => {
+			if (index == 0) {
+				if (value.slice(0, 3).match('^[0-9]*$')) {
+					arr.push(value.slice(0, 3));
+				}
+
+				else if (index == 0) {
+					if (value.slice(0, 2).match('^[0-9]*$')) {
+						arr.push(value.slice(0, 2));
+						arr.push(string[1].slice(0, 1))
+					}
+				}
+			}
+		});
+		let acronym = "";
+		if (arr.length == 0) {
+			acronym = string.slice(0, 3).reduce((response, word) => response += word.slice(0, 1), '')
+			
+		}
+		if (arr.length == 1) {
+			acronym = arr[0];
+		}
+		if (arr.length==2){
+			acronym=arr[0]+arr[1]
+			console.log(acronym)
+		}
+		// if (string.split(" ").length > 3) {
+		// 	string = str.replace(/[0-9]/g, '');
+		// }
+		// var nothe = nospecial.replace("the", '').trim();
+		// var space = nothe.replace("  ", ' ')
+		// let acronym = space.split(" ").slice(0, 3).reduce((response, word) => response += word.slice(0, 1), '')
+
 		profileLetter = acronym;
 	}
 	return (
@@ -274,14 +319,14 @@ export default function Dashboard({ history, authObj }) {
 						<span >
 							{/* <img src={private_img} alt="..." /> */}
 							{letter()}
-							<p style={{ alignItems: "center", justifyContent: "center", display: "flex",color:"#000066" }}>{profileLetter}</p>
+							<p style={{ alignItems: "center", justifyContent: "center", display: "flex", color: "#000066" }}>{profileLetter}</p>
 							<p></p>
 						</span>
 					</div>
 					{isDropdownVisible && (
 						<div
 							className="show-dropdown"
-						onMouseLeave={() => setIsDropdownVisible(false)}
+							onMouseLeave={() => setIsDropdownVisible(false)}
 						>
 							<div className="profile-picture-block">
 								{/* <span >

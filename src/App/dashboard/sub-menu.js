@@ -5,43 +5,43 @@ import ResponsiveNav from '@rsuite/responsive-nav';
 import 'rsuite/dist/styles/rsuite-default.css';
 
 const items = [
-	{ eventKey: 'Settings', label: 'Settings' },
-	{ eventKey: 'Predefined', label: 'Predefined tags' },
-	{ eventKey: 'People', label: 'People' },
-	{ eventKey: 'Roles', label: 'Roles' },
-	{ eventKey: 'Profile', label: 'Profile' },
-	{ eventKey: 'Patients', label: 'Patients' },
+    { eventKey: 'Settings', label: 'Settings' },
+    { eventKey: 'Predefined', label: 'Predefined tags' },
+    { eventKey: 'People', label: 'People' },
+    { eventKey: 'Roles', label: 'Roles' },
+    { eventKey: 'Profile', label: 'Profile' },
+    { eventKey: 'Patients', label: 'Patients' },
 ];
 
 class SubMenu extends Component {
-	state = {
-		activeKey: 'Settings',
-	};
-	setActiveKey = event => {
-		this.setState({
-			activeKey: event,
-		});
-	};
+    state = {
+        activeKey: 'Profile',
+    };
+    setActiveKey = event => {
+        this.setState({
+            activeKey: event,
+        });
+    };
 
-	render() {
-		return (
-			<Styles>
-				<div className="body">
-					<ResponsiveNav
-						activeKey={this.state.activeKey}
-						appearance="tabs"
-						onSelect={this.setActiveKey}
-					>
-						{items.map(item => (
-							<ResponsiveNav.Item key={item.eventKey} eventKey={item.eventKey}>
-								{item.label}
-							</ResponsiveNav.Item>
-						))}
-					</ResponsiveNav>
-				</div>
-			</Styles>
-		);
-	}
+    render() {
+        return (
+            <Styles>
+                <div className="body">
+                    <ResponsiveNav
+                        activeKey={this.state.activeKey}
+                        appearance="tabs"
+                        onSelect={this.setActiveKey}
+                    >
+                        {items.map(item => (
+                            <ResponsiveNav.Item key={item.eventKey} eventKey={item.eventKey}>
+                                {item.label}
+                            </ResponsiveNav.Item>
+                        ))}
+                    </ResponsiveNav>
+                </div>
+            </Styles>
+        );
+    }
 }
 
 export default SubMenu;
