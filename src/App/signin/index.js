@@ -6,6 +6,7 @@ import { FaEyeSlash } from 'react-icons/fa';
 
 import { device } from '../../exportables/exportables';
 import ResetPasswordPopup from './components/ResetPasswordPopup';
+import { apiUrl } from '../calls/apis';
 
 class Signin extends Component {
 	constructor(props) {
@@ -37,15 +38,14 @@ class Signin extends Component {
 		return false;
 	}
 
+	saveAuthTokenInSession = token => {
+		window.sessionStorage.setItem('token', token);
+	};
+
 	handleSubmit = e => {
 		e.preventDefault();
 		const email = this.emailRef.current.value;
 		const password = this.passwordRef.current.value;
-
-		// temp email and password for server kind mock
-		let serverEmail = 'demo@mail.com';
-		let serverPassword = 'Demo@mail';
-
 		/**
 		 * Two scenario for email validation.
 		 * - no email provided
@@ -63,6 +63,7 @@ class Signin extends Component {
 			});
 			return;
 		}
+
 		// Validate no password
 		if (!password.length) {
 			this.setState({
@@ -76,57 +77,61 @@ class Signin extends Component {
 			return;
 		}
 
-		if (email !== serverEmail || password !== serverPassword) {
-			if (this.state.errors.nAttempt < 5)
-				this.setState(prevState => {
-					let attempt = prevState.errors.nAttempt + 1;
-					return {
-						...prevState,
-						errors: {
-							...prevState.errors,
-							passwordErrMsg: null,
-							emailErrMsg: null,
-							nAttempt: attempt,
-							loginErrMsg: `Email or Password incorrect, ${attempt} of 5 attempts remaining`,
-						},
-					};
-				});
-			else
-				this.setState(prevState => {
-					return {
-						...prevState,
-						errors: {
-							...prevState.errors,
-							passwordErrMsg: null,
-							emailErrMsg: null,
-							loginErrMsg: `Your account blocked for 1 day`,
-						},
-					};
-				});
-		}
+		let data = {
+			email,
+			password,
+		};
 
-		if (email === serverEmail && password === serverPassword) {
-			this.setState(prevState => {
-				return {
-					...prevState,
-					errors: {
-						...prevState.errors,
-						passwordErrMsg: null,
-						emailErrMsg: null,
-						loginErrMsg: null,
-						nAttempt: 0,
+		apiUrl.post('/account/login', data).then(({data, status})=> {
+			if (status === 200 && data.token) {
+				this.setState(
+					prevState => {
+						return {
+							...prevState,
+							errors: {
+								...prevState.errors,
+								passwordErrMsg: null,
+								emailErrMsg: null,
+								loginErrMsg: null,
+								nAttempt: 0,
+							},
+						};
 					},
-				};
-			});
-
-			// let data = {
-			// 	email,
-			// 	password,
-			// };
-
-			this.props.authObj.authenticate(true);
-			this.props.history.push('/dashboard');
-		}
+					() => {					
+						this.saveAuthTokenInSession(data.token);
+						this.props.authObj.authenticate(true);
+						this.props.history.push('/dashboard');
+					}
+				);
+			} else {
+				if (this.state.errors.nAttempt < 5)
+					this.setState(prevState => {
+						let attempt = prevState.errors.nAttempt + 1;
+						return {
+							...prevState,
+							errors: {
+								...prevState.errors,
+								passwordErrMsg: null,
+								emailErrMsg: null,
+								nAttempt: attempt,
+								loginErrMsg: `Email or Password incorrect, ${attempt} of 5 attempts remaining`,
+							},
+						};
+					});
+				else
+					this.setState(prevState => {
+						return {
+							...prevState,
+							errors: {
+								...prevState.errors,
+								passwordErrMsg: null,
+								emailErrMsg: null,
+								loginErrMsg: `Your account blocked for 1 day`,
+							},
+						};
+					});
+			}
+		});
 	};
 
 	renderErrorMessage = msg => {
@@ -136,12 +141,18 @@ class Signin extends Component {
 
 	renderResetPasswordPopup = (isVisible, email) => {
 		if (!isVisible) return <></>;
-		return <ResetPasswordPopup email={email} isPopupVisible={isVisible} togglePopup={this.togglePopup} />;
+		return (
+			<ResetPasswordPopup
+				email={email}
+				isPopupVisible={isVisible}
+				togglePopup={this.togglePopup}
+			/>
+		);
 	};
 
 	togglePopup = () => {
-		this.setState({isPopupVisible: !this.state.isPopupVisible})
-	}
+		this.setState({ isPopupVisible: !this.state.isPopupVisible });
+	};
 
 	render() {
 		const { handleSubmit, renderErrorMessage, emailRef, passwordRef } = this;
@@ -179,14 +190,11 @@ class Signin extends Component {
 								/>
 							</span>
 						</PasswordLabel>
-						<Input
-							type={passwordFieldName}
-							name="password"
-							ref={this.passwordRef}
-							
-						/>
+						<Input type={passwordFieldName} name="password" ref={passwordRef} />
 						<br />
-						<p className="reset-password-button" onClick={this.togglePopup}>Forgot password ?</p>
+						<p className="reset-password-button" onClick={this.togglePopup}>
+							Forgot password ?
+						</p>
 						<br />
 						<p style={{ fontSize: '85%', textAlign: 'center' }}>
 							{renderErrorMessage(errors.loginErrMsg)}
@@ -200,7 +208,7 @@ class Signin extends Component {
 					</form>
 				</div>
 
-				{ this.renderResetPasswordPopup(isPopupVisible, email) }
+				{this.renderResetPasswordPopup(isPopupVisible, email)}
 			</Styles>
 		);
 	}

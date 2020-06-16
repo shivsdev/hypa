@@ -2,10 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { GrHelp } from 'react-icons/gr';
 import logo from '../../assets/logo.png';
+import { apiUrlWithToken } from '../calls/apis';
 
 const private_img = require('../../assets/user-profile.jpg');
 const workgroup_profile =
 	'https://images.unsplash.com/photo-1581360742512-021d5b2157d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&q=80';
+
 export default function Dashboard({ history, authObj }) {
 	const [brandLinkWidth, setBrandLinkWidth] = React.useState(0);
 	const [isDropdownVisible, setIsDropdownVisible] = React.useState(false);
@@ -16,10 +18,22 @@ export default function Dashboard({ history, authObj }) {
 	const top_menu_dropdown_bg_color = '#4395A6';
 	const top_menu_dropdown_text_color = 'white';
 
+	const handleLogout = () => {
+		apiUrlWithToken.post('/account/logout').then(res => {
+			if (res.status === 200 && res.data.status === 'success') {
+				window.sessionStorage.clear();
+				authObj.authenticate(false);
+				history.push('/');
+			}
+		});
+	};
+
+	React.useLayoutEffect(() => {}, [brandLinkWidth]);
+
 	const TopMenu = styled.div`
 		display: flex;
 		nav {
-			width: 80%;
+			width: 75%;
 			background: ${menu_bg_color};
 			ul {
 				padding: 0;
@@ -91,7 +105,7 @@ export default function Dashboard({ history, authObj }) {
 		}
 		> .navbar-dropdown {
 			display: flex;
-			width: 20%;
+			width: 25%;
 			background: ${top_menu_dropdown_bg_color};
 			color: white;
 			align-items: center;
@@ -164,7 +178,9 @@ export default function Dashboard({ history, authObj }) {
 					.persona-item {
 						display: flex;
 						padding: 5px 0;
+						margin: 2px 0;
 						cursor: pointer;
+						align-items: center;
 						:hover {
 							background: #eee;
 						}
@@ -189,11 +205,12 @@ export default function Dashboard({ history, authObj }) {
 					color: #666;
 					padding: 5px;
 					cursor: pointer;
+					margin-top: 40px;
 				}
 			}
 		}
 	`;
-
+	
 	return (
 		<>
 			<TopMenu>
@@ -284,18 +301,23 @@ export default function Dashboard({ history, authObj }) {
 									<p className="persona-item-text">Workgroup Name</p>
 								</li>
 							</ul>
-							<button
-								onClick={() => {
-									authObj.authenticate(false);
-									history.push('/');
-								}}
-							>
-								Log Out
-							</button>
+							<button onClick={() => handleLogout()}>Log Out</button>
 						</div>
 					)}
 				</div>
 			</TopMenu>
+			<div
+				style={{
+					marginTop: '4vh',
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					color: '#777',
+					height: '80vh',
+				}}
+			>
+				<h4>Micro front End app</h4>
+			</div>
 		</>
 	);
 }

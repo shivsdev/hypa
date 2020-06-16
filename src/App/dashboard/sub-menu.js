@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { device } from '../../exportables/exportables';
 import styled from 'styled-components';
 import Nav from '@rsuite/responsive-nav';
 import ResponsiveNav from '@rsuite/responsive-nav';

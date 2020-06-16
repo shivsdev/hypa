@@ -11,9 +11,10 @@ import Dashboard from './dashboard'
 const authObj = {
 	isAuthenticated:
 		JSON.parse(window.sessionStorage.getItem('isAuthenticated')) || false,
-	authenticate(isLogged) {
-		window.sessionStorage.setItem('isAuthenticated', isLogged);
-		this.isAuthenticated = JSON.parse(window.sessionStorage.getItem('isAuthenticated'));
+	authenticate(isLoggedBool) {
+		window.sessionStorage.setItem('isAuthenticated', isLoggedBool);
+		let token = window.sessionStorage.getItem('token')
+		this.isAuthenticated = token && JSON.parse(window.sessionStorage.getItem('isAuthenticated'));
 	},
 };
 
