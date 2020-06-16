@@ -5,43 +5,43 @@ import ResponsiveNav from '@rsuite/responsive-nav';
 import 'rsuite/dist/styles/rsuite-default.css';
 
 const items = [
-	{ eventKey: 'Settings', label: 'Settings' },
-	{ eventKey: 'Predefined', label: 'Predefined tags' },
-	{ eventKey: 'People', label: 'People' },
-	{ eventKey: 'Roles', label: 'Roles' },
-	{ eventKey: 'Profile', label: 'Profile' },
-	{ eventKey: 'Patients', label: 'Patients' },
+    { eventKey: 'Settings', label: 'Settings' },
+    { eventKey: 'Predefined', label: 'Predefined tags' },
+    { eventKey: 'People', label: 'People' },
+    { eventKey: 'Roles', label: 'Roles' },
+    { eventKey: 'Profile', label: 'Profile' },
+    { eventKey: 'Patients', label: 'Patients' },
 ];
 
 class SubMenu extends Component {
-	state = {
-		activeKey: 'Settings',
-	};
-	setActiveKey = event => {
-		this.setState({
-			activeKey: event,
-		});
-	};
+    state = {
+        activeKey: 'Profile',
+    };
+    setActiveKey = event => {
+        this.setState({
+            activeKey: event,
+        });
+    };
 
-	render() {
-		return (
-			<Styles>
-				<div className="body">
-					<ResponsiveNav
-						activeKey={this.state.activeKey}
-						appearance="tabs"
-						onSelect={this.setActiveKey}
-					>
-						{items.map(item => (
-							<ResponsiveNav.Item key={item.eventKey} eventKey={item.eventKey}>
-								{item.label}
-							</ResponsiveNav.Item>
-						))}
-					</ResponsiveNav>
-				</div>
-			</Styles>
-		);
-	}
+    render() {
+        return (
+            <Styles>
+                <div className="body">
+                    <ResponsiveNav
+                        activeKey={this.state.activeKey}
+                        appearance="tabs"
+                        onSelect={this.setActiveKey}
+                    >
+                        {items.map(item => (
+                            <ResponsiveNav.Item key={item.eventKey} eventKey={item.eventKey}>
+                                {item.label}
+                            </ResponsiveNav.Item>
+                        ))}
+                    </ResponsiveNav>
+                </div>
+            </Styles>
+        );
+    }
 }
 
 export default SubMenu;
@@ -55,7 +55,7 @@ const Styles = styled.div`
     border-radius: 0 0 0 0;
 }
 .rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle, .rs-nav .rs-nav-item-active > .rs-nav-item-content, .rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle:hover, .rs-nav .rs-nav-item-active > .rs-nav-item-content:hover, .rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle:focus, .rs-nav .rs-nav-item-active > .rs-nav-item-content:focus, .rs-nav .rs-dropdown .rs-dropdown-menu-active ~ .rs-dropdown-toggle:active, .rs-nav .rs-nav-item-active > .rs-nav-item-content:active {
-    color: #009999;
+    color: rgb(67, 149, 166);
     background: #ffffff;
     margin-left:10px
     
@@ -77,7 +77,7 @@ const Styles = styled.div`
     transition: all 0s;
 }
 a {
-    background-color: #009999;
+    background-color: rgb(67, 149, 166);
 }
 .rs-dropdown-menu {
     margin: 0;
@@ -98,23 +98,23 @@ a {
     color:#fff
 }
 .rs-dropdown-menu > .rs-dropdown-item-active > .rs-dropdown-item-content, .rs-dropdown-menu > .rs-dropdown-item-active > .rs-dropdown-item-content:hover, .rs-dropdown-menu > .rs-dropdown-item-active > .rs-dropdown-item-content:focus {
-    color: #009999;
+    color: rgb(67, 149, 166);
 }
 .rs-dropdown-menu .rs-dropdown-item-content {
     color: #ffffff;
 }
 .rs-nav-tabs .rs-nav-item:not(.rs-nav-item-active):not(.rs-nav-item-disabled) > .rs-nav-item-content:hover, .rs-nav-tabs .rs-nav-item:not(.rs-nav-item-active):not(.rs-nav-item-disabled) > .rs-nav-item-content:focus {
-    background: #009999; 
+    background: rgb(67, 149, 166); 
     color: #fff;
 }
 .rs-btn-subtle:focus, .rs-btn-subtle.rs-btn-focus, .rs-btn-subtle:hover {
     color: #fff;
-    background: #009999; 
+    background: rgb(67, 149, 166); 
 }
 .rs-dropdown-menu > .rs-dropdown-item > .rs-dropdown-item-content:hover, .rs-dropdown-menu > .rs-dropdown-item > .rs-dropdown-item-content:focus {
     text-decoration: none;
     color: #fff;
-    background-color: #009999;
+    background-color: rgb(67, 149, 166);
 }
 .rs-nav-default .rs-nav-item:not(.rs-nav-item-disabled) .rs-ripple-pond, .rs-nav-tabs .rs-nav-item:not(.rs-nav-item-disabled) .rs-ripple-pond {
     display: none;
