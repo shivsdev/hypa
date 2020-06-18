@@ -35,7 +35,7 @@ export default function Dashboard({ history, authObj, location }) {
 			});
 	};
 
-	React.useLayoutEffect(() => {}, [brandLinkWidth]);
+	React.useLayoutEffect(() => { }, [brandLinkWidth]);
 
 	const TopMenu = styled.div`
 		display: flex;
@@ -272,12 +272,7 @@ export default function Dashboard({ history, authObj, location }) {
 			acronym = arr[0] + arr[1];
 			console.log(acronym);
 		}
-		// if (string.split(" ").length > 3) {
-		// 	string = str.replace(/[0-9]/g, '');
-		// }
-		// var nothe = nospecial.replace("the", '').trim();
-		// var space = nothe.replace("  ", ' ')
-		// let acronym = space.split(" ").slice(0, 3).reduce((response, word) => response += word.slice(0, 1), '')
+
 
 		profileLetter = acronym;
 	};
@@ -307,7 +302,7 @@ export default function Dashboard({ history, authObj, location }) {
 								to="/dashboard"
 								className="brand-link"
 								ref={el => setBrandLinkWidth(el?.getBoundingClientRect().width)}
-								// activeClassName="selectedLink"
+							// activeClassName="selectedLink"
 							>
 								<div>
 									<img src={logo} alt=".." />
@@ -431,21 +426,21 @@ export default function Dashboard({ history, authObj, location }) {
 					height="600px"
 				/>
 			) : (
-				<div
-					style={{
-						marginTop: '4vh',
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-						flexDirection: 'column',
-						color: '#777',
-						height: '80vh',
-					}}
-				>
-					<h3>Page you are looking is </h3>
-					<p>Not found or under development</p>					
-				</div>
-			)}
+					<div
+						style={{
+							marginTop: '4vh',
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							flexDirection: 'column',
+							color: '#777',
+							height: '80vh',
+						}}
+					>
+						<h3>Page you are looking is </h3>
+						<p>Not found or under development</p>
+					</div>
+				)}
 		</>
 	);
 }
