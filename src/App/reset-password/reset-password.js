@@ -43,8 +43,8 @@ class Reset extends Component {
     }
     password = () => {
         this.setState({
-			password: this.state.passwordRef.current.value,
-		});
+            password: this.state.passwordRef.current.value,
+        });
         if (this.state.passwordRef.current.value.length < 8) {
             this.setState({
                 passwordError: true,
@@ -169,7 +169,7 @@ class Reset extends Component {
             borderRadius: 5,
             marginLeft: '12px',
         });
-
+        var email = sessionStorage.getItem('email')
         return (
             < Styles >
                 <div className="logo-holder">
@@ -177,7 +177,7 @@ class Reset extends Component {
                 </div>
                 <div className="content-box">
                     <BlueH1 >Password reset for</BlueH1>
-                    <GreenH1 >{this.state.email}</GreenH1>
+                    <GreenH1 >{email}</GreenH1>
                     <br /> <br />  <br /> <br /> <br /><br />
                     <form
                         onSubmit={this.handleSubmit}

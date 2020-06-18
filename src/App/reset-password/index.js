@@ -21,127 +21,29 @@ class Reset extends Component {
         this.state.emailRef.current.value = this.state.email;
     }
 
-
-    handleSubmit = (event) => {
-        event.preventDefault();
-        var err = false
-        this.setState({
-            email: this.state.emailRef.current.value,
-        })
-        if (emailValidate.test(this.state.emailRef.current.value) === false) {
-            this.setState({
-                emailError: true
-            })
-            err = true;
-        } else {
-            this.setState({
-                emailError: false
-            })
-        }
-
-        if (!err) {
-            var createCORSRequest = (method, url) => {
-                var xhr = new XMLHttpRequest();
-                if ("withCredentials" in xhr) {
-                    // Most browsers.
-                    xhr.open(method, url, true);
-                } else if (typeof window.XDomainRequest != "undefined") {
-                    // IE8 & IE9
-                    xhr = new window.XDomainRequest();
-                    xhr.open(method, url);
-                } else {
-                    // CORS not supported.
-                    xhr = null;
-                }
-                return xhr;
-            };
-            var url = 'http://34.253.224.180:18306/register/index';
-            var method = 'POST';
-            var xhr = createCORSRequest(method, url);
-
-            xhr.onload = (res) => {
-                this.props.history.push("/reset-password/" + this.state.emailRef.current.value)
-                console.log(res)
-            };
-
-            xhr.onerror = function () {
-                // Error code goes here.
-            };
-
-            xhr.send({ email: 'demo@gmail.com', password: 'Demo@123' });
-
-        }
+    resetpassword = () => {
+        this.props.history.push('/reset-password')
     }
 
+
     render() {
-        const Input = styled.input({
-            width: "100%",
-            borderRadius: 5,
-            height: "40px",
-            borderWidth: 1,
-            padding: 0
-        })
 
-        const Button = styled.button({
-            width: "100%",
-            height: "40px",
-            borderRadius: 5,
-            backgroundColor: " #009999",
-            borderWidth: 0,
-            marginTop: 5,
-            marginBottom: 20
-        })
-        const Buttontext = styled.p({
-            color: "#FFFFFF"
-        })
-        const BlueH1 = styled.h1({
-            margin: 0,
-            fontSize: 60,
-            color: '#000066',
-            fontWeight: 'bolder',
-        });
-        const GreenH1 = styled.h1({
-            fontSize: 50,
-            margin: 0,
-            fontWeight: 'bolder',
-            color: '#009999',
-        });
-        const Label = styled.p({
-            margin: 0,
-        });
 
-        const Errortext = styled.p({
-            color: "#ff0000",
-            margin: 0,
-        })
+
         return (
             < Styles>
                 <div className="logo-holder">
                     <img src={hypaiq} alt="Hypaiq" />
                 </div>
                 <div className="content-box">
-                    <BlueH1 >Enter your</BlueH1>
-                    <GreenH1 >Email</GreenH1>
-
-                    <form
-                        onSubmit={this.handleSubmit}
-                        id="SIGINFORM"
-                    >
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <div style={{ flexDirection: "row", display: "flex", justifyContent: "space-between", width: "60%" }}>
-                            <Label >Email</Label>
-                            {this.state.emailError ? <Errortext>invalid email format</Errortext> : null}
-                        </div>
-                        <Input ref={this.state.emailRef} required name="email" id="email" className="" /><br />
-                        <br />
-                        <Button className="button" title="Log in" type={"submit"} >
-                            <Buttontext >Next</Buttontext>
-                        </Button>
-
-                    </form>
+                    <h1 className="second-row-title">Forgotton Password</h1>
+                    <h1 className="first-row-title">Reset Link</h1>
+                    <p className="hypa-intro">
+                        We have sent you a link via email to enable you to reset your password. Please check your in box and
+                        spam folder . The link is valid for 1 hr after which you will need to request another. alternatively
+                        you may ignore the mail and continue to log in with current password.
+					</p>
+                    <Button onClick={this.resetpassword}>Reset Link</Button>
                 </div>
             </Styles >
         );
@@ -158,22 +60,25 @@ const Styles = styled.div`
 		}
 	}
 	.content-box {
-		max-width: 350px;
+		width: 500px;
 		margin: 0px auto;
 		.first-row-title {
-			font-size: calc(1em + 2.5vw);
+			font-size: calc(1em + 1.5vw);
 			margin: 0;
 			font-weight: normal;
 			color: #009999;
 		}
 		.second-row-title {
 			margin: 0;
-			font-size: calc(1em + 2.5vw);
+			font-size: calc(1em + 2vw);
 			color: #000066;
 			font-weight: bolder;
 		}
-		form {
-			margin: 100px 0;
+		.hypa-intro {
+            margin-top:10px;
+			font-size: calc(1em + 0.3vw);
+			color: #777;
+			font-weight: 500;
 		}
 	}
 
@@ -187,6 +92,7 @@ const Styles = styled.div`
 			}
 		}
 		.content-box {
+            width: 350px;
 			width: 85%;
 			margin: auto;
 			margin-top: 2em;
@@ -206,5 +112,17 @@ const Styles = styled.div`
 				margin: 50px 0;
 			}
 		}
-	}
+    }
+    
 `;
+const Button = styled.button({
+    width: "60%",
+    height: "40px",
+    borderRadius: 5,
+    backgroundColor: " #009999",
+    borderWidth: 0,
+    marginTop: 20,
+    marginBottom: 20,
+    color: "#FFFFFF",
+    fontSize: "20px"
+})
