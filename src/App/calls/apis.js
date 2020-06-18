@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-var url = 'https://cors-anywhere.herokuapp.com/http://34.253.224.180:18306/v1';
+var url = 'http://34.253.224.180:18306/v1';
 const apiUrl = Axios.create({
 	baseURL: url,
 });

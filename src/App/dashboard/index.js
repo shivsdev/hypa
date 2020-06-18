@@ -1,6 +1,8 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { GrHelp } from 'react-icons/gr';
+
 import logo from '../../assets/logo.png';
 import { apiUrlWithToken } from '../calls/apis';
 import SubMenu from './sub-menu';
@@ -9,9 +11,10 @@ const private_img = require('../../assets/user-profile.jpg');
 const workgroup_profile =
 	'https://images.unsplash.com/photo-1581360742512-021d5b2157d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&q=80';
 
-export default function Dashboard({ history, authObj }) {
+export default function Dashboard({ history, authObj, location }) {
 	const [brandLinkWidth, setBrandLinkWidth] = React.useState(0);
 	const [isDropdownVisible, setIsDropdownVisible] = React.useState(false);
+	let path = location.pathname.split('/')[2];
 
 	const menu_bg_color = '#0F1662';
 	const menu_font_color = 'white';
@@ -22,22 +25,23 @@ export default function Dashboard({ history, authObj }) {
 	const handleLogout = () => {
 		apiUrlWithToken
 			.post('/account/logout')
-			.then(res => {				
+			.then(res => {
 				authObj.authenticate(false);
 				window.sessionStorage.clear();
 				history.push('/');
 			})
 			.catch(error => {
-				console.log(error.response);
+				alert(error.response.data.msg);
 			});
 	};
 
-	React.useLayoutEffect(() => { }, [brandLinkWidth]);
+	React.useLayoutEffect(() => {}, [brandLinkWidth]);
 
 	const TopMenu = styled.div`
 		display: flex;
+		margin-bottom: 30px;
 		nav {
-			width: 75%;
+			width: 77%;
 			background: ${menu_bg_color};
 			ul {
 				padding: 0;
@@ -49,7 +53,7 @@ export default function Dashboard({ history, authObj }) {
 					background: ${menu_bg_color};
 					:first-child {
 						background: red;
-						width: ${brandLinkWidth}px;
+						width: ${brandLinkWidth + 15}px;
 					}
 					.brand-link {
 						position: absolute;
@@ -85,11 +89,15 @@ export default function Dashboard({ history, authObj }) {
 						display: inline-flex;
 						align-items: center;
 						background: ${menu_bg_color};
-						padding: 0 40px;
+						padding: 0 50px;
 						height: 45px;
 						font-size: ${menu_text_size};
 						color: ${menu_font_color};
 						text-decoration: none;
+					}
+					.selectedLink {
+						background: ${menu_font_color};
+						color: ${menu_bg_color};
 					}
 					.help-icon {
 						background: #5bb528;
@@ -100,6 +108,7 @@ export default function Dashboard({ history, authObj }) {
 						align-items: center;
 						justify-content: center;
 						color: white;
+						cursor: pointer;
 					}
 				}
 			}
@@ -109,11 +118,11 @@ export default function Dashboard({ history, authObj }) {
 		}
 		> .navbar-dropdown {
 			display: flex;
-			width: 25%;
+			width: 23%;
 			background: ${top_menu_dropdown_bg_color};
 			color: white;
 			align-items: center;
-			padding: 0 40px;
+			padding: 0 10px 0 30px;
 			justify-content: space-between;
 			position: relative;
 
@@ -121,18 +130,18 @@ export default function Dashboard({ history, authObj }) {
 				cursor: pointer;
 				p {
 					margin: 0;
-					font-size: 90%;
+					font-size: 95%;
 				}
 			}
 			.profile-picture {
 				position: absolute;
-				right: 40px;
-				bottom: -15px;
+				right: 20px;
+				bottom: -25px;
 				cursor: pointer;
 
 				img {
-					width: 55px;
-					height: 55px;
+					width: 68px;
+					height: 68px;
 					border-radius: 50%;
 					border: 4px solid ${top_menu_dropdown_bg_color};
 				}
@@ -215,46 +224,53 @@ export default function Dashboard({ history, authObj }) {
 			}
 		}
 	`;
+
 	let profileLetter = '';
+
 	const letter = () => {
-		let str = "Mark Wood";
-		let string = str.split(" ");
-		if (str.split(" ").length > 3) {
-			string = string.filter(value => { return value.length > 1 })
-
-
+		let str = 'Mark Wood';
+		let string = str.split(' ');
+		if (str.split(' ').length > 3) {
+			string = string.filter(value => {
+				return value.length > 1;
+			});
 		}
 		if (string.length > 3) {
-			string = string.map(value => { return value.replace("the", '') })
-			string = string.map(value => { return value.replace("NHS", '') })
-			string = string.filter(value => { return value != "" })
+			string = string.map(value => {
+				return value.replace('the', '');
+			});
+			string = string.map(value => {
+				return value.replace('NHS', '');
+			});
+			string = string.filter(value => {
+				return value != '';
+			});
 		}
 		let arr = [];
 		string.forEach((value, index) => {
 			if (index == 0) {
 				if (value.slice(0, 3).match('^[0-9]*$')) {
 					arr.push(value.slice(0, 3));
-				}
-
-				else if (index == 0) {
+				} else if (index == 0) {
 					if (value.slice(0, 2).match('^[0-9]*$')) {
 						arr.push(value.slice(0, 2));
-						arr.push(string[1].slice(0, 1))
+						arr.push(string[1].slice(0, 1));
 					}
 				}
 			}
 		});
-		let acronym = "";
+		let acronym = '';
 		if (arr.length == 0) {
-			acronym = string.slice(0, 3).reduce((response, word) => response += word.slice(0, 1), '')
-			
+			acronym = string
+				.slice(0, 3)
+				.reduce((response, word) => (response += word.slice(0, 1)), '');
 		}
 		if (arr.length == 1) {
 			acronym = arr[0];
 		}
-		if (arr.length==2){
-			acronym=arr[0]+arr[1]
-			console.log(acronym)
+		if (arr.length == 2) {
+			acronym = arr[0] + arr[1];
+			console.log(acronym);
 		}
 		// if (string.split(" ").length > 3) {
 		// 	string = str.replace(/[0-9]/g, '');
@@ -265,45 +281,70 @@ export default function Dashboard({ history, authObj }) {
 
 		profileLetter = acronym;
 	};
+
+	let iframeUrl = '';
+	switch (path) {
+		case 'patients':
+			iframeUrl = 'http://hypaiq-patient.cyb.co.uk/';
+			break;
+		case 'scheduler':
+			iframeUrl = 'http://hypa-scheduler.cyb.co.uk/';
+			break;
+		case 'admin':
+			iframeUrl = 'http://hypaiq-admin.cyb.co.uk/';
+			break;
+		default:
+			iframeUrl = '';
+	}
+
 	return (
 		<>
 			<TopMenu>
 				<nav>
 					<ul>
 						<li>
-							<a
-								href="javascript:void(0)"
+							<NavLink
+								to="/dashboard"
 								className="brand-link"
 								ref={el => setBrandLinkWidth(el?.getBoundingClientRect().width)}
+								// activeClassName="selectedLink"
 							>
 								<div>
 									<img src={logo} alt=".." />
 									<strong>HUB</strong>
 									<span>15</span>
 								</div>
-							</a>
+							</NavLink>
 						</li>
 						<li>
-							<a href="javascript:void(0)">Patients</a>
+							<NavLink to="/dashboard/patients" activeClassName="selectedLink">
+								Patients
+							</NavLink>
 						</li>
 						<li>
-							<a href="javascript:void(0)">Scheduler</a>
+							<NavLink to="/dashboard/scheduler" activeClassName="selectedLink">
+								Scheduler
+							</NavLink>
 						</li>
 						<li>
-							<a href="javascript:void(0)">Notes</a>
+							<NavLink to="/dashboard/notes" activeClassName="selectedLink">Notes</NavLink>
 						</li>
 						<li>
-							<a href="javascript:void(0)">Admin</a>
+							<NavLink to="/dashboard/admin" activeClassName="selectedLink">
+								Admin
+							</NavLink>
 						</li>
 						<li>
-							<a href="javascript:void(0)">Content</a>
+							<NavLink to="/dashboard/content" activeClassName="selectedLink">
+								Content
+							</NavLink>
 						</li>
 						<li>
-							<a href="javascript:void(0)">
-								<span className="help-icon">
-									<GrHelp />
-								</span>
-							</a>
+							{/* <a href="javascript:void(0)"> */}
+							<span className="help-icon">
+								<GrHelp />
+							</span>
+							{/* </a> */}
 						</li>
 					</ul>
 				</nav>
@@ -341,7 +382,7 @@ export default function Dashboard({ history, authObj }) {
 							onMouseLeave={() => setIsDropdownVisible(false)}
 						>
 							<div className="profile-picture-block">
-								<span >
+								<span>
 									<img src={private_img} alt="..." />
 								</span>
 								{/* <span
@@ -382,18 +423,29 @@ export default function Dashboard({ history, authObj }) {
 					)}
 				</div>
 			</TopMenu>
-			<div
-				style={{
-					marginTop: '4vh',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					color: '#777',
-					height: '80vh',
-				}}
-			>
-				<h4>Micro front End app</h4>
-			</div>
+			{iframeUrl ? (
+				<iframe
+					style={{ border: 0 }}
+					src={iframeUrl}
+					width="100%"
+					height="600px"
+				/>
+			) : (
+				<div
+					style={{
+						marginTop: '4vh',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						flexDirection: 'column',
+						color: '#777',
+						height: '80vh',
+					}}
+				>
+					<h3>Page you are looking is </h3>
+					<p>Not found or under development</p>					
+				</div>
+			)}
 		</>
 	);
 }
