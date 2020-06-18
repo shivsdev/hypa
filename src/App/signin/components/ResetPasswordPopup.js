@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { apiUrl } from '../../calls/apis';
 
-export default function ResetPasswordPopup({
+
+export default function ViewProfile({
 	email,
 	isPopupVisible,
 	togglePopup,
+	resetPassword
 }) {
 	const [isSent, setisSent] = useState(false);
 	const emailRef = useRef();
@@ -15,9 +18,18 @@ export default function ResetPasswordPopup({
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		setTimeout(() => {
-			setisSent(true);
-		}, 500);
+		let Data = {
+			"email": 'demo@mail.com'
+		}
+		apiUrl
+			.post('/account/forgotpassword', Data)
+			.then(({ data, status }) => {
+				resetPassword(emailRef.current.value);
+			})
+			.catch(err => {
+				console.log(err)
+			});
+
 	};
 
 	const closePopup = () => {
@@ -47,25 +59,25 @@ export default function ResetPasswordPopup({
 							</div>
 						</div>
 					) : (
-						<form onSubmit={handleSubmit}>
-							<div className="input-group">
-								{/* <label>Email</label> */}
-								<input
-									type="email"
-									defaultValue={email ? email : ''}
-									placeholder="Enter your email"
-									ref={emailRef}
-									name="reset-password"
-								/>
-							</div>
-							<p className="reset-text">
-								Check your inbox for reset password link, expires in a hour.
+							<form onSubmit={handleSubmit}>
+								<div className="input-group">
+									{/* <label>Email</label> */}
+									<input
+										type="email"
+										defaultValue={email ? email : ''}
+										placeholder="Enter your email"
+										ref={emailRef}
+										name="reset-password"
+									/>
+								</div>
+								<p className="reset-text">
+									Check your inbox for reset password link, expires in a hour.
 							</p>
-							<div className="reset-button-holder">
-								<button>RESET</button>
-							</div>
-						</form>
-					)}
+								<div className="reset-button-holder">
+									<button>RESET</button>
+								</div>
+							</form>
+						)}
 				</div>
 			</div>
 		</Popup>

@@ -6,7 +6,8 @@ import Resetpassword from './reset-password';
 import UserAgreement from './user-agreement';
 import Reset from './reset-password/reset-password';
 import Home from './home';
-import Dashboard from './dashboard'
+import Dashboard from './dashboard';
+
 
 const authObj = {
 	isAuthenticated:
@@ -25,8 +26,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 			authObj.isAuthenticated === true ? (
 				<Component {...props} authObj={authObj} />
 			) : (
-				<Redirect to="/" />
-			)
+					<Redirect to="/" />
+				)
 		}
 	/>
 );
@@ -38,11 +39,11 @@ export default function App() {
 				exact
 				path="/"
 				render={props => <Signin {...props} authObj={authObj} />}
-			/>			
+			/>
 			<Route exact path="/signup" render={props => <Signup {...props} authObj={authObj} />} />
 			<Route exact path="/reset" component={Resetpassword} />
 			<Route exact path="/user-agreement" component={UserAgreement} />
-			<Route exact path="/reset-password/:email" component={Reset} />
+			<Route exact path="/reset-password" component={Reset} />
 			<Route exact path="/home" component={Home} />
 			<PrivateRoute path="/dashboard" component={Dashboard} />
 		</div>

@@ -136,7 +136,11 @@ class Signin extends Component {
 					});
 			});
 	};
-
+	ResetPassword = (email) => {
+		this.togglePopup();
+		window.sessionStorage.setItem('email', email)
+		this.props.history.push("/reset")
+	}
 	renderErrorMessage = msg => {
 		if (!msg?.length) return null;
 		return <span style={{ color: 'red' }}>{msg}</span>;
@@ -149,6 +153,7 @@ class Signin extends Component {
 				email={email}
 				isPopupVisible={isVisible}
 				togglePopup={this.togglePopup}
+				resetPassword={this.ResetPassword}
 			/>
 		);
 	};
