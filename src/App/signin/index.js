@@ -81,7 +81,7 @@ class Signin extends Component {
 			email,
 			password,
 		};
-
+		let tempEmail = email;
 		apiUrl
 			.post('/account/login', data)
 			.then(({ data, status }) => {
@@ -100,6 +100,7 @@ class Signin extends Component {
 							};
 						},
 						() => {
+							window.sessionStorage.setItem('email', tempEmail);
 							this.saveAuthTokenInSession(data.token);
 							this.props.authObj.authenticate(true);
 							this.props.history.push('/dashboard');
@@ -130,7 +131,7 @@ class Signin extends Component {
 								...prevState.errors,
 								passwordErrMsg: null,
 								emailErrMsg: null,
-								loginErrMsg: `Your account blocked for 1 day`,
+								loginErrMsg: `Your account blocked for 5 min`,
 							},
 						};
 					});

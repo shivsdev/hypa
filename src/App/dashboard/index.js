@@ -5,7 +5,7 @@ import { GrHelp } from 'react-icons/gr';
 
 import logo from '../../assets/logo.png';
 import { apiUrlWithToken } from '../calls/apis';
-import SubMenu from './sub-menu';
+import Spinner from './components/Spinner';
 
 const private_img = require('../../assets/user-profile.jpg');
 const workgroup_profile =
@@ -14,6 +14,7 @@ const workgroup_profile =
 export default function Dashboard({ history, authObj, location }) {
 	const [brandLinkWidth, setBrandLinkWidth] = React.useState(0);
 	const [isDropdownVisible, setIsDropdownVisible] = React.useState(false);
+	const [isLoading, setIsLoading] = React.useState(false);
 	let path = location.pathname.split('/')[2];
 
 	const menu_bg_color = '#0F1662';
@@ -23,6 +24,7 @@ export default function Dashboard({ history, authObj, location }) {
 	const top_menu_dropdown_text_color = 'white';
 
 	const handleLogout = () => {
+		setIsLoading(true)
 		apiUrlWithToken
 			.post('/account/logout')
 			.then(res => {
@@ -297,6 +299,10 @@ export default function Dashboard({ history, authObj, location }) {
 			iframeUrl = '';
 	}
 
+	if(isLoading) {
+		return <Spinner msg="Loading ..." />
+	}
+
 	return (
 		<>
 			<TopMenu>
@@ -327,7 +333,9 @@ export default function Dashboard({ history, authObj, location }) {
 							</NavLink>
 						</li>
 						<li>
-							<NavLink to="/dashboard/notes" activeClassName="selectedLink">Notes</NavLink>
+							<NavLink to="/dashboard/notes" activeClassName="selectedLink">
+								Notes
+							</NavLink>
 						</li>
 						<li>
 							<NavLink to="/dashboard/admin" activeClassName="selectedLink">
@@ -354,7 +362,11 @@ export default function Dashboard({ history, authObj, location }) {
 						onClick={() => setIsDropdownVisible(true)}
 					>
 						<p>Welcome !</p>
-						<p>username@mail.com</p>
+						<p>
+							{window.sessionStorage.getItem('email')
+								? window.sessionStorage.getItem('email')
+								: 'username@email.com'}
+						</p>
 					</div>
 					<div
 						className="profile-picture"
@@ -443,7 +455,7 @@ export default function Dashboard({ history, authObj, location }) {
 					}}
 				>
 					<h3>Page you are looking is </h3>
-					<p>Not found or under development</p>					
+					<p>Not found or under development</p>
 				</div>
 			)}
 		</>
