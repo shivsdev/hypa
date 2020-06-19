@@ -22,6 +22,7 @@ export default function Dashboard({ history, authObj, location }) {
 	const menu_text_size = '16px';
 	const top_menu_dropdown_bg_color = '#4395A6';
 	const top_menu_dropdown_text_color = 'white';
+	const token = window.sessionStorage.getItem('token');
 
 	const handleLogout = () => {
 		setIsLoading(true)
@@ -433,7 +434,7 @@ export default function Dashboard({ history, authObj, location }) {
 			{iframeUrl ? (
 				<iframe
 					style={{ border: 0 }}
-					src={iframeUrl}
+					src={iframeUrl+`?token=${token}`}
 					width="100%"
 					height="600px"
 				/>
