@@ -7,6 +7,7 @@ import { FaEyeSlash } from 'react-icons/fa';
 import { device } from '../../exportables/exportables';
 import ResetPasswordPopup from './components/ResetPasswordPopup';
 import { apiUrl } from '../calls/apis';
+import axios from 'axios';
 
 class Signin extends Component {
 	constructor(props) {
@@ -20,6 +21,7 @@ class Signin extends Component {
 				nAttempt: 0,
 			},
 			isPopupVisible: false,
+			styles: {}
 		};
 		this.emailRef = createRef();
 		this.passwordRef = createRef();
@@ -29,6 +31,13 @@ class Signin extends Component {
 
 	componentDidMount() {
 		window.scrollTo(0, 0);
+		axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
+			.then((res) => {
+				this.setState({
+					styles: res.data
+				})
+			}
+			)
 	}
 
 	validateEmail(mail) {
@@ -155,6 +164,7 @@ class Signin extends Component {
 				isPopupVisible={isVisible}
 				togglePopup={this.togglePopup}
 				resetPassword={this.ResetPassword}
+				styles={this.state.styles}
 			/>
 		);
 	};
@@ -169,7 +179,6 @@ class Signin extends Component {
 		const passwordFieldName = isPasswordVisible ? 'text' : 'password';
 		const email = emailRef?.current?.value ? emailRef.current.value : null;
 		const { isPopupVisible } = this.state;
-
 		return (
 			<Styles>
 				<div className="logo-holder">

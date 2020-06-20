@@ -3,51 +3,60 @@ import hypaiq from './../../exportables/hypaiq.png';
 import styled from 'styled-components';
 import { Redirect, withRouter } from 'react-router-dom';
 import { device } from '../../exportables/exportables'
+import Axios from 'axios';
 
 let emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 class Reset extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            Redirect: null,
-            emailRef: React.createRef(),
-            emailError: null,
-        }
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			email: "",
+			Redirect: null,
+			emailRef: React.createRef(),
+			emailError: null,
+			styles: {}
+		}
+	}
 
-    componentDidUpdate() {
-        this.state.emailRef.current.value = this.state.email;
-    }
+	componentDidUpdate() {
+		this.state.emailRef.current.value = this.state.email;
+		Axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
+			.then((res) => {
+				this.setState({
+					styles: res.data
+				})
+			}
+			)
+	}
 
-    resetpassword = () => {
-        this.props.history.push('/reset-password')
-    }
+	resetpassword = () => {
+		this.props.history.push('/reset-password')
+	}
 
 
-    render() {
+	render() {
 
 
 
-        return (
-            < Styles>
-                <div className="logo-holder">
-                    <img src={hypaiq} alt="Hypaiq" />
-                </div>
-                <div className="content-box">
-                    <h1 className="second-row-title">Forgotton Password</h1>
-                    <h1 className="first-row-title">Reset Link</h1>
-                    <p className="hypa-intro">
-                        We have sent you a link via email to enable you to reset your password. Please check your in box and
-                        spam folder . The link is valid for 1 hr after which you will need to request another. alternatively
-                        you may ignore the mail and continue to log in with current password.
+		return (
+			< Styles>
+				<div className="logo-holder">
+					<img src={hypaiq} alt="Hypaiq" />
+				</div>
+				<div className="content-box">
+					<h1 className="second-row-title">Forgotton Password</h1>
+					<h1 className="first-row-title">Reset Link</h1>
+					<p className="hypa-intro">
+						We have sent you a link via email to enable you to reset your password. Please check your in box and
+						spam folder . The link is valid for 1 hr after which you will need to request another. alternatively
+						you may ignore the mail and continue to log in with current password.
 					</p>
-                    <Button onClick={this.resetpassword}>Reset Link</Button>
-                </div>
-            </Styles >
-        );
-    }
+					<Button onClick={this.resetpassword}>Reset Link</Button>
+				</div>
+			</Styles >
+		);
+	}
 }
 export default withRouter(Reset);
 const Styles = styled.div`
@@ -116,13 +125,13 @@ const Styles = styled.div`
     
 `;
 const Button = styled.button({
-    width: "60%",
-    height: "40px",
-    borderRadius: 5,
-    backgroundColor: " #009999",
-    borderWidth: 0,
-    marginTop: 20,
-    marginBottom: 20,
-    color: "#FFFFFF",
-    fontSize: "20px"
+	width: "60%",
+	height: "40px",
+	borderRadius: 5,
+	backgroundColor: " #009999",
+	borderWidth: 0,
+	marginTop: 20,
+	marginBottom: 20,
+	color: "#FFFFFF",
+	fontSize: "20px"
 })

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
+import axios from 'axios';
 
 import hypaiq from './../../exportables/hypaiq.png';
 import { device } from '../../exportables/exportables';
@@ -40,6 +41,13 @@ class Signup extends Component {
 
 	componentDidMount() {
 		window.scrollTo(0, 0);
+		axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
+			.then((res) => {
+				this.setState({
+					styles: res.data
+				})
+			}
+			)
 	}
 
 	componentDidUpdate(prevProps) {
@@ -263,11 +271,11 @@ class Signup extends Component {
 						>
 							<Label>Password</Label>
 							{this.state.uppError ||
-							this.state.numberError ||
-							this.state.SpecialError ||
-							this.state.lengthError ? (
-								<Errortext>Strong password required</Errortext>
-							) : null}
+								this.state.numberError ||
+								this.state.SpecialError ||
+								this.state.lengthError ? (
+									<Errortext>Strong password required</Errortext>
+								) : null}
 							<IconContext.Provider value={{ style: { fontSize: '15' } }}>
 								<div>
 									<FaEyeSlash

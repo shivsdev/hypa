@@ -7,7 +7,8 @@ export default function ViewProfile({
 	email,
 	isPopupVisible,
 	togglePopup,
-	resetPassword
+	resetPassword,
+	styles
 }) {
 	const [isSent, setisSent] = useState(false);
 	const emailRef = useRef();
@@ -35,7 +36,6 @@ export default function ViewProfile({
 	const closePopup = () => {
 		togglePopup();
 	};
-
 	return (
 		<Popup>
 			<div className="popup">

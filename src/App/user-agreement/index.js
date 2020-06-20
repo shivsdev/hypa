@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import hypaiq from './../../exportables/hypaiq.png';
 import { Link } from 'react-router-dom';
 import { device } from '../../exportables/exportables';
@@ -8,6 +9,13 @@ class UserAgreement extends Component {
 
 	componentDidMount() {
 		window.scrollTo(0, 0);
+		axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
+			.then((res) => {
+				this.setState({
+					styles: res.data
+				})
+			}
+			)
 	}
 
 	render() {

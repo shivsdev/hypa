@@ -17,6 +17,7 @@ class SubMenu extends Component {
     state = {
         activeKey: 'Profile',
     };
+    
     setActiveKey = event => {
         this.setState({
             activeKey: event,

@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { GrHelp } from 'react-icons/gr';
+import axios from 'axios';
 
 import logo from '../../assets/logo.png';
 import { apiUrlWithToken } from '../calls/apis';
@@ -23,6 +24,14 @@ export default function Dashboard({ history, authObj, location }) {
 	const top_menu_dropdown_bg_color = '#4395A6';
 	const top_menu_dropdown_text_color = 'white';
 	const token = window.sessionStorage.getItem('token');
+	let styles = {};
+
+	axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
+		.then((res) => {
+			console.log(res)
+			styles = res.data;
+		}
+		)
 
 	const handleLogout = () => {
 		setIsLoading(true)
@@ -283,20 +292,20 @@ export default function Dashboard({ history, authObj, location }) {
 	let iframeUrl = '';
 	switch (path) {
 		case 'patients':
-			iframeUrl = 'http://hypaiq-patient.cyb.co.uk/';
+			iframeUrl = 'http://localhost:3002/';
 			break;
 		case 'scheduler':
-			iframeUrl = 'http://hypa-scheduler.cyb.co.uk/';
+			iframeUrl = 'http://localhost:3003/';
 			break;
 		case 'admin':
-			iframeUrl = 'http://hypaiq-admin.cyb.co.uk/';
+			iframeUrl = 'http://localhost:3000/';
 			break;
 		default:
 			iframeUrl = '';
 	}
 
-	if(isLoading) {
-		return <Spinner msg="Loading ..." />
+	if (isLoading) {
+		return <Spinner msg="Loading ..." styles={styles} />
 	}
 
 	return (
@@ -439,21 +448,21 @@ export default function Dashboard({ history, authObj, location }) {
 					height="600px"
 				/>
 			) : (
-				<div
-					style={{
-						marginTop: '4vh',
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-						flexDirection: 'column',
-						color: '#777',
-						height: '80vh',
-					}}
-				>
-					<h3>Page you are looking is </h3>
-					<p>Not found or under development</p>
-				</div>
-			)}
+					<div
+						style={{
+							marginTop: '4vh',
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							flexDirection: 'column',
+							color: '#777',
+							height: '80vh',
+						}}
+					>
+						<h3>Page you are looking is </h3>
+						<p>Not found or under development</p>
+					</div>
+				)}
 		</>
 	);
 }
