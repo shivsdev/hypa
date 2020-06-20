@@ -292,13 +292,13 @@ export default function Dashboard({ history, authObj, location }) {
 	let iframeUrl = '';
 	switch (path) {
 		case 'patients':
-			iframeUrl = 'http://localhost:3002/';
+			iframeUrl = 'http://hypaiq-patient.cyb.co.uk/';
 			break;
 		case 'scheduler':
-			iframeUrl = 'http://localhost:3003/';
+			iframeUrl = 'http://hypa-scheduler.cyb.co.uk/';
 			break;
 		case 'admin':
-			iframeUrl = 'http://localhost:3000/';
+			iframeUrl = 'http://hypaiq-admin.cyb.co.uk/';
 			break;
 		default:
 			iframeUrl = '';
@@ -443,7 +443,7 @@ export default function Dashboard({ history, authObj, location }) {
 			{iframeUrl ? (
 				<iframe
 					style={{ border: 0 }}
-					src={iframeUrl+`?token=${token}`}
+					src={iframeUrl + `?token=${token}`}
 					width="100%"
 					height="600px"
 				/>
