@@ -1,10 +1,3 @@
-// Scroll bar design
-// Text input
-// Textarea 
-// Select
-// Tooltip
-
-
 export const size = {
 	mobileS: '320px',
 	mobileM: '375px',
