@@ -7,6 +7,7 @@ import UserAgreement from './user-agreement';
 import Reset from './reset-password/reset-password';
 import Home from './home';
 import Dashboard from './dashboard';
+import Confirmation from './signup/authentication';
 
 
 const authObj = {
@@ -45,6 +46,8 @@ export default function App() {
 			<Route exact path="/user-agreement" component={UserAgreement} />
 			<Route exact path="/reset-password" component={Reset} />
 			<Route exact path="/home" component={Home} />
+			<Route exact path="/email-verification" component={Confirmation} />
+			<Route exact path="/verify-email" component={Confirmation} />
 			<PrivateRoute path="/dashboard" component={Dashboard} />
 		</div>
 	);

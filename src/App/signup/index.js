@@ -15,7 +15,7 @@ class Signup extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: '',
+			email: sessionStorage.getItem('email'),
 			password: '',
 			emailRef: React.createRef(),
 			passwordRef: React.createRef(),
@@ -34,20 +34,29 @@ class Signup extends Component {
 			focused: React.createRef(),
 			passwordError: false,
 			checkedError: false,
+			styles: {
+				top_menu_button: {
+
+				}
+			}
 		};
 		if (this.props.authObj.isAuthenticated)
 			this.props.history.push('/dashboard');
 	}
 
-	componentDidMount() {
-		window.scrollTo(0, 0);
+
+	componentWillMount() {
 		axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
 			.then((res) => {
+				console.log("doneasdas")
 				this.setState({
 					styles: res.data
 				})
 			}
 			)
+
+		window.scrollTo(0, 0);
+
 	}
 
 	componentDidUpdate(prevProps) {
@@ -185,7 +194,7 @@ class Signup extends Component {
 					.post('/account/register', data)
 					.then(({ status, data }) => {
 						if ((status === 200) & (data.status === 'success')) {
-							this.props.history.push('/');
+							this.props.history.push('/email-verification');
 						}
 					})
 					.catch(err => {
@@ -196,6 +205,21 @@ class Signup extends Component {
 	};
 
 	render() {
+
+		const signup_button_color = this.state.styles.top_menu_button;
+		const Button = styled.button({
+			width: '100%',
+			height: '40px',
+			borderRadius: 5,
+			backgroundColor: signup_button_color.passive_border_colour,
+			borderWidth: 0,
+			marginTop: 5,
+			marginBottom: 20,
+			color: signup_button_color.active_border_colour,
+			fontSize: 18,
+			fontWeight: 'bold',
+			cursor: 'pointer',
+		});
 		const Chardiv = styled.div({
 			backgroundColor: this.state.charColor,
 			height: '10px',
@@ -225,6 +249,11 @@ class Signup extends Component {
 			borderRadius: 5,
 			marginLeft: '12px',
 		});
+		if (this.state.styles === null) {
+			return (
+				<div></div>
+			);
+		}
 
 		return (
 			<Styles>
@@ -441,19 +470,7 @@ const Input = styled.input`
 	margin-top: 3px;
 `;
 
-const Button = styled.button({
-	width: '100%',
-	height: '40px',
-	borderRadius: 5,
-	backgroundColor: ' #009999',
-	borderWidth: 0,
-	marginTop: 5,
-	marginBottom: 20,
-	color: '#FFFFFF',
-	fontSize: 18,
-	fontWeight: 'bold',
-	cursor: 'pointer',
-});
+
 const AgreeText = styled.p({
 	fontSize: 12,
 	marginTop: 0,

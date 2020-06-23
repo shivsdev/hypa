@@ -16,23 +16,28 @@ export default function Dashboard({ history, authObj, location }) {
 	const [brandLinkWidth, setBrandLinkWidth] = React.useState(0);
 	const [isDropdownVisible, setIsDropdownVisible] = React.useState(false);
 	const [isLoading, setIsLoading] = React.useState(false);
+	const [styles, setStyles] = React.useState({
+		top_menu_button: {
+
+		}
+	});
 	let path = location.pathname.split('/')[2];
 
-	const menu_bg_color = '#0F1662';
-	const menu_font_color = 'white';
-	const menu_text_size = '16px';
-	const top_menu_dropdown_bg_color = '#4395A6';
-	const top_menu_dropdown_text_color = 'white';
+
 	const token = window.sessionStorage.getItem('token');
-	let styles = {};
+React.useEffect(() => {
+	let res = axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
+	.then((res) => {
+		setStyles(res.data)
+	}
+	)
+})
 
-	axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
-		.then((res) => {
-			console.log(res)
-			styles = res.data;
-		}
-		)
-
+	const menu_bg_color = styles.top_menu_button.passive_background_colour;
+	const menu_font_color = styles.top_menu_button.passive_text_colour;
+	const menu_text_size = '16px';
+	const top_menu_dropdown_bg_color = styles.top_menu_button.passive_border_colour;
+	const top_menu_dropdown_text_color = styles.top_menu_button.passive_text_colour;
 	const handleLogout = () => {
 		setIsLoading(true)
 		apiUrlWithToken
@@ -46,7 +51,6 @@ export default function Dashboard({ history, authObj, location }) {
 				alert(error.response.data.msg);
 			});
 	};
-
 	React.useLayoutEffect(() => { }, [brandLinkWidth]);
 
 	const TopMenu = styled.div`

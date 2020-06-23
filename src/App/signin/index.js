@@ -8,6 +8,7 @@ import { device } from '../../exportables/exportables';
 import ResetPasswordPopup from './components/ResetPasswordPopup';
 import { apiUrl } from '../calls/apis';
 import axios from 'axios';
+import signup from '../signup';
 
 class Signin extends Component {
 	constructor(props) {
@@ -172,8 +173,13 @@ class Signin extends Component {
 	togglePopup = () => {
 		this.setState({ isPopupVisible: !this.state.isPopupVisible });
 	};
+	signup = () => {
+		window.sessionStorage.setItem('email', this.emailRef.current.value);
+		this.props.history.push("/signup")
+	}
 
 	render() {
+
 		const { handleSubmit, renderErrorMessage, emailRef, passwordRef } = this;
 		const { isPasswordVisible, errors } = this.state;
 		const passwordFieldName = isPasswordVisible ? 'text' : 'password';
@@ -227,7 +233,7 @@ class Signin extends Component {
 						<Button>SIGN IN</Button>
 						<br />
 						Don't have an account ?
-						<Link style={{ color: '#009999', marginLeft: 5 }} to="/signup">
+						<Link style={{ color: '#009999', marginLeft: 5 }} onClick={this.signup}>
 							Sign up
 						</Link>
 					</form>
