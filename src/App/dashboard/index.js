@@ -1,40 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { GrHelp } from 'react-icons/gr';
-import axios from 'axios';
 
 import logo from '../../assets/logo.png';
-import { apiUrlWithToken } from '../calls/apis';
+import private_img from '../../assets/user-profile.jpg';
+import { apiUrlWithToken, apiUrl } from '../calls/apis';
 import Spinner from './components/Spinner';
-
-const private_img = require('../../assets/user-profile.jpg');
-const workgroup_profile =
-	'https://images.unsplash.com/photo-1581360742512-021d5b2157d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&q=80';
+import NotFound from './components/NotFound';
 
 export default function Dashboard({ history, authObj, location }) {
-	const [brandLinkWidth, setBrandLinkWidth] = React.useState(0);
-	const [isDropdownVisible, setIsDropdownVisible] = React.useState(false);
-	const [isLoading, setIsLoading] = React.useState(false);
-	let path = location.pathname.split('/')[2];
-
-	const menu_bg_color = '#0F1662';
-	const menu_font_color = 'white';
-	const menu_text_size = '16px';
-	const top_menu_dropdown_bg_color = '#4395A6';
-	const top_menu_dropdown_text_color = 'white';
+	const [brandLinkWidth, setBrandLinkWidth] = useState(161.125);
+	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [theme, setTheme] = useState(null);
 	const token = window.sessionStorage.getItem('token');
-	let styles = {};
-
-	axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
-		.then((res) => {
-			console.log(res)
-			styles = res.data;
-		}
-		)
+	const path = location.pathname.split('/')[2];
 
 	const handleLogout = () => {
-		setIsLoading(true)
+		setIsLoading(true);
 		apiUrlWithToken
 			.post('/account/logout')
 			.then(res => {
@@ -47,198 +31,22 @@ export default function Dashboard({ history, authObj, location }) {
 			});
 	};
 
-	React.useLayoutEffect(() => { }, [brandLinkWidth]);
-
-	const TopMenu = styled.div`
-		display: flex;
-		margin-bottom: 30px;
-		nav {
-			width: 77%;
-			background: ${menu_bg_color};
-			ul {
-				padding: 0;
-				margin: 0%;
-				border-bottom: 5px solid ${top_menu_dropdown_bg_color};
-				position: relative;
-				li {
-					display: inline-flex;
-					background: ${menu_bg_color};
-					:first-child {
-						background: red;
-						width: ${brandLinkWidth + 15}px;
-					}
-					.brand-link {
-						position: absolute;
-						top: 15px;
-						left: 5px;
-						border: 1px solid white;
-						padding: 0;
-
-						div {
-							display: inline-flex;
-							align-items: center;
-							position: relative;
-							img {
-								height: 40px;
-							}
-							strong {
-								font-weight: bold;
-								font-size: 2em;
-								padding: 0 20px;
-							}
-							span {
-								position: absolute;
-								background: red;
-								border-radius: 10px;
-								padding: 0 4px;
-								font-size: 10px;
-								top: 5%;
-								right: -5%;
-							}
-						}
-					}
-					a {
-						display: inline-flex;
-						align-items: center;
-						background: ${menu_bg_color};
-						padding: 0 50px;
-						height: 45px;
-						font-size: ${menu_text_size};
-						color: ${menu_font_color};
-						text-decoration: none;
-					}
-					.selectedLink {
-						background: ${menu_font_color};
-						color: ${menu_bg_color};
-					}
-					.help-icon {
-						background: #5bb528;
-						border-radius: 20px;
-						width: 25px;
-						height: 25px;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						color: white;
-						cursor: pointer;
-					}
-				}
-			}
-		}
-		path {
-			stroke: white;
-		}
-		> .navbar-dropdown {
-			display: flex;
-			width: 23%;
-			background: ${top_menu_dropdown_bg_color};
-			color: white;
-			align-items: center;
-			padding: 0 10px 0 30px;
-			justify-content: space-between;
-			position: relative;
-
-			.profile-info {
-				cursor: pointer;
-				p {
-					margin: 0;
-					font-size: 95%;
-				}
-			}
-			.profile-picture {
-				position: absolute;
-				right: 20px;
-				bottom: -25px;
-				cursor: pointer;
-
-				img {
-					width: 68px;
-					height: 68px;
-					border-radius: 50%;
-					border: 4px solid ${top_menu_dropdown_bg_color};
-				}
-			}
-			.show-dropdown {
-				box-sizing: border-box;
-				position: absolute;
-				top: 0;
-				left: 2%;
-				width: 96%;
-				min-height: 350px;
-				background: white;
-				border: 2px solid #999;
-				border-radius: 10px;
-				padding: 10px;
-				margin: auto;
-				color: #666;
-				font-size: 90%;
-				.profile-picture-block {
-					display: flex;
-					justify-content: flex-end;
-					width: 100%;
-					span {
-						border-radius: 50%;
-						border: 3px solid #999;
-						width: 40px;
-						height: 40px;
-						overflow: hidden;
-						img {
-							width: 100%;
-						}
-					}
-				}
-				.persona-name {
-					border-bottom: 2px solid #999;
-					p {
-						margin: 5px 0;
-					}
-				}
-				.current-persona-info {
-					border-bottom: 2px solid #999;
-					p {
-						margin: 5px 0;
-					}
-				}
-				.personas-container {
-					padding: 0;
-					.persona-item {
-						display: flex;
-						padding: 5px 0;
-						margin: 2px 0;
-						cursor: pointer;
-						align-items: center;
-						:hover {
-							background: #eee;
-						}
-						.persona-item-image {
-							border-radius: 50%;
-							border: 3px solid #999;
-							width: 40px;
-							height: 40px;
-							overflow: hidden;
-							img {
-								width: 100%;
-							}
-						}
-						.persona-item-text {
-							padding-left: 10px;
-						}
-					}
-				}
-				button {
-					border: 0;
-					background: 0;
-					color: #666;
-					padding: 5px;
-					cursor: pointer;
-					margin-top: 40px;
-				}
-			}
-		}
-	`;
+	let iframeUrl = '';
+	switch (path) {
+		case 'patients':
+			iframeUrl = 'http://hypaiq-patient.cyb.co.uk/';
+			break;
+		case 'scheduler':
+			iframeUrl = 'http://hypa-scheduler.cyb.co.uk/';
+			break;
+		case 'admin':
+			iframeUrl = 'http://hypaiq-admin.cyb.co.uk/';
+			break;
+		default:
+			iframeUrl = '';
+	}
 
 	let profileLetter = '';
-
 	const letter = () => {
 		let str = 'Mark Wood';
 		let string = str.split(' ');
@@ -285,32 +93,32 @@ export default function Dashboard({ history, authObj, location }) {
 			console.log(acronym);
 		}
 
-
 		profileLetter = acronym;
 	};
 
-	let iframeUrl = '';
-	switch (path) {
-		case 'patients':
-			iframeUrl = 'http://hypaiq-patient.cyb.co.uk/';
-			break;
-		case 'scheduler':
-			iframeUrl = 'http://hypa-scheduler.cyb.co.uk/';
-			break;
-		case 'admin':
-			iframeUrl = 'http://hypaiq-admin.cyb.co.uk/';
-			break;
-		default:
-			iframeUrl = '';
-	}
+	React.useEffect(() => {
+		const theme_temp = {
+			menu_bg_color: '#0F1662',
+			menu_font_color: 'white',
+			menu_text_size: '16px',
+			top_menu_dropdown_bg_color: '#4395A6',
+			top_menu_dropdown_text_color: 'white',
+		};
+
+		apiUrl.get('/uiobjects/styles').then(res => {
+			setTheme({ ...theme_temp, ...res.data });
+			setIsLoading(false);
+		});
+
+	}, [brandLinkWidth, theme]);
 
 	if (isLoading) {
-		return <Spinner msg="Loading ..." styles={styles} />
+		return <Spinner msg="Loading ..." theme={theme} />;
 	}
 
 	return (
 		<>
-			<TopMenu>
+			<TopMenu theme={theme}>
 				<nav>
 					<ul>
 						<li>
@@ -318,7 +126,6 @@ export default function Dashboard({ history, authObj, location }) {
 								to="/dashboard"
 								className="brand-link"
 								ref={el => setBrandLinkWidth(el?.getBoundingClientRect().width)}
-							// activeClassName="selectedLink"
 							>
 								<div>
 									<img src={logo} alt=".." />
@@ -428,18 +235,19 @@ export default function Dashboard({ history, authObj, location }) {
 									</span>
 									<p className="persona-item-text">Private</p>
 								</li>
-								<li className="persona-item">
+								{/* <li className="persona-item">
 									<span className="persona-item-image">
 										<img src={workgroup_profile} alt="..." />
 									</span>
 									<p className="persona-item-text">Workgroup Name</p>
-								</li>
+								</li> */}
 							</ul>
 							<button onClick={() => handleLogout()}>Log Out</button>
 						</div>
 					)}
 				</div>
 			</TopMenu>
+			
 			{iframeUrl ? (
 				<iframe
 					style={{ border: 0 }}
@@ -448,21 +256,197 @@ export default function Dashboard({ history, authObj, location }) {
 					height="600px"
 				/>
 			) : (
-					<div
-						style={{
-							marginTop: '4vh',
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-							flexDirection: 'column',
-							color: '#777',
-							height: '80vh',
-						}}
-					>
-						<h3>Page you are looking is </h3>
-						<p>Not found or under development</p>
-					</div>
-				)}
+				<NotFound />
+			)}
 		</>
 	);
 }
+
+const TopMenu = styled.div`
+	display: flex;
+	margin-bottom: 30px;
+	nav {
+		width: 77%;		
+		background: ${props => props.theme.main_menu.background_colour};
+		ul {
+			padding: 0;
+			margin: 0%;
+			border-bottom: 5px solid
+				${props => props.theme.top_menu_dropdown_bg_color};
+			position: relative;
+			li {
+				display: inline-flex;
+				background: ${props => props.theme.menu_bg_color};
+				:first-child {
+					background: red;
+					width: ${props => props.theme.brandLinkWidth + 15}px;
+				}
+				.brand-link {
+					position: absolute;
+					top: 15px;
+					left: 5px;
+					border: 1px solid white;
+					padding: 0;
+
+					div {
+						display: inline-flex;
+						align-items: center;
+						position: relative;
+						img {
+							height: 40px;
+						}
+						strong {
+							font-weight: bold;
+							font-size: 2em;
+							padding: 0 20px;
+						}
+						span {
+							position: absolute;
+							background: red;
+							border-radius: 10px;
+							padding: 0 4px;
+							font-size: 10px;
+							top: 5%;
+							right: -5%;
+						}
+					}
+				}
+				a {
+					display: inline-flex;
+					align-items: center;
+					background: ${props => props.theme.menu_bg_color};
+					padding: 0 50px;
+					height: 45px;
+					font-size: ${props => props.theme.menu_text_size};
+					color: ${props => props.theme.menu_font_color};
+					text-decoration: none;
+				}
+				.selectedLink {
+					background: ${props => props.theme.menu_font_color};
+					color: ${props => props.theme.menu_bg_color};
+				}
+				.help-icon {
+					background: #5bb528;
+					border-radius: 20px;
+					width: 25px;
+					height: 25px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					color: white;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+	path {
+		stroke: white;
+	}
+	> .navbar-dropdown {
+		display: flex;
+		width: 23%;
+		background: ${props => props.theme.top_menu_dropdown_bg_color};
+		color: white;
+		align-items: center;
+		padding: 0 10px 0 30px;
+		justify-content: space-between;
+		position: relative;
+
+		.profile-info {
+			cursor: pointer;
+			p {
+				margin: 0;
+				font-size: 95%;
+			}
+		}
+		.profile-picture {
+			position: absolute;
+			right: 20px;
+			bottom: -25px;
+			cursor: pointer;
+
+			img {
+				width: 68px;
+				height: 68px;
+				border-radius: 50%;
+				border: 4px solid ${props => props.theme.top_menu_dropdown_bg_color};
+			}
+		}
+		.show-dropdown {
+			box-sizing: border-box;
+			position: absolute;
+			top: 0;
+			left: 2%;
+			width: 96%;
+			min-height: 350px;
+			background: white;
+			border: 2px solid #999;
+			border-radius: 10px;
+			padding: 10px;
+			margin: auto;
+			color: #666;
+			font-size: 90%;
+			.profile-picture-block {
+				display: flex;
+				justify-content: flex-end;
+				width: 100%;
+				span {
+					border-radius: 50%;
+					border: 3px solid #999;
+					width: 40px;
+					height: 40px;
+					overflow: hidden;
+					img {
+						width: 100%;
+					}
+				}
+			}
+			.persona-name {
+				border-bottom: 2px solid #999;
+				p {
+					margin: 5px 0;
+				}
+			}
+			.current-persona-info {
+				border-bottom: 2px solid #999;
+				p {
+					margin: 5px 0;
+				}
+			}
+			.personas-container {
+				padding: 0;
+				.persona-item {
+					display: flex;
+					padding: 5px 0;
+					margin: 2px 0;
+					cursor: pointer;
+					align-items: center;
+					:hover {
+						background: #eee;
+					}
+					.persona-item-image {
+						border-radius: 50%;
+						border: 3px solid #999;
+						width: 40px;
+						height: 40px;
+						overflow: hidden;
+						img {
+							width: 100%;
+						}
+					}
+					.persona-item-text {
+						padding-left: 10px;
+					}
+				}
+			}
+			button {
+				border: 0;
+				background: 0;
+				color: #666;
+				padding: 5px;
+				cursor: pointer;
+				margin-top: 40px;
+			}
+		}
+	}
+`;

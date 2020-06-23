@@ -8,14 +8,14 @@ import Reset from './reset-password/reset-password';
 import Home from './home';
 import Dashboard from './dashboard';
 
-
 const authObj = {
 	isAuthenticated:
 		JSON.parse(window.sessionStorage.getItem('isAuthenticated')) || false,
 	authenticate(isLoggedBool) {
 		window.sessionStorage.setItem('isAuthenticated', isLoggedBool);
-		let token = window.sessionStorage.getItem('token')
-		this.isAuthenticated = token && JSON.parse(window.sessionStorage.getItem('isAuthenticated'));
+		let token = window.sessionStorage.getItem('token');
+		this.isAuthenticated =
+			token && JSON.parse(window.sessionStorage.getItem('isAuthenticated'));
 	},
 };
 
@@ -26,8 +26,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 			authObj.isAuthenticated === true ? (
 				<Component {...props} authObj={authObj} />
 			) : (
-					<Redirect to="/" />
-				)
+				<Redirect to="/" />
+			)
 		}
 	/>
 );
@@ -40,7 +40,11 @@ export default function App() {
 				path="/"
 				render={props => <Signin {...props} authObj={authObj} />}
 			/>
-			<Route exact path="/signup" render={props => <Signup {...props} authObj={authObj} />} />
+			<Route
+				exact
+				path="/signup"
+				render={props => <Signup {...props} authObj={authObj} />}
+			/>
 			<Route exact path="/reset" component={Resetpassword} />
 			<Route exact path="/user-agreement" component={UserAgreement} />
 			<Route exact path="/reset-password" component={Reset} />

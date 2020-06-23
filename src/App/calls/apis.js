@@ -15,6 +15,7 @@ apiUrl.interceptors.request.use(function (config) {
   config.headers.accept = 'application/json';
   return config;
 })
+
 apiUrlWithToken.interceptors.request.use(function (config) {
   config.headers.accept = 'application/json';
 	config.headers.Authorization = `Bearer ${token}`;

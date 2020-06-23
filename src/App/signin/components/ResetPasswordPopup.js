@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { apiUrl } from '../../calls/apis';
 
-
 export default function ViewProfile({
 	email,
 	isPopupVisible,
