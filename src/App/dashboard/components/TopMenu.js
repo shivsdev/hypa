@@ -14,6 +14,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 	const [toggled, setToggled] = useState(false);
 	const [width, setWidth] = useState(window.innerWidth);
+	const [persona, setPersona] = useState(null);
 
 	const handleLogout = () => {
 		setIsLoading(true);
@@ -33,11 +34,24 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 		setToggled(!toggled);
 	};
 
+	const getValueIfExists = (value, additional = null) => {
+		return value ? value + additional : null;
+	};
+
 	useEffect(() => {
-		window.addEventListener('resize', () => {
-			// setWidth(window.innerWidth);
+		let email = window.sessionStorage.getItem('email');
+		apiUrlWithToken.get(`/account/find/${email}`).then(({ data }) => {
+			const profile = data.account[0];
+			if (profile?.personaldetails) {
+				const { personaldetails, email } = profile;
+				const { title, firstname, lastname } = personaldetails;
+				let name = `${getValueIfExists(title, '.')} ${getValueIfExists(
+					firstname
+				)} ${getValueIfExists(lastname)}`;
+				setPersona({ name, email });
+			}
 		});
-	}, [window]);
+	}, []);
 
 	console.log('theme', theme);
 	/*
@@ -65,7 +79,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 							<div>
 								<img src={logo} alt=".." />
 								<strong>HUB</strong>
-								<span>15</span>
+								<span>0</span>
 							</div>
 						</NavLink>
 					</li>
@@ -142,11 +156,13 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 						setIsDropdownVisible(true);
 					}}
 				>
-					<p>Welcome !</p>
+					<p>{persona ? persona.name : 'Welcome !'}</p>
 					<p>
-						{window.sessionStorage.getItem('email')
+						{persona
+							? persona.email
+							: window.sessionStorage.getItem('email')
 							? window.sessionStorage.getItem('email')
-							: 'username@email.com'}
+							: ''}
 					</p>
 				</div>
 				<div
@@ -175,9 +191,9 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 							<p>Private</p>
 						</div>
 						<div className="current-persona-info">
-							<p>username</p>
-							<p>USER_ID 481490</p>
-							<p>Last logged in @ 12/07/2019 - 12:05</p>
+							<p>{persona ? persona.name : 'username_temp'}</p>
+							<p>USER_ID 481490_temp</p>
+							<p>Last logged in @ 12/07/2019 - 12:05-temp</p>
 						</div>
 						<ul className="personas-container">
 							<li className="persona-item">
@@ -187,7 +203,20 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 								<p className="persona-item-text">Private</p>
 							</li>
 						</ul>
-						<button onClick={() => handleLogout()}>Log Out</button>
+						<ul className="persona-bottom-links">
+							<li>
+								<button>Create new Group</button>
+							</li>
+							<li>
+								<button>Invite a user</button>
+							</li>
+							<li>
+								<button>Account info</button>
+							</li>
+							<li>
+								<button onClick={() => handleLogout()}>Log Out</button>
+							</li>
+						</ul>
 					</div>
 				)}
 			</div>
@@ -198,14 +227,14 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 export default TopMenu;
 
 const getResponsiveFontSize = (sizeinpx, width) => {
-	let fontSize = parseInt(sizeinpx.substr(0, 2));	
-	let result = (fontSize / width * 80 )+ 'vw';
+	let fontSize = parseInt(sizeinpx.substr(0, 2));
+	let result = (fontSize / width) * 80 + 'vw';
 	return result;
 };
 
 const TopMenuStyles = styled.div`
 	display: flex;
-	margin-bottom: 30px;
+	/* margin-bottom: 30px; */
 	nav {
 		width: 77%;
 		background: ${props => props.theme.main_menu.background_colour};
@@ -216,9 +245,7 @@ const TopMenuStyles = styled.div`
 			padding: 0;
 			margin: 0%;
 			border-bottom: 5px solid
-				${props =>
-					props.theme.main_menu
-						.highlight_colour};
+				${props => props.theme.main_menu.highlight_colour};
 			position: relative;
 			white-space: nowrap;
 			li {
@@ -416,13 +443,20 @@ const TopMenuStyles = styled.div`
 					}
 				}
 			}
-			button {
-				border: 0;
-				background: 0;
-				color: #666;
-				padding: 5px;
-				cursor: pointer;
+			.persona-bottom-links {
 				margin-top: 40px;
+				border-top: 1px solid #999;
+				li {
+					button {
+						border: 0;
+						background: 0;
+						color: #666;
+						padding: 5px;
+						cursor: pointer;
+						outline: 0;
+					}
+				}
+			
 			}
 		}
 	}

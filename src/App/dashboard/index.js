@@ -25,10 +25,6 @@ export default function Dashboard({ history, authObj, location }) {
 			iframeUrl = '';
 	}
 
-	// const menu_font_color = styles.top_menu_button.passive_text_colour;
-	// const top_menu_dropdown_bg_color = styles.top_menu_button.passive_border_colour;
-	// const top_menu_dropdown_text_color = styles.top_menu_button.passive_text_colour;
-
 	React.useEffect(() => {
 		const theme_temp = {
 			top_menu_dropdown_bg_color: '#4395A6',
@@ -55,10 +51,9 @@ export default function Dashboard({ history, authObj, location }) {
 
 			{iframeUrl ? (
 				<iframe
-					style={{ border: 0 }}
+					style={{ border: 0, height: 'calc(100vh - 70px)' }}
 					src={iframeUrl + `?token=${token}`}
-					width="100%"
-					height="600px"
+					width="100%"					
 				/>
 			) : (
 				<NotFound />
