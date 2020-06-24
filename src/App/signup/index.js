@@ -35,9 +35,21 @@ class Signup extends Component {
 			passwordError: false,
 			checkedError: false,
 			styles: {
-				top_menu_button: {
-
-				}
+				title1_colour: "#009999",
+				title1_font_size: "60px",
+				title2_colour: "#000066",
+				title2_font_size: "50px",
+				error_text_colour: "#ff0000",
+				label_text_colour: "#676767",
+				check_box_border_colour: "#009999",
+				button_bg_colour: "#009999",
+				button_text_colour: "#ffffff",
+				button_text_font: "18px",
+				password_passive_colour: "#b3b3b3",
+				password_active_colour: "#33cc33",
+				password_error_colour: "#ff0000",
+				green_text_colour: "#009999",
+				icon_passive_colour: "#ccc"
 			}
 		};
 		if (this.props.authObj.isAuthenticated)
@@ -50,7 +62,7 @@ class Signup extends Component {
 			.then((res) => {
 				console.log("doneasdas")
 				this.setState({
-					styles: res.data
+					styles: { ...this.state.styles, ...res.data }
 				})
 			}
 			)
@@ -101,52 +113,52 @@ class Signup extends Component {
 			this.setState({
 				passwordError: true,
 				lengthError: true,
-				charColor: '#ff0000',
+				charColor: this.state.styles.password_error_colour,
 			});
 		} else {
 			this.setState({
 				passwordError: false,
 				lengthError: false,
-				charColor: '#33cc33',
+				charColor: this.state.styles.password_active_colour,
 			});
 		}
 		if (this.state.passwordRef.current.value.search(/[0-9]/) < 0) {
 			this.setState({
 				passwordError: true,
 				numberError: true,
-				numberColor: '#ff0000',
+				numberColor: this.state.styles.password_error_colour,
 			});
 		} else {
 			this.setState({
 				passwordError: false,
 				numberError: false,
-				numberColor: '#33cc33',
+				numberColor: this.state.styles.password_active_colour,
 			});
 		}
 		if (this.state.passwordRef.current.value.search(/[A-Z]/) < 0) {
 			this.setState({
 				passwordError: true,
 				uppError: true,
-				uppColor: '#ff0000',
+				uppColor: this.state.styles.password_error_colour,
 			});
 		} else {
 			this.setState({
 				passwordError: false,
 				uppError: false,
-				uppColor: '#33cc33',
+				uppColor: this.state.styles.password_active_colour,
 			});
 		}
 		if (this.state.passwordRef.current.value.search(/[!#$%&@? ]/) < 0) {
 			this.setState({
 				passwordError: true,
 				SpecialError: true,
-				specialColor: '#ff0000',
+				specialColor: this.state.styles.password_error_colour,
 			});
 		} else {
 			this.setState({
 				passwordError: false,
 				SpecialError: false,
-				specialColor: '#33cc33',
+				specialColor: this.state.styles.password_active_colour,
 			});
 		}
 	};
@@ -205,21 +217,16 @@ class Signup extends Component {
 	};
 
 	render() {
-		const title1_colour = "#009999";
-		const title2_colour = "#000066";
-		const error_text_colour = "#ff0000";
-		const label_text_colour = "#676767";
-		const check_box_border_colour = "#009999";
-		const signup_button_color = this.state.styles.top_menu_button;
+		const width = window.innerWidth;
 		const Button = styled.button({
 			width: '100%',
 			height: '40px',
 			borderRadius: 5,
-			backgroundColor: signup_button_color.passive_border_colour,
+			backgroundColor: this.state.styles.button_bg_colour,
 			borderWidth: 0,
 			marginTop: 5,
 			marginBottom: 20,
-			color: signup_button_color.active_border_colour,
+			color: this.state.styles.button_text_colour,
 			fontSize: 18,
 			fontWeight: 'bold',
 			cursor: 'pointer',
@@ -253,93 +260,6 @@ class Signup extends Component {
 			borderRadius: 5,
 			marginLeft: '12px',
 		});
-		const Styles = styled.div`
-	padding: 2% 5%;
-	color: #676767;
-	.logo-holder {
-		margin-bottom: 20px;
-		img {
-			width: 27.5%;
-			max-width: 250px;
-		}
-	}
-	.content-box {
-		max-width: 350px;
-		margin: 0px auto;
-		.first-row-title {
-			font-size: calc(1em + 2.5vw);
-			margin: 0;
-			font-weight: normal;
-			color: ${title1_colour};
-		}
-		.second-row-title {
-			margin: 0;
-			font-size: calc(1em + 2.5vw);
-			color: ${title2_colour};
-			font-weight: bolder;
-		}
-		form {
-			margin-bottom: 50px;
-			.terms-content {
-				display: flex;
-				align-items: center;
-				input {
-					margin: 0;
-				}
-			}
-		}
-		.hypa-intro {
-			font-size: calc(1em + 0.3vw);
-			color: #777;
-			font-weight: 500;
-		}
-	}
-
-	@media ${device.tablet} {
-		padding: 0;
-		.logo-holder {
-			text-align: center;
-			padding: 4% 0;
-			img {
-				width: 35%;
-			}
-		}
-		.content-box {
-			width: 85%;
-			margin: auto;
-			margin-top: 2em;
-			.first-row-title {
-				font-size: 11vw;
-				margin: 0;
-				font-weight: normal;
-				color: ${title1_colour};
-			}
-			.second-row-title {
-				margin: 0;
-				font-size: 11vw;
-				color: ${title2_colour};
-				font-weight: bolder;
-			}
-			.terms-link {
-				display: block;
-				margin-left: 20px;
-			}
-		}
-	}
-`;
-
-		const Input = styled.input`
-	width: 100%;
-	border-radius: 5px;
-	height: 40px;
-	border: 1px solid #ccc;
-	padding: 0px;
-	outline: 0px;
-	font-size: 16px;
-	padding: 10px;
-	box-sizing: border-box;
-	margin-top: 3px;
-`;
 
 
 		const AgreeText = styled.p({
@@ -347,16 +267,16 @@ class Signup extends Component {
 			marginTop: 0,
 		});
 		const Checkbox = styled.input({
-			borderColor: check_box_border_colour,
+			borderColor: this.state.styles.button_text_colour,
 		});
 
 		const Label = styled.p({
 			margin: 0,
-			color: label_text_colour,
+			color: this.state.styles.label_text_colour,
 		});
 
 		const Errortext = styled.p({
-			color: error_text_colour,
+			color: this.state.styles.error_text_colour,
 			margin: 0,
 		});
 		if (this.state.styles === null) {
@@ -366,7 +286,7 @@ class Signup extends Component {
 		}
 
 		return (
-			<Styles>
+			<Styles theme={this.state.styles} width={width}>
 				<div className="logo-holder">
 					<img src={hypaiq} alt="Hypaiq" />
 				</div>
@@ -419,7 +339,7 @@ class Signup extends Component {
 								<div>
 									<FaEyeSlash
 										onClick={this.showpassword}
-										color={this.state.showpassword ? '#ccc' : ''}
+										color={this.state.showpassword ? this.state.styles.icon_passive_colour : ''}
 									/>
 								</div>
 							</IconContext.Provider>
@@ -465,7 +385,7 @@ class Signup extends Component {
 								<Link
 									className="terms-link"
 									style={{
-										color: '#009999',
+										color: this.state.styles.green_text_colour,
 										textDecoration: 'none',
 									}}
 									to="/user-agreement"
@@ -480,7 +400,7 @@ class Signup extends Component {
 						<br />
 						<span>Already have an account ? </span>
 						<Link
-							style={{ color: '#009999', textDecoration: 'underline' }}
+							style={{ color: this.state.styles.green_text_colour, textDecoration: 'underline' }}
 							to="/"
 						>
 							Sign in
@@ -492,4 +412,111 @@ class Signup extends Component {
 	}
 }
 export default withRouter(Signup);
+const getResponsiveFontSize = (sizeinpx, width) => {
+	let fontSize = parseInt(sizeinpx.substr(0, 2));
+	let result = (fontSize / width * 80) + 'vw';
+	return result;
+};
+const Styles = styled.div`
+	padding: 2% 5%;
+	color: #676767;
+	.logo-holder {
+		margin-bottom: 20px;
+		img {
+			width: 27.5%;
+			max-width: 250px;
+		}
+	}
+	.content-box {
+		max-width: 350px;
+		margin: 0px auto;
+		.first-row-title {
+			font-size: ${props =>
+		getResponsiveFontSize(
+			props.theme.title1_font_size,
+			props.width
+		)};
+			margin: 0;
+			font-weight: normal;
+			color: ${props => props.theme.title1_colour};
+		}
+		.second-row-title {
+			margin: 0;
+			font-size: ${props =>
+		getResponsiveFontSize(
+			props.theme.title2_font_size,
+			props.width
+		)};
+			color: ${props => props.theme.title2_colour};
+			font-weight: bolder;
+		}
+		form {
+			margin-bottom: 50px;
+			.terms-content {
+				display: flex;
+				align-items: center;
+				input {
+					margin: 0;
+				}
+			}
+		}
+		.hypa-intro {
+			font-size: calc(1em + 0.3vw);
+			color: #777;
+			font-weight: 500;
+		}
+	}
 
+	@media ${device.tablet} {
+		padding: 0;
+		.logo-holder {
+			text-align: center;
+			padding: 4% 0;
+			img {
+				width: 35%;
+			}
+		}
+		.content-box {
+			width: 85%;
+			margin: auto;
+			margin-top: 2em;
+			.first-row-title {
+				font-size: ${props =>
+		getResponsiveFontSize(
+			props.theme.title1_font_size,
+			props.width
+		)};
+				margin: 0;
+				font-weight: normal;
+				color: ${props => props.theme.title1_colour};
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: ${props =>
+		getResponsiveFontSize(
+			props.theme.title2_font_size,
+			props.width
+		)};
+				color: ${props => props.theme.title2_colour};
+				font-weight: bolder;
+			}
+			.terms-link {
+				display: block;
+				margin-left: 20px;
+			}
+		}
+	}
+`;
+
+const Input = styled.input`
+	width: 100%;
+	border-radius: 5px;
+	height: 40px;
+	border: 1px solid #ccc;
+	padding: 0px;
+	outline: 0px;
+	font-size: 16px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 3px;
+`;
