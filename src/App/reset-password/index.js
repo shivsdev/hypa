@@ -36,8 +36,88 @@ class Reset extends Component {
 
 
 	render() {
-
-
+		const title1_colour = "#009999";
+		const title2_colour = "#000066";
+		const body_text_colour = "#777"
+		const button_bg_colour = "#009999";
+		const button_text_colour = "#FFFFFF";
+		const check_box_border_colour = "#009999";
+		const Styles = styled.div`
+		padding: 2% 5%;
+		.logo-holder {
+			margin-bottom: 20px;
+			img {
+				width: 27.5%;
+				max-width: 250px;
+			}
+		}
+		.content-box {
+			width: 500px;
+			margin: 0px auto;
+			.first-row-title {
+				font-size: calc(1em + 1.5vw);
+				margin: 0;
+				font-weight: normal;
+				color: ${title1_colour}
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: calc(1em + 2vw);
+				color: ${title2_colour};
+				font-weight: bolder;
+			}
+			.hypa-intro {
+				margin-top:10px;
+				font-size: calc(1em + 0.3vw);
+				color: ${body_text_colour};
+				font-weight: 500;
+			}
+		}
+	
+		@media ${device.tablet} {
+			padding: 0;
+			.logo-holder {
+				text-align: center;
+				padding: 4% 0;
+				img {
+					width: 35%;
+				}
+			}
+			.content-box {
+				width: 350px;
+				width: 85%;
+				margin: auto;
+				margin-top: 2em;
+				.first-row-title {
+					font-size: 12vw;
+					margin: 0;
+					font-weight: normal;
+					color: ${title1_colour};
+				}
+				.second-row-title {
+					margin: 0;
+					font-size: 12vw;
+					color: ${title2_colour};
+					font-weight: bolder;
+				}
+				form {
+					margin: 50px 0;
+				}
+			}
+		}
+		
+	`;
+		const Button = styled.button({
+			width: "60%",
+			height: "40px",
+			borderRadius: 5,
+			backgroundColor: button_bg_colour,
+			borderWidth: 0,
+			marginTop: 20,
+			marginBottom: 20,
+			color: button_text_colour,
+			fontSize: "20px"
+		})
 
 		return (
 			< Styles>
@@ -59,79 +139,3 @@ class Reset extends Component {
 	}
 }
 export default withRouter(Reset);
-const Styles = styled.div`
-	padding: 2% 5%;
-	.logo-holder {
-		margin-bottom: 20px;
-		img {
-			width: 27.5%;
-			max-width: 250px;
-		}
-	}
-	.content-box {
-		width: 500px;
-		margin: 0px auto;
-		.first-row-title {
-			font-size: calc(1em + 1.5vw);
-			margin: 0;
-			font-weight: normal;
-			color: #009999;
-		}
-		.second-row-title {
-			margin: 0;
-			font-size: calc(1em + 2vw);
-			color: #000066;
-			font-weight: bolder;
-		}
-		.hypa-intro {
-            margin-top:10px;
-			font-size: calc(1em + 0.3vw);
-			color: #777;
-			font-weight: 500;
-		}
-	}
-
-	@media ${device.tablet} {
-		padding: 0;
-		.logo-holder {
-			text-align: center;
-			padding: 4% 0;
-			img {
-				width: 35%;
-			}
-		}
-		.content-box {
-            width: 350px;
-			width: 85%;
-			margin: auto;
-			margin-top: 2em;
-			.first-row-title {
-				font-size: 12vw;
-				margin: 0;
-				font-weight: normal;
-				color: #009999;
-			}
-			.second-row-title {
-				margin: 0;
-				font-size: 12vw;
-				color: #000066;
-				font-weight: bolder;
-			}
-			form {
-				margin: 50px 0;
-			}
-		}
-    }
-    
-`;
-const Button = styled.button({
-	width: "60%",
-	height: "40px",
-	borderRadius: 5,
-	backgroundColor: " #009999",
-	borderWidth: 0,
-	marginTop: 20,
-	marginBottom: 20,
-	color: "#FFFFFF",
-	fontSize: "20px"
-})

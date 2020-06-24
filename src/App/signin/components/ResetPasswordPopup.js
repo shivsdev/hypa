@@ -35,6 +35,104 @@ export default function ViewProfile({
 	const closePopup = () => {
 		togglePopup();
 	};
+	const popup_header_bg_colour = "#4395a6";
+	const popup_border_colour = "#4395a6";
+	const poup_body_bg_colour = "#FFFFFF";
+	const header_colour = "green";
+	const input_group_colour = "#4395a6";
+	const input_colour = "#ff0000";
+	const reset_text_colour = "#999";
+	const reset_button_colour = "#4395a6";
+	const reset_button_text_colour = "#ffffff";
+
+
+	const Popup = styled.div`
+position: absolute;
+top: 0;
+bottom: 0;
+right: 0;
+left: 0;
+background: rgba(0, 0, 0, 0.5);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+.popup {
+	max-width: 350px;
+	width: 90%;
+	.popup-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background: ${popup_header_bg_colour};
+		color: white;
+		padding: 5px 10px;
+		border-radius: 5px 5px 0 0;
+		border: 1px solid ${popup_border_colour};
+		h3 {
+			margin: 0;
+			font-weight: 500;
+			padding: 0;
+			font-size: 100%;
+		}
+		.close {
+			font-weight: bold;
+			cursor: pointer;
+		}
+	}
+	.popup-body {
+		position: relative;
+		border: 1.5px solid ${popup_border_colour};
+		border-radius: 0 0 5px 5px;
+		padding: 30px 15px;
+		background: ${poup_body_bg_colour};
+		.email-sent {
+			display: flex;
+			align-items: center;
+			div {
+	  width: 50%;
+	  h4 {
+		color: ${header_colour};
+		font-weight: normal;
+	  }
+			}
+			img {
+				width: 100%;
+			}
+		}
+		.input-group {
+			display: flex;
+			flex-direction: column;
+			color: ${input_group_colour};
+			input {
+				height: 38px;
+				font-size: 90%;
+				color: ${input_colour};
+			}
+		}
+		.reset-text {
+			font-size: 80%;
+			color: ${reset_text_colour};
+			font-style: italic;
+		}
+		.reset-button-holder {
+			text-align: right;
+			button {
+				border-radius: 5px;
+				background-color: ${reset_button_colour};
+				color: ${reset_button_text_colour};
+				font-size: 90%;
+				text-transform: uppercase;
+				font-weight: 500;
+				cursor: pointer;
+				outline: 0;
+				padding: 8px 20px;
+			}
+		}
+	}
+}
+`;
+
 	return (
 		<Popup>
 			<div className="popup">
@@ -82,90 +180,3 @@ export default function ViewProfile({
 		</Popup>
 	);
 }
-
-const Popup = styled.div`
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	background: rgba(0, 0, 0, 0.5);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	.popup {
-		max-width: 350px;
-		width: 90%;
-		.popup-header {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			background: #4395a6;
-			color: white;
-			padding: 5px 10px;
-			border-radius: 5px 5px 0 0;
-			border: 1px solid #4395a6;
-			h3 {
-				margin: 0;
-				font-weight: 500;
-				padding: 0;
-				font-size: 100%;
-			}
-			.close {
-				font-weight: bold;
-				cursor: pointer;
-			}
-		}
-		.popup-body {
-			position: relative;
-			border: 1.5px solid #4395a6;
-			border-radius: 0 0 5px 5px;
-			padding: 30px 15px;
-			background: white;
-			.email-sent {
-				display: flex;
-				align-items: center;
-				div {
-          width: 50%;
-          h4 {
-            color: green;
-            font-weight: normal;
-          }
-				}
-				img {
-					width: 100%;
-				}
-			}
-			.input-group {
-				display: flex;
-				flex-direction: column;
-				color: #4395a6;
-				input {
-					height: 38px;
-					font-size: 90%;
-					color: #333;
-				}
-			}
-			.reset-text {
-				font-size: 80%;
-				color: #999;
-				font-style: italic;
-			}
-			.reset-button-holder {
-				text-align: right;
-				button {
-					border-radius: 5px;
-					background-color: #4395a6;
-					color: #ffffff;
-					font-size: 90%;
-					text-transform: uppercase;
-					font-weight: 500;
-					cursor: pointer;
-					outline: 0;
-					padding: 8px 20px;
-				}
-			}
-		}
-	}
-`;

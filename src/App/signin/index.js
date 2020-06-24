@@ -179,12 +179,149 @@ class Signin extends Component {
 	}
 
 	render() {
-
+		const title1_colour = "#009999";
+		const title1_font_size = "";
+		const title2_colour = "#000066";
+		const title2_font_size = "";
+		const error_text_colour = "#ff0000";
+		const label_text_colour = "#676767";
+		const button_colour = "#009999";
+		const button_text_colour = "#ffffff";
+		const reset_password_button_colour = "#479a99";
+		const input_font_size = "16px";
+		const button_text_font_size = "18";
 		const { handleSubmit, renderErrorMessage, emailRef, passwordRef } = this;
 		const { isPasswordVisible, errors } = this.state;
 		const passwordFieldName = isPasswordVisible ? 'text' : 'password';
 		const email = emailRef?.current?.value ? emailRef.current.value : null;
 		const { isPopupVisible } = this.state;
+		const Styles = styled.div`
+	color: #676767;
+	padding: 2% 5%;
+	position: relative;
+	button {
+		border: 0;
+	}
+	input {
+		width: 100%;
+		border-radius: 5px;
+		height: 40px;
+		border: 1px solid #ccc;
+		padding: 0px;
+		outline: 0px;
+		font-size:${input_font_size} ;
+		padding: 10px;
+		box-sizing: border-box;
+		margin-top: 3px;
+	}
+	.logo-holder {
+		margin-bottom: 20px;
+		img {
+			width: 27.5%;
+			max-width: 250px;
+		}
+	}
+	.content-box {
+		max-width: 350px;
+		margin: 0px auto;
+		.first-row-title {
+			font-size: calc(1em + 2.5vw);
+			margin: 0;
+			font-weight: normal;
+			color: ${title1_colour};
+		}
+		.second-row-title {
+			margin: 0;
+			font-size: calc(1em + 2.5vw);
+			color: ${title2_colour};
+			font-weight: bolder;
+		}
+		form {
+			margin: 100px 0;
+			.reset-password-button {
+				display: inline-block;
+				padding: 0;
+				float: right;
+				margin: 0;
+				background: transparent;
+				cursor: pointer;
+				color: ${reset_password_button_colour};
+				font-size: 100%;
+				margin-top: 2px;
+				text-decoration: underline;
+			}
+		}
+	}
+
+	@media ${device.tablet} {
+		padding: 0;
+		.logo-holder {
+			text-align: center;
+			padding: 4% 0;
+			img {
+				width: 35%;
+			}
+		}
+		.content-box {
+			width: 85%;
+			margin: auto;
+			margin-top: 2em;
+			.first-row-title {
+				font-size: 12vw;
+				margin: 0;
+				font-weight: normal;
+				color: ${title1_colour};
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: 12vw;
+				color: ${title2_colour};
+				font-weight: bolder;
+			}
+			form {
+				margin: 50px 0;
+			}
+		}
+	}
+`;
+
+		const Button = styled.button({
+			width: '100%',
+			height: '40px',
+			borderRadius: 5,
+			backgroundColor: button_colour,
+			borderWidth: 0,
+			marginTop: 5,
+			marginBottom: 20,
+			color: button_text_colour,
+			fontSize: button_text_font_size,
+			fontWeight: 'bold',
+			cursor: 'pointer',
+		});
+
+		const Input = styled.input`
+	width: 100%;
+	border-radius: 5px;
+	height: 40px;
+	border: 1px solid #ccc;
+	padding: 0px;
+	outline: 0px;
+	font-size: 16px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 3px;
+`;
+
+		const Label = styled.label`
+	display: flex;
+	color: ${label_text_colour};
+	justify-content: space-between;
+`;
+		const PasswordLabel = styled.label`
+	display: flex;
+	justify-content: space-between;
+	color: ${label_text_colour};
+`;
 		return (
 			<Styles>
 				<div className="logo-holder">
@@ -247,130 +384,4 @@ class Signin extends Component {
 
 export default withRouter(Signin);
 
-const Styles = styled.div`
-	color: #676767;
-	padding: 2% 5%;
-	position: relative;
-	button {
-		border: 0;
-	}
-	input {
-		width: 100%;
-		border-radius: 5px;
-		height: 40px;
-		border: 1px solid #ccc;
-		padding: 0px;
-		outline: 0px;
-		font-size: 16px;
-		padding: 10px;
-		box-sizing: border-box;
-		margin-top: 3px;
-	}
-	.logo-holder {
-		margin-bottom: 20px;
-		img {
-			width: 27.5%;
-			max-width: 250px;
-		}
-	}
-	.content-box {
-		max-width: 350px;
-		margin: 0px auto;
-		.first-row-title {
-			font-size: calc(1em + 2.5vw);
-			margin: 0;
-			font-weight: normal;
-			color: #009999;
-		}
-		.second-row-title {
-			margin: 0;
-			font-size: calc(1em + 2.5vw);
-			color: #000066;
-			font-weight: bolder;
-		}
-		form {
-			margin: 100px 0;
-			.reset-password-button {
-				display: inline-block;
-				padding: 0;
-				float: right;
-				margin: 0;
-				background: transparent;
-				cursor: pointer;
-				color: #479a99;
-				font-size: 100%;
-				margin-top: 2px;
-				text-decoration: underline;
-			}
-		}
-	}
 
-	@media ${device.tablet} {
-		padding: 0;
-		.logo-holder {
-			text-align: center;
-			padding: 4% 0;
-			img {
-				width: 35%;
-			}
-		}
-		.content-box {
-			width: 85%;
-			margin: auto;
-			margin-top: 2em;
-			.first-row-title {
-				font-size: 12vw;
-				margin: 0;
-				font-weight: normal;
-				color: #009999;
-			}
-			.second-row-title {
-				margin: 0;
-				font-size: 12vw;
-				color: #000066;
-				font-weight: bolder;
-			}
-			form {
-				margin: 50px 0;
-			}
-		}
-	}
-`;
-
-const Button = styled.button({
-	width: '100%',
-	height: '40px',
-	borderRadius: 5,
-	backgroundColor: ' #009999',
-	borderWidth: 0,
-	marginTop: 5,
-	marginBottom: 20,
-	color: '#FFFFFF',
-	fontSize: 18,
-	fontWeight: 'bold',
-	cursor: 'pointer',
-});
-
-const Input = styled.input`
-	width: 100%;
-	border-radius: 5px;
-	height: 40px;
-	border: 1px solid #ccc;
-	padding: 0px;
-	outline: 0px;
-	font-size: 16px;
-	padding: 10px;
-	box-sizing: border-box;
-	margin-top: 3px;
-`;
-
-const Label = styled.label`
-	display: flex;
-	color: #676767;
-	justify-content: space-between;
-`;
-const PasswordLabel = styled.label`
-	display: flex;
-	justify-content: space-between;
-	color: #676767;
-`;

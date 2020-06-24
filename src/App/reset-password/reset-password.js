@@ -35,13 +35,14 @@ class Reset extends Component {
             this.state.focused.current.focus()
         }
         axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
-			.then((res) => {
-				this.setState({
-					styles: res.data
-				})
-			}
-			)
+            .then((res) => {
+                this.setState({
+                    styles: res.data
+                })
+            }
+            )
     }
+
     showpassword = () => {
         this.setState({
             showpassword: !this.state.showpassword,
@@ -147,6 +148,18 @@ class Reset extends Component {
         }
     }
     render() {
+        const title1_colour = "#009999";
+        const title1_font_size = "60px";
+        const title2_colour = "#000066";
+        const title2_font_size = "50px";
+        const input_border_colour = "#ccc"
+        const error_text_colour = "#ff0000";
+        const label_text_colour = "#676767";
+        const button_colour = "#009999";
+        const button_text_colour = "#ffffff";
+        const agreee_text_colour = "#090909";
+        const input_font_size = "16px";
+        const button_text_font_size = "18";
         const Chardiv = styled.div({
             backgroundColor: this.state.charColor,
             height: '1vh',
@@ -175,6 +188,125 @@ class Reset extends Component {
             width: '60px',
             borderRadius: 5,
             marginLeft: '12px',
+        });
+        const Styles = styled.div`
+	padding: 2% 5%;
+	.logo-holder {
+		margin-bottom: 20px;
+		img {
+			width: 27.5%;
+			max-width: 250px;
+		}
+	}
+	.content-box {
+		max-width: 350px;
+		margin: 0px auto;
+		.first-row-title {
+			font-size: calc(1em + 2.5vw);
+			margin: 0;
+			font-weight: normal;
+			color: ${title1_colour};
+		}
+		.second-row-title {
+			margin: 0;
+			font-size: calc(1em + 2.5vw);
+			color: ${title2_colour};
+			font-weight: bolder;
+		}
+		form {
+			margin-bottom: 50px;
+		}
+		.hypa-intro {
+			font-size: calc(1em + 0.3vw);
+			color: #777;
+			font-weight: 500;
+		}
+	}
+
+	@media ${device.tablet} {
+		padding: 0;
+		.logo-holder {
+			text-align: center;
+			padding: 4% 0;
+			img {
+				width: 35%;
+			}
+		}
+		.content-box {
+			width: 85%;
+			margin: auto;
+			margin-top: 2em;
+			.first-row-title {
+				font-size: 11vw;
+				margin: 0;
+				font-weight: normal;
+				color: ${title1_colour};
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: 11vw;
+				color: ${title2_colour};
+				font-weight: bolder;
+			}
+			.terms-link {
+				display: block;
+				margin-left: 20px;
+			}
+		}
+	}
+`;
+
+        const Input = styled.input`
+	width: 100%;
+	border-radius: 5px;
+	height: 40px;
+	border: 1px solid ${input_border_colour};
+	padding: 0px;
+	outline: 0px;
+	font-size: 16px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 3px;
+`;
+
+        const Button = styled.button({
+            width: '100%',
+            height: '40px',
+            borderRadius: 5,
+            backgroundColor: button_colour,
+            borderWidth: 0,
+            marginTop: 5,
+            marginBottom: 20,
+            color: button_text_colour,
+            fontSize: 18,
+            fontWeight: 'bold',
+            cursor: 'pointer',
+        });
+        const BlueH1 = styled.h1({
+            margin: 0,
+            fontSize: title1_font_size,
+            color: title2_colour,
+            fontWeight: 'bolder',
+        });
+        const GreenH1 = styled.h1({
+            fontSize: title2_font_size,
+            margin: 0,
+            fontWeight: 'bolder',
+            color: title1_colour,
+        });
+        const AgreeText = styled.p({
+            fontSize: 12,
+            marginTop: 0,
+            color: agreee_text_colour,
+        });
+
+        const Label = styled.p({
+            margin: 0,
+        });
+
+        const Errortext = styled.p({
+            color: error_text_colour,
+            margin: 0,
         });
         var email = sessionStorage.getItem('email')
         return (
@@ -226,122 +358,3 @@ class Reset extends Component {
 }
 
 export default withRouter(Reset);
-const Styles = styled.div`
-	padding: 2% 5%;
-	.logo-holder {
-		margin-bottom: 20px;
-		img {
-			width: 27.5%;
-			max-width: 250px;
-		}
-	}
-	.content-box {
-		max-width: 350px;
-		margin: 0px auto;
-		.first-row-title {
-			font-size: calc(1em + 2.5vw);
-			margin: 0;
-			font-weight: normal;
-			color: #009999;
-		}
-		.second-row-title {
-			margin: 0;
-			font-size: calc(1em + 2.5vw);
-			color: #000066;
-			font-weight: bolder;
-		}
-		form {
-			margin-bottom: 50px;
-		}
-		.hypa-intro {
-			font-size: calc(1em + 0.3vw);
-			color: #777;
-			font-weight: 500;
-		}
-	}
-
-	@media ${device.tablet} {
-		padding: 0;
-		.logo-holder {
-			text-align: center;
-			padding: 4% 0;
-			img {
-				width: 35%;
-			}
-		}
-		.content-box {
-			width: 85%;
-			margin: auto;
-			margin-top: 2em;
-			.first-row-title {
-				font-size: 11vw;
-				margin: 0;
-				font-weight: normal;
-				color: #009999;
-			}
-			.second-row-title {
-				margin: 0;
-				font-size: 11vw;
-				color: #000066;
-				font-weight: bolder;
-			}
-			.terms-link {
-				display: block;
-				margin-left: 20px;
-			}
-		}
-	}
-`;
-
-const Input = styled.input`
-	width: 100%;
-	border-radius: 5px;
-	height: 40px;
-	border: 1px solid #ccc;
-	padding: 0px;
-	outline: 0px;
-	font-size: 16px;
-	padding: 10px;
-	box-sizing: border-box;
-	margin-top: 3px;
-`;
-
-const Button = styled.button({
-    width: '100%',
-    height: '40px',
-    borderRadius: 5,
-    backgroundColor: ' #009999',
-    borderWidth: 0,
-    marginTop: 5,
-    marginBottom: 20,
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: 'bold',
-    cursor: 'pointer',
-});
-const BlueH1 = styled.h1({
-    margin: 0,
-    fontSize: 60,
-    color: '#000066',
-    fontWeight: 'bolder',
-});
-const GreenH1 = styled.h1({
-    fontSize: 50,
-    margin: 0,
-    fontWeight: 'bolder',
-    color: '#009999',
-});
-const AgreeText = styled.p({
-    fontSize: 12,
-    marginTop: 0,
-    color: '#090909',
-});
-
-const Label = styled.p({
-    margin: 0,
-});
-
-const Errortext = styled.p({
-    color: '#ff0000',
-    margin: 0,
-});
