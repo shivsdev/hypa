@@ -22,7 +22,26 @@ class Signin extends Component {
 				nAttempt: 0,
 			},
 			isPopupVisible: false,
-			styles: {}
+			styles: {
+				title1_colour: "#009999",
+				title1_font_size: "60px",
+				title2_colour: "#000066",
+				title2_font_size: "50px",
+				error_text_colour: "#ff0000",
+				label_text_colour: "#676767",
+				check_box_border_colour: "#009999",
+				button_bg_colour: "#009999",
+				button_text_colour: "#ffffff",
+				button_text_font: "18px",
+				password_passive_colour: "#b3b3b3",
+				password_active_colour: "#33cc33",
+				password_error_colour: "#ff0000",
+				green_text_colour: "#009999",
+				icon_passive_colour: "#ccc",
+				input_font_size: "16px",
+				input_border_colour: "#ccc",
+				reset_password_button_colour: "#479a99",
+			}
 		};
 		this.emailRef = createRef();
 		this.passwordRef = createRef();
@@ -35,7 +54,7 @@ class Signin extends Component {
 		axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
 			.then((res) => {
 				this.setState({
-					styles: res.data
+					styles: { ...this.state.styles, ...res.data }
 				})
 			}
 			)
@@ -195,95 +214,7 @@ class Signin extends Component {
 		const passwordFieldName = isPasswordVisible ? 'text' : 'password';
 		const email = emailRef?.current?.value ? emailRef.current.value : null;
 		const { isPopupVisible } = this.state;
-		const Styles = styled.div`
-	color: #676767;
-	padding: 2% 5%;
-	position: relative;
-	button {
-		border: 0;
-	}
-	input {
-		width: 100%;
-		border-radius: 5px;
-		height: 40px;
-		border: 1px solid #ccc;
-		padding: 0px;
-		outline: 0px;
-		font-size:${input_font_size} ;
-		padding: 10px;
-		box-sizing: border-box;
-		margin-top: 3px;
-	}
-	.logo-holder {
-		margin-bottom: 20px;
-		img {
-			width: 27.5%;
-			max-width: 250px;
-		}
-	}
-	.content-box {
-		max-width: 350px;
-		margin: 0px auto;
-		.first-row-title {
-			font-size: calc(1em + 2.5vw);
-			margin: 0;
-			font-weight: normal;
-			color: ${title1_colour};
-		}
-		.second-row-title {
-			margin: 0;
-			font-size: calc(1em + 2.5vw);
-			color: ${title2_colour};
-			font-weight: bolder;
-		}
-		form {
-			margin: 100px 0;
-			.reset-password-button {
-				display: inline-block;
-				padding: 0;
-				float: right;
-				margin: 0;
-				background: transparent;
-				cursor: pointer;
-				color: ${reset_password_button_colour};
-				font-size: 100%;
-				margin-top: 2px;
-				text-decoration: underline;
-			}
-		}
-	}
 
-	@media ${device.tablet} {
-		padding: 0;
-		.logo-holder {
-			text-align: center;
-			padding: 4% 0;
-			img {
-				width: 35%;
-			}
-		}
-		.content-box {
-			width: 85%;
-			margin: auto;
-			margin-top: 2em;
-			.first-row-title {
-				font-size: 12vw;
-				margin: 0;
-				font-weight: normal;
-				color: ${title1_colour};
-			}
-			.second-row-title {
-				margin: 0;
-				font-size: 12vw;
-				color: ${title2_colour};
-				font-weight: bolder;
-			}
-			form {
-				margin: 50px 0;
-			}
-		}
-	}
-`;
 
 		const Button = styled.button({
 			width: '100%',
@@ -322,8 +253,9 @@ class Signin extends Component {
 	justify-content: space-between;
 	color: ${label_text_colour};
 `;
+		const width = window.innerWidth;
 		return (
-			<Styles>
+			<Styles theme={this.state.styles} width={width}>
 				<div className="logo-holder">
 					<img src={hypaiq} alt="Hypaiq" />
 				</div>
@@ -384,4 +316,113 @@ class Signin extends Component {
 
 export default withRouter(Signin);
 
+const getResponsiveFontSize = (sizeinpx, width) => {
+	let fontSize = parseInt(sizeinpx.substr(0, 2));
+	let result = (fontSize / width * 80) + 'vw';
+	return result;
+};
+const Styles = styled.div`
+	color: #676767;
+	padding: 2% 5%;
+	position: relative;
+	button {
+		border: 0;
+	}
+	input {
+		width: 100%;
+		border-radius: 5px;
+		height: 40px;
+		border: 1px solid ${props => props.theme.input_border_colour};
+		padding: 0px;
+		outline: 0px;
+		font-size:12px;
+		padding: 10px;
+		box-sizing: border-box;
+		margin-top: 3px;
+	}
+	.logo-holder {
+		margin-bottom: 20px;
+		img {
+			width: 27.5%;
+			max-width: 250px;
+		}
+	}
+	.content-box {
+		max-width: 350px;
+		margin: 0px auto;
+		.first-row-title {
+			font-size: ${props =>
+		getResponsiveFontSize(
+			props.theme.title1_font_size,
+			props.width
+		)};
+			margin: 0;
+			font-weight: normal;
+			color: ${props => props.theme.title1_colour};
+		}
+		.second-row-title {
+			margin: 0;
+			font-size: ${props =>
+		getResponsiveFontSize(
+			props.theme.title2_font_size,
+			props.width
+		)};
+			color: ${props => props.theme.title2_colour};
+			font-weight: bolder;
+		}
+		form {
+			margin: 100px 0;
+			.reset-password-button {
+				display: inline-block;
+				padding: 0;
+				float: right;
+				margin: 0;
+				background: transparent;
+				cursor: pointer;
+				color: ${props => props.theme.reset_password_button_colour};
+				font-size: 100%;
+				margin-top: 2px;
+				text-decoration: underline;
+			}
+		}
+	}
 
+	@media ${device.tablet} {
+		padding: 0;
+		.logo-holder {
+			text-align: center;
+			padding: 4% 0;
+			img {
+				width: 35%;
+			}
+		}
+		.content-box {
+			width: 85%;
+			margin: auto;
+			margin-top: 2em;
+			.first-row-title {
+				font-size: ${props =>
+		getResponsiveFontSize(
+			props.theme.title1_font_size,
+			props.width
+		)};
+				margin: 0;
+				font-weight: normal;
+				color:${props => props.theme.title1_colour} ;
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: ${props =>
+		getResponsiveFontSize(
+			props.theme.title2_font_size,
+			props.width
+		)};
+				color: ${props => props.theme.title2_colour} ;
+				font-weight: bolder;
+			}
+			form {
+				margin: 50px 0;
+			}
+		}
+	}
+`;
