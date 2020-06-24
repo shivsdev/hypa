@@ -197,7 +197,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 
 export default TopMenu;
 
-const getResponsiveFont = (sizeinpx, width) => {
+const getResponsiveFontSize = (sizeinpx, width) => {
 	let fontSize = parseInt(sizeinpx.substr(0, 2));	
 	let result = (fontSize / width * 80 )+ 'vw';
 	return result;
@@ -266,7 +266,7 @@ const TopMenuStyles = styled.div`
 					padding: 0 50px;
 					height: 45px;
 					font-size: ${props =>
-						getResponsiveFont(
+						getResponsiveFontSize(
 							props.theme.top_menu_button.passive_text_size,
 							props.width
 						)};
@@ -275,7 +275,7 @@ const TopMenuStyles = styled.div`
 				}
 				.selectedLink {
 					font-size: ${props =>
-						getResponsiveFont(
+						getResponsiveFontSize(
 							props.theme.top_menu_button.active_text_size,
 							props.width
 						)};
