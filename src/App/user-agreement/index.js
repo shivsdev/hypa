@@ -19,6 +19,102 @@ class UserAgreement extends Component {
 	}
 
 	render() {
+		const title_colour = "#000066";
+		const title_font_size = "";
+		
+		const button_colour = "#009999";
+		const button_text_colour = "#ffffff";
+		const button_text_font_size = "18";
+		const scrollbar_colour = "#999999";
+		const scrollbar_thumb_colour = "#0f1662";
+		const scrollbar_thumb_over_colour = "#4e5384";
+
+		const Styles = styled.div`
+padding: 2% 5%;
+.logo-holder {
+	margin-bottom: 20px;
+	img {
+		width: 27.5%;
+		max-width: 250px;
+	}
+}
+.content-box {
+	h1 {
+		margin: 0px;
+		font-size: calc(1em + 2.5vw);
+		color: ${title_colour};
+		font-weight: bolder;
+		text-align: center;
+	}
+}
+.scrollable-content {
+	max-height: 85vh;
+	overflow: auto;
+	width: 100%;
+	padding-right: 3%;
+	font-size: 14px;
+	font-weight: bold;
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+	::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 5px ${scrollbar_colour};
+		border-radius: 20px;
+		background: ${scrollbar_colour};
+		padding: 6px;
+	}
+	::-webkit-scrollbar-thumb {
+		background: ${scrollbar_thumb_colour};
+		border-radius: 20px;
+		background-clip: content-box;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: ${scrollbar_thumb_over_colour};
+	}
+}
+button {
+	color: ${button_text_colour};
+	font-weight: bolder;
+	text-decoration: none;
+	width: 25%;
+	height: 40px;
+	border-radius: 5px;
+	background-color: ${button_colour};
+	border-width: 0px;
+	margin-top: 5px;
+	margin-bottom: 20px;
+	right: 0px;
+	margin-left: 70%;
+	cursor: pointer;
+	outline: 0;
+}
+@media ${device.tablet} {
+	padding: 0;
+	.logo-holder {
+		text-align: center;
+		padding: 4% 0;
+		img {
+			width: 35%;
+		}
+	}
+	.content-box {
+		width: 85%;
+		margin: auto;
+		margin-top: 2em;
+		h1 {
+			margin: 0px;
+			font-size: 10vw;
+			color: ${title_colour};
+			font-weight: bolder;
+			text-align: center;
+		}
+	}
+	button {
+		width: 100%;
+		margin: 20px 0 20px 0;
+	}
+}
+`;
 		return (
 			<Styles>
 				<div className="logo-holder">
@@ -371,89 +467,3 @@ class UserAgreement extends Component {
 
 export default UserAgreement;
 
-const Styles = styled.div`
-	padding: 2% 5%;
-	.logo-holder {
-		margin-bottom: 20px;
-		img {
-			width: 27.5%;
-			max-width: 250px;
-		}
-	}
-	.content-box {
-		h1 {
-			margin: 0px;
-			font-size: calc(1em + 2.5vw);
-			color: #000066;
-			font-weight: bolder;
-			text-align: center;
-		}
-	}
-	.scrollable-content {
-		max-height: 85vh;
-		overflow: auto;
-		width: 100%;
-		padding-right: 3%;
-		font-size: 14px;
-		font-weight: bold;
-		::-webkit-scrollbar {
-			width: 10px;
-		}
-		::-webkit-scrollbar-track {
-			box-shadow: inset 0 0 5px #999999;
-			border-radius: 20px;
-			background: #999999;
-			padding: 6px;
-		}
-		::-webkit-scrollbar-thumb {
-			background: #0f1662;
-			border-radius: 20px;
-			background-clip: content-box;
-		}
-		::-webkit-scrollbar-thumb:hover {
-			background: #4e5384;
-		}
-	}
-	button {
-		color: #ffffff;
-		font-weight: bolder;
-		text-decoration: none;
-		width: 25%;
-		height: 40px;
-		border-radius: 5px;
-		background-color: #009999;
-		border-width: 0px;
-		margin-top: 5px;
-		margin-bottom: 20px;
-		right: 0px;
-		margin-left: 70%;
-		cursor: pointer;
-		outline: 0;
-	}
-	@media ${device.tablet} {
-		padding: 0;
-		.logo-holder {
-			text-align: center;
-			padding: 4% 0;
-			img {
-				width: 35%;
-			}
-		}
-		.content-box {
-			width: 85%;
-			margin: auto;
-			margin-top: 2em;
-			h1 {
-				margin: 0px;
-				font-size: 10vw;
-				color: #000066;
-				font-weight: bolder;
-				text-align: center;
-			}
-		}
-		button {
-			width: 100%;
-			margin: 20px 0 20px 0;
-		}
-	}
-`;

@@ -205,7 +205,11 @@ class Signup extends Component {
 	};
 
 	render() {
-
+		const title1_colour = "#009999";
+		const title2_colour = "#000066";
+		const error_text_colour = "#ff0000";
+		const label_text_colour = "#676767";
+		const check_box_border_colour = "#009999";
 		const signup_button_color = this.state.styles.top_menu_button;
 		const Button = styled.button({
 			width: '100%',
@@ -248,6 +252,112 @@ class Signup extends Component {
 			width: '60px',
 			borderRadius: 5,
 			marginLeft: '12px',
+		});
+		const Styles = styled.div`
+	padding: 2% 5%;
+	color: #676767;
+	.logo-holder {
+		margin-bottom: 20px;
+		img {
+			width: 27.5%;
+			max-width: 250px;
+		}
+	}
+	.content-box {
+		max-width: 350px;
+		margin: 0px auto;
+		.first-row-title {
+			font-size: calc(1em + 2.5vw);
+			margin: 0;
+			font-weight: normal;
+			color: ${title1_colour};
+		}
+		.second-row-title {
+			margin: 0;
+			font-size: calc(1em + 2.5vw);
+			color: ${title2_colour};
+			font-weight: bolder;
+		}
+		form {
+			margin-bottom: 50px;
+			.terms-content {
+				display: flex;
+				align-items: center;
+				input {
+					margin: 0;
+				}
+			}
+		}
+		.hypa-intro {
+			font-size: calc(1em + 0.3vw);
+			color: #777;
+			font-weight: 500;
+		}
+	}
+
+	@media ${device.tablet} {
+		padding: 0;
+		.logo-holder {
+			text-align: center;
+			padding: 4% 0;
+			img {
+				width: 35%;
+			}
+		}
+		.content-box {
+			width: 85%;
+			margin: auto;
+			margin-top: 2em;
+			.first-row-title {
+				font-size: 11vw;
+				margin: 0;
+				font-weight: normal;
+				color: ${title1_colour};
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: 11vw;
+				color: ${title2_colour};
+				font-weight: bolder;
+			}
+			.terms-link {
+				display: block;
+				margin-left: 20px;
+			}
+		}
+	}
+`;
+
+		const Input = styled.input`
+	width: 100%;
+	border-radius: 5px;
+	height: 40px;
+	border: 1px solid #ccc;
+	padding: 0px;
+	outline: 0px;
+	font-size: 16px;
+	padding: 10px;
+	box-sizing: border-box;
+	margin-top: 3px;
+`;
+
+
+		const AgreeText = styled.p({
+			fontSize: 12,
+			marginTop: 0,
+		});
+		const Checkbox = styled.input({
+			borderColor: check_box_border_colour,
+		});
+
+		const Label = styled.p({
+			margin: 0,
+			color: label_text_colour,
+		});
+
+		const Errortext = styled.p({
+			color: error_text_colour,
+			margin: 0,
 		});
 		if (this.state.styles === null) {
 			return (
@@ -382,109 +492,4 @@ class Signup extends Component {
 	}
 }
 export default withRouter(Signup);
-const Styles = styled.div`
-	padding: 2% 5%;
-	color: #676767;
-	.logo-holder {
-		margin-bottom: 20px;
-		img {
-			width: 27.5%;
-			max-width: 250px;
-		}
-	}
-	.content-box {
-		max-width: 350px;
-		margin: 0px auto;
-		.first-row-title {
-			font-size: calc(1em + 2.5vw);
-			margin: 0;
-			font-weight: normal;
-			color: #009999;
-		}
-		.second-row-title {
-			margin: 0;
-			font-size: calc(1em + 2.5vw);
-			color: #000066;
-			font-weight: bolder;
-		}
-		form {
-			margin-bottom: 50px;
-			.terms-content {
-				display: flex;
-				align-items: center;
-				input {
-					margin: 0;
-				}
-			}
-		}
-		.hypa-intro {
-			font-size: calc(1em + 0.3vw);
-			color: #777;
-			font-weight: 500;
-		}
-	}
 
-	@media ${device.tablet} {
-		padding: 0;
-		.logo-holder {
-			text-align: center;
-			padding: 4% 0;
-			img {
-				width: 35%;
-			}
-		}
-		.content-box {
-			width: 85%;
-			margin: auto;
-			margin-top: 2em;
-			.first-row-title {
-				font-size: 11vw;
-				margin: 0;
-				font-weight: normal;
-				color: #009999;
-			}
-			.second-row-title {
-				margin: 0;
-				font-size: 11vw;
-				color: #000066;
-				font-weight: bolder;
-			}
-			.terms-link {
-				display: block;
-				margin-left: 20px;
-			}
-		}
-	}
-`;
-
-const Input = styled.input`
-	width: 100%;
-	border-radius: 5px;
-	height: 40px;
-	border: 1px solid #ccc;
-	padding: 0px;
-	outline: 0px;
-	font-size: 16px;
-	padding: 10px;
-	box-sizing: border-box;
-	margin-top: 3px;
-`;
-
-
-const AgreeText = styled.p({
-	fontSize: 12,
-	marginTop: 0,
-});
-const Checkbox = styled.input({
-	borderColor: '#009999',
-});
-
-const Label = styled.p({
-	margin: 0,
-	color: '#676767',
-});
-
-const Errortext = styled.p({
-	color: '#ff0000',
-	margin: 0,
-});
