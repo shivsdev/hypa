@@ -35,22 +35,22 @@ class Signup extends Component {
 			passwordError: false,
 			checkedError: false,
 			styles: {
-				title1_colour: '#009999',
-				title1_font_size: '60px',
-				title2_colour: '#000066',
-				title2_font_size: '50px',
-				error_text_colour: '#ff0000',
-				label_text_colour: '#676767',
-				check_box_border_colour: '#009999',
-				button_bg_colour: '#009999',
-				button_text_colour: '#ffffff',
-				button_text_font: '18px',
-				password_passive_colour: '#b3b3b3',
-				password_active_colour: '#33cc33',
-				password_error_colour: '#ff0000',
-				green_text_colour: '#009999',
-				icon_passive_colour: '#ccc',
-			},
+				title1_colour: "#009999",
+				title1_font_size: "60px",
+				title2_colour: "#000066",
+				title2_font_size: "50px",
+				error_text_colour: "#ff0000",
+				label_text_colour: "#676767",
+				check_box_border_colour: "#009999",
+				button_bg_colour: "#009999",
+				button_text_colour: "#ffffff",
+				button_text_font_size: "18px",
+				password_passive_colour: "#b3b3b3",
+				password_active_colour: "#33cc33",
+				password_error_colour: "#ff0000",
+				green_text_colour: "#009999",
+				icon_passive_colour: "#ccc"
+			}
 		};
 		if (this.props.authObj.isAuthenticated)
 			this.props.history.push('/dashboard');
@@ -234,7 +234,7 @@ class Signup extends Component {
 			marginTop: 5,
 			marginBottom: 20,
 			color: this.state.styles.button_text_colour,
-			fontSize: 18,
+			fontSize: this.state.styles.button_text_font,
 			fontWeight: 'bold',
 			cursor: 'pointer',
 		});
