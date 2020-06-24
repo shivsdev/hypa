@@ -10,7 +10,6 @@ export default function Dashboard({ history, authObj, location }) {
 	const [theme, setTheme] = useState(null);
 	const token = window.sessionStorage.getItem('token');
 	const path = location.pathname.split('/')[2];
-
 	let iframeUrl = '';
 	switch (path) {
 		case 'patients':
@@ -37,8 +36,9 @@ export default function Dashboard({ history, authObj, location }) {
 		apiUrl.get('/uiobjects/styles').then(res => {
 			setTheme({ ...theme_temp, ...res.data });
 			setIsLoading(false);
+			// console.log(res.data)
 		});
-	}, [theme]);
+	}, []);
 
 	if (isLoading) {
 		return <Spinner msg="Loading ..." theme={theme} />;

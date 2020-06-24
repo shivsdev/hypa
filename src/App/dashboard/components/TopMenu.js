@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { GrHelp } from 'react-icons/gr';
+import { MdMenu, MdClose } from 'react-icons/md';
 
 import logo from '../../../assets/logo.png';
 import private_img from '../../../assets/user-profile.jpg';
@@ -9,8 +10,9 @@ import { apiUrlWithToken } from '../../calls/apis';
 import { device, size } from '../../../exportables/exportables';
 
 function TopMenu({ theme, history, setIsLoading, authObj }) {
-	const [brandLinkWidth, setBrandLinkWidth] = useState(161.125);
+	const [brandLinkWidth, setBrandLinkWidth] = useState(160);
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+	const [toggled, setToggled] = useState(false);
 
 	const handleLogout = () => {
 		setIsLoading(true);
@@ -26,15 +28,28 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 			});
 	};
 
+	const handleSideMenu = () => {
+		setToggled(!toggled);
+	};
+
+	console.log("theme", theme)
+	
 	return (
 		<TopMenuStyles theme={theme} brandLinkWidth={brandLinkWidth}>
 			<nav>
-				<ul>
+				<ul className={`${toggled ? 'toggled' : ''}`}>
 					<li>
 						<NavLink
 							to="/dashboard"
-							className="brand-link"
-							ref={el => setBrandLinkWidth(el?.getBoundingClientRect().width)}
+							className={`brand-link ${toggled ? 'toggled' : ''}`}
+							ref={el =>
+								setBrandLinkWidth(
+									el?.getBoundingClientRect().width > brandLinkWidth
+										? el?.getBoundingClientRect().width
+										: brandLinkWidth
+								)
+							}
+							onClick={() => setToggled(false)}
 						>
 							<div>
 								<img src={logo} alt=".." />
@@ -46,8 +61,9 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 					<li>
 						<NavLink
 							to="/dashboard/patients"
-							className="link"
+							className={`link ${toggled ? 'toggled' : ''}`}
 							activeClassName="selectedLink"
+							onClick={() => setToggled(false)}
 						>
 							Patients
 						</NavLink>
@@ -55,8 +71,9 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 					<li>
 						<NavLink
 							to="/dashboard/scheduler"
-							className="link"
+							className={`link ${toggled ? 'toggled' : ''}`}
 							activeClassName="selectedLink"
+							onClick={() => setToggled(false)}
 						>
 							Scheduler
 						</NavLink>
@@ -64,8 +81,9 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 					<li>
 						<NavLink
 							to="/dashboard/notes"
-							className="link"
+							className={`link ${toggled ? 'toggled' : ''}`}
 							activeClassName="selectedLink"
+							onClick={() => setToggled(false)}
 						>
 							Notes
 						</NavLink>
@@ -73,8 +91,9 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 					<li>
 						<NavLink
 							to="/dashboard/admin"
-							className="link"
+							className={`link ${toggled ? 'toggled' : ''}`}
 							activeClassName="selectedLink"
+							onClick={() => setToggled(false)}
 						>
 							Admin
 						</NavLink>
@@ -82,13 +101,17 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 					<li>
 						<NavLink
 							to="/dashboard/content"
-							className="link"
+							className={`link ${toggled ? 'toggled' : ''}`}
 							activeClassName="selectedLink"
+							onClick={() => setToggled(false)}
 						>
 							Content
 						</NavLink>
 					</li>
-					<li>
+					<li
+						className={`help-icon-holder ${toggled ? 'toggled' : ''}`}
+						onClick={() => setToggled(false)}
+					>
 						{/* <a href="javascript:void(0)"> */}
 						<span className="help-icon">
 							<GrHelp />
@@ -96,11 +119,17 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 						{/* </a> */}
 					</li>
 				</ul>
+				<span onClick={handleSideMenu}>
+					{toggled ? <MdClose /> : <MdMenu />}
+				</span>
 			</nav>
 			<div className="navbar-dropdown">
 				<div
 					className="profile-info"
-					onClick={() => setIsDropdownVisible(true)}
+					onClick={() => {
+						setToggled(false);
+						setIsDropdownVisible(true);
+					}}
 				>
 					<p>Welcome !</p>
 					<p>
@@ -111,7 +140,10 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 				</div>
 				<div
 					className="profile-picture"
-					onClick={() => setIsDropdownVisible(true)}
+					onClick={() => {
+						setToggled(false);
+						setIsDropdownVisible(true);
+					}}
 				>
 					<span>
 						<img src={private_img} alt="..." />
@@ -123,6 +155,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 						onMouseLeave={() => setIsDropdownVisible(false)}
 					>
 						<div className="profile-picture-block">
+							<span onClick={() => setIsDropdownVisible(false)}>X</span>
 							<span>
 								<img src={private_img} alt="..." />
 							</span>
@@ -159,17 +192,19 @@ const TopMenuStyles = styled.div`
 	nav {
 		width: 77%;
 		background: ${props => props.theme.main_menu.background_colour};
+		> span {
+			display: none;
+		}
 		ul {
 			padding: 0;
 			margin: 0%;
 			border-bottom: 5px solid
-				${props => props.theme.top_menu_dropdown_bg_color};
+				${props => props.theme.main_menu.highlight_colour}; /* main_menu.highlight_colour = #0F1662 */
 			position: relative;
 			li {
 				display: inline-flex;
-				background: ${props => props.theme.menu_bg_color};
+				background: ${props => props.theme.main_menu.background_colour};
 				:first-child {
-					background: red;
 					width: ${props => props.brandLinkWidth + 15}px;
 				}
 				.brand-link {
@@ -178,11 +213,13 @@ const TopMenuStyles = styled.div`
 					left: 5px;
 					border: 1px solid white;
 					padding: 0;
-
+					background: ${props => props.theme.main_menu.passive_background_colour};
 					div {
 						display: inline-flex;
 						align-items: center;
 						position: relative;
+						justify-content: center;
+						width: 100%;
 						img {
 							height: 40px;
 						}
@@ -205,16 +242,28 @@ const TopMenuStyles = styled.div`
 				a {
 					display: inline-flex;
 					align-items: center;
-					background: ${props => props.theme.menu_bg_color};
+					background: ${props => props.theme.top_menu_button.passive_background_colour};
 					padding: 0 50px;
 					height: 45px;
-					font-size: ${props => props.theme.menu_text_size};
-					color: ${props => props.theme.menu_font_color};
+					font-size: ${props => props.theme.top_menu_button.passive_text_size};
+					color: ${props => props.theme.top_menu_button.passive_text_colour};
 					text-decoration: none;
 				}
 				.selectedLink {
-					background: ${props => props.theme.menu_font_color};
-					color: ${props => props.theme.menu_bg_color};
+					font-size: ${props => props.theme.top_menu_button.active_text_size};
+					color: ${props => props.theme.top_menu_button.active_text_colour};
+					background: ${props => props.theme.top_menu_button.active_background_colour};
+					position: relative;
+					&:before {
+						content: '';
+						position: absolute;
+						display: block;
+						width: 100%;
+						height: 5px;
+						background: white;
+						bottom: -5px;
+						left: 0;
+					}
 				}
 				.help-icon {
 					background: #5bb528;
@@ -225,6 +274,7 @@ const TopMenuStyles = styled.div`
 					align-items: center;
 					justify-content: center;
 					color: white;
+					margin-left: 10px;
 					cursor: pointer;
 				}
 			}
@@ -268,8 +318,9 @@ const TopMenuStyles = styled.div`
 			box-sizing: border-box;
 			position: absolute;
 			top: 0;
-			left: 2%;
+			right: 2%;
 			width: 96%;
+			max-width: 300px;
 			min-height: 350px;
 			background: white;
 			border: 2px solid #999;
@@ -280,16 +331,23 @@ const TopMenuStyles = styled.div`
 			font-size: 90%;
 			.profile-picture-block {
 				display: flex;
-				justify-content: flex-end;
+				justify-content: space-between;
 				width: 100%;
 				span {
-					border-radius: 50%;
-					border: 3px solid #999;
-					width: 40px;
-					height: 40px;
-					overflow: hidden;
-					img {
-						width: 100%;
+					&:first-child {
+						padding: 5px 10px;
+						display: flex;
+						align-items: center;
+					}
+					&:last-child {
+						border-radius: 50%;
+						border: 3px solid #999;
+						width: 40px;
+						height: 40px;
+						overflow: hidden;
+						img {
+							width: 100%;
+						}
 					}
 				}
 			}
@@ -356,14 +414,19 @@ const TopMenuStyles = styled.div`
 			padding: 0 25px;
 		}
 	}
-	/* @media (min-width: 1024px) and (max-width: 1440px) {
+	@media (min-width: 768px) and (max-width: 850px) {
 		.link {
-			padding: 0 25px;
+			padding: 0 10px;
 		}
-	} */
-	@media (min-width: 768px) and (max-width: 1024px) {
+	}
+	@media (min-width: 850px) and (max-width: 1000px) {
 		.link {
-			padding: 0 25px;
+			padding: 0 15px;
+		}
+	}
+	@media (min-width: 1000px) and (max-width: 1200px) {
+		.link {
+			padding: 0 20px;
 		}
 	}
 	@media ${device.tablet} {
@@ -371,11 +434,26 @@ const TopMenuStyles = styled.div`
 		width: 100%;
 		nav {
 			width: 90%;
+			> span {
+				display: inline-block;
+				color: white;
+				font-size: 25px;
+				margin-left: 10px;
+				margin-top: 15px;
+				cursor: pointer;
+			}
 			ul {
 				border-bottom: 0;
+				&.toggled {
+					display: flex;
+					flex-direction: column;
+					position: absolute;
+					top: 53px;
+				}
+
 				.brand-link {
 					display: flex;
-					top: 125% !important;
+					top: 180% !important;
 					left: 0 !important;
 					right: 0 !important;
 					width: 70%;
@@ -383,17 +461,31 @@ const TopMenuStyles = styled.div`
 					max-width: 260px;
 					margin: auto;
 					justify-content: center;
+					&.toggled {
+						position: unset;
+						border: 0;
+					}
 				}
 				.link {
-					opacity: 0;
-					display: none !important;
+					width: 100%;
+					justify-content: center;
+					display: none;
+					&.toggled {
+						display: flex;
+					}
 				}
-				.help-icon {
-					display: none !important;
+				.help-icon-holder {
+					width: 100%;
+					display: flex;
+					justify-content: center;
+					padding: 10px;
+					display: none;
+					&.toggled {
+						display: flex;
+					}
 				}
 			}
 		}
-
 		.navbar-dropdown {
 			display: flex;
 			width: 10%;
@@ -414,6 +506,12 @@ const TopMenuStyles = styled.div`
 			.show-dropdown {
 				min-height: 290px;
 			}
+		}
+	}
+	@media (max-width: 320px) {
+		.brand-link {
+			width: 50% !important;
+			min-width: 162px !important;
 		}
 	}
 `;
