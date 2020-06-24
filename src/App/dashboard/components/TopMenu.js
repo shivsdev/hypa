@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { GrHelp } from 'react-icons/gr';
@@ -13,6 +13,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 	const [brandLinkWidth, setBrandLinkWidth] = useState(160);
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 	const [toggled, setToggled] = useState(false);
+	const [width, setWidth] = useState(window.innerWidth);
 
 	const handleLogout = () => {
 		setIsLoading(true);
@@ -32,10 +33,20 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 		setToggled(!toggled);
 	};
 
-	console.log("theme", theme)
-	
+	useEffect(() => {
+		window.addEventListener('resize', () => {
+			// setWidth(window.innerWidth);
+		});
+	}, [window]);
+
+	console.log('theme', theme);
+	/*
+		corrections on style-api
+		main_menu.highlight_colour = #4395A6;
+ */
+
 	return (
-		<TopMenuStyles theme={theme} brandLinkWidth={brandLinkWidth}>
+		<TopMenuStyles theme={theme} brandLinkWidth={brandLinkWidth} width={width}>
 			<nav>
 				<ul className={`${toggled ? 'toggled' : ''}`}>
 					<li>
@@ -186,6 +197,12 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 
 export default TopMenu;
 
+const getResponsiveFont = (sizeinpx, width) => {
+	let fontSize = parseInt(sizeinpx.substr(0, 2));	
+	let result = (fontSize / width * 80 )+ 'vw';
+	return result;
+};
+
 const TopMenuStyles = styled.div`
 	display: flex;
 	margin-bottom: 30px;
@@ -199,8 +216,11 @@ const TopMenuStyles = styled.div`
 			padding: 0;
 			margin: 0%;
 			border-bottom: 5px solid
-				${props => props.theme.main_menu.highlight_colour}; /* main_menu.highlight_colour = #0F1662 */
+				${props =>
+					props.theme.main_menu
+						.highlight_colour};
 			position: relative;
+			white-space: nowrap;
 			li {
 				display: inline-flex;
 				background: ${props => props.theme.main_menu.background_colour};
@@ -245,12 +265,20 @@ const TopMenuStyles = styled.div`
 					background: ${props => props.theme.top_menu_button.passive_background_colour};
 					padding: 0 50px;
 					height: 45px;
-					font-size: ${props => props.theme.top_menu_button.passive_text_size};
+					font-size: ${props =>
+						getResponsiveFont(
+							props.theme.top_menu_button.passive_text_size,
+							props.width
+						)};
 					color: ${props => props.theme.top_menu_button.passive_text_colour};
 					text-decoration: none;
 				}
 				.selectedLink {
-					font-size: ${props => props.theme.top_menu_button.active_text_size};
+					font-size: ${props =>
+						getResponsiveFont(
+							props.theme.top_menu_button.active_text_size,
+							props.width
+						)};
 					color: ${props => props.theme.top_menu_button.active_text_colour};
 					background: ${props => props.theme.top_menu_button.active_background_colour};
 					position: relative;
@@ -331,13 +359,12 @@ const TopMenuStyles = styled.div`
 			font-size: 90%;
 			.profile-picture-block {
 				display: flex;
-				justify-content: space-between;
+				justify-content: flex-end;
 				width: 100%;
 				span {
 					&:first-child {
-						padding: 5px 10px;
-						display: flex;
-						align-items: center;
+						
+						display: none;
 					}
 					&:last-child {
 						border-radius: 50%;
@@ -497,7 +524,7 @@ const TopMenuStyles = styled.div`
 				display: none;
 			}
 			.profile-picture {
-				position: unset;
+				position: unset;			
 				img {
 					width: 50px;
 					height: 50px;
@@ -505,6 +532,17 @@ const TopMenuStyles = styled.div`
 			}
 			.show-dropdown {
 				min-height: 290px;
+				.profile-picture-block {
+				display: flex;
+				justify-content: space-between;
+				width: 100%;
+				span {
+					&:first-child {
+						padding: 5px 10px;
+						display: flex;
+						align-items: center;
+					}
+				}
 			}
 		}
 	}

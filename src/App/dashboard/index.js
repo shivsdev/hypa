@@ -25,23 +25,18 @@ export default function Dashboard({ history, authObj, location }) {
 			iframeUrl = '';
 	}
 
-	// const menu_bg_color = styles.top_menu_button.passive_background_colour;
 	// const menu_font_color = styles.top_menu_button.passive_text_colour;
 	// const top_menu_dropdown_bg_color = styles.top_menu_button.passive_border_colour;
 	// const top_menu_dropdown_text_color = styles.top_menu_button.passive_text_colour;
 
 	React.useEffect(() => {
 		const theme_temp = {
-			menu_bg_color: '#0F1662',
-			menu_font_color: 'white',
-			menu_text_size: '16px',
 			top_menu_dropdown_bg_color: '#4395A6',
 			top_menu_dropdown_text_color: 'white',
 		};
 		apiUrl.get('/uiobjects/styles').then(res => {
 			setTheme({ ...theme_temp, ...res.data });
 			setIsLoading(false);
-			// console.log(res.data)
 		});
 	}, []);
 
@@ -66,8 +61,8 @@ export default function Dashboard({ history, authObj, location }) {
 					height="600px"
 				/>
 			) : (
-					<NotFound />
-				)}
+				<NotFound />
+			)}
 		</>
 	);
 }
