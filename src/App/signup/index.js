@@ -15,7 +15,7 @@ class Signup extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: sessionStorage.getItem('email'),
+			email: '',
 			password: '',
 			emailRef: React.createRef(),
 			passwordRef: React.createRef(),
@@ -35,40 +35,40 @@ class Signup extends Component {
 			passwordError: false,
 			checkedError: false,
 			styles: {
-				title1_colour: "#009999",
-				title1_font_size: "60px",
-				title2_colour: "#000066",
-				title2_font_size: "50px",
-				error_text_colour: "#ff0000",
-				label_text_colour: "#676767",
-				check_box_border_colour: "#009999",
-				button_bg_colour: "#009999",
-				button_text_colour: "#ffffff",
-				button_text_font: "18px",
-				password_passive_colour: "#b3b3b3",
-				password_active_colour: "#33cc33",
-				password_error_colour: "#ff0000",
-				green_text_colour: "#009999",
-				icon_passive_colour: "#ccc"
-			}
+				title1_colour: '#009999',
+				title1_font_size: '60px',
+				title2_colour: '#000066',
+				title2_font_size: '50px',
+				error_text_colour: '#ff0000',
+				label_text_colour: '#676767',
+				check_box_border_colour: '#009999',
+				button_bg_colour: '#009999',
+				button_text_colour: '#ffffff',
+				button_text_font: '18px',
+				password_passive_colour: '#b3b3b3',
+				password_active_colour: '#33cc33',
+				password_error_colour: '#ff0000',
+				green_text_colour: '#009999',
+				icon_passive_colour: '#ccc',
+			},
 		};
 		if (this.props.authObj.isAuthenticated)
 			this.props.history.push('/dashboard');
 	}
 
-
 	componentWillMount() {
-		axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
-			.then((res) => {
-				console.log("doneasdas")
-				this.setState({
-					styles: { ...this.state.styles, ...res.data }
-				})
-			}
-			)
+		axios.get('http://34.253.224.180:18306/v1/uiobjects/styles').then(res => {
+			this.setState({
+				styles: { ...this.state.styles, ...res.data },
+			});
+		});
 
 		window.scrollTo(0, 0);
+	}
 
+	componentDidMount() {
+		let email = this.props.location.email ? this.props.location.email : '';
+		this.setState({ email });
 	}
 
 	componentDidUpdate(prevProps) {
@@ -201,7 +201,6 @@ class Signup extends Component {
 					email: this.state.email,
 					password: this.state.password,
 				};
-
 				apiUrl
 					.post('/account/register', data)
 					.then(({ status, data }) => {
@@ -216,7 +215,15 @@ class Signup extends Component {
 		}
 	};
 
+	redirectToSignin = () => {
+		this.props.history.push({
+			pathname: '/',
+			email: this.state.emailRef.current.value,
+		});
+	};
+
 	render() {
+		const { redirectToSignin } = this;
 		const width = window.innerWidth;
 		const Button = styled.button({
 			width: '100%',
@@ -261,7 +268,6 @@ class Signup extends Component {
 			marginLeft: '12px',
 		});
 
-
 		const AgreeText = styled.p({
 			fontSize: 12,
 			marginTop: 0,
@@ -280,9 +286,7 @@ class Signup extends Component {
 			margin: 0,
 		});
 		if (this.state.styles === null) {
-			return (
-				<div></div>
-			);
+			return <div></div>;
 		}
 
 		return (
@@ -330,16 +334,20 @@ class Signup extends Component {
 						>
 							<Label>Password</Label>
 							{this.state.uppError ||
-								this.state.numberError ||
-								this.state.SpecialError ||
-								this.state.lengthError ? (
-									<Errortext>Strong password required</Errortext>
-								) : null}
+							this.state.numberError ||
+							this.state.SpecialError ||
+							this.state.lengthError ? (
+								<Errortext>Strong password required</Errortext>
+							) : null}
 							<IconContext.Provider value={{ style: { fontSize: '15' } }}>
 								<div>
 									<FaEyeSlash
 										onClick={this.showpassword}
-										color={this.state.showpassword ? this.state.styles.icon_passive_colour : ''}
+										color={
+											this.state.showpassword
+												? this.state.styles.icon_passive_colour
+												: ''
+										}
 									/>
 								</div>
 							</IconContext.Provider>
@@ -399,12 +407,16 @@ class Signup extends Component {
 						<Button type="submit">Sign Up</Button>
 						<br />
 						<span>Already have an account ? </span>
-						<Link
-							style={{ color: this.state.styles.green_text_colour, textDecoration: 'underline' }}
-							to="/"
+						<span
+							style={{
+								color: this.state.styles.green_text_colour,
+								textDecoration: 'underline',
+								cursor: 'pointer',
+							}}
+							onClick={redirectToSignin}
 						>
 							Sign in
-						</Link>
+						</span>
 					</form>
 				</div>
 			</Styles>
@@ -414,7 +426,7 @@ class Signup extends Component {
 export default withRouter(Signup);
 const getResponsiveFontSize = (sizeinpx, width) => {
 	let fontSize = parseInt(sizeinpx.substr(0, 2));
-	let result = (fontSize / width * 80) + 'vw';
+	let result = (fontSize / width) * 80 + 'vw';
 	return result;
 };
 const Styles = styled.div`
@@ -432,10 +444,7 @@ const Styles = styled.div`
 		margin: 0px auto;
 		.first-row-title {
 			font-size: ${props =>
-		getResponsiveFontSize(
-			props.theme.title1_font_size,
-			props.width
-		)};
+				getResponsiveFontSize(props.theme.title1_font_size, props.width)};
 			margin: 0;
 			font-weight: normal;
 			color: ${props => props.theme.title1_colour};
@@ -443,10 +452,7 @@ const Styles = styled.div`
 		.second-row-title {
 			margin: 0;
 			font-size: ${props =>
-		getResponsiveFontSize(
-			props.theme.title2_font_size,
-			props.width
-		)};
+				getResponsiveFontSize(props.theme.title2_font_size, props.width)};
 			color: ${props => props.theme.title2_colour};
 			font-weight: bolder;
 		}
@@ -482,10 +488,7 @@ const Styles = styled.div`
 			margin-top: 2em;
 			.first-row-title {
 				font-size: ${props =>
-		getResponsiveFontSize(
-			props.theme.title1_font_size,
-			props.width
-		)};
+					getResponsiveFontSize(props.theme.title1_font_size, props.width)};
 				margin: 0;
 				font-weight: normal;
 				color: ${props => props.theme.title1_colour};
@@ -493,10 +496,7 @@ const Styles = styled.div`
 			.second-row-title {
 				margin: 0;
 				font-size: ${props =>
-		getResponsiveFontSize(
-			props.theme.title2_font_size,
-			props.width
-		)};
+					getResponsiveFontSize(props.theme.title2_font_size, props.width)};
 				color: ${props => props.theme.title2_colour};
 				font-weight: bolder;
 			}

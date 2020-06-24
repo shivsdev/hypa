@@ -8,7 +8,6 @@ import { device } from '../../exportables/exportables';
 import ResetPasswordPopup from './components/ResetPasswordPopup';
 import { apiUrl } from '../calls/apis';
 import axios from 'axios';
-import signup from '../signup';
 
 class Signin extends Component {
 	constructor(props) {
@@ -23,41 +22,42 @@ class Signin extends Component {
 			},
 			isPopupVisible: false,
 			styles: {
-				title1_colour: "#009999",
-				title1_font_size: "60px",
-				title2_colour: "#000066",
-				title2_font_size: "50px",
-				error_text_colour: "#ff0000",
-				label_text_colour: "#676767",
-				check_box_border_colour: "#009999",
-				button_bg_colour: "#009999",
-				button_text_colour: "#ffffff",
-				button_text_font: "18px",
-				password_passive_colour: "#b3b3b3",
-				password_active_colour: "#33cc33",
-				password_error_colour: "#ff0000",
-				green_text_colour: "#009999",
-				icon_passive_colour: "#ccc",
-				input_font_size: "16px",
-				input_border_colour: "#ccc",
-				reset_password_button_colour: "#479a99",
-			}
+				title1_colour: '#009999',
+				title1_font_size: '60px',
+				title2_colour: '#000066',
+				title2_font_size: '50px',
+				error_text_colour: '#ff0000',
+				label_text_colour: '#676767',
+				check_box_border_colour: '#009999',
+				button_bg_colour: '#009999',
+				button_text_colour: '#ffffff',
+				button_text_font: '18px',
+				password_passive_colour: '#b3b3b3',
+				password_active_colour: '#33cc33',
+				password_error_colour: '#ff0000',
+				green_text_colour: '#009999',
+				icon_passive_colour: '#ccc',
+				input_font_size: '16px',
+				input_border_colour: '#ccc',
+				reset_password_button_colour: '#479a99',
+			},
+			email: '',
+			password: '',
 		};
-		this.emailRef = createRef();
-		this.passwordRef = createRef();
+
 		if (this.props.authObj.isAuthenticated)
 			this.props.history.push('/dashboard');
 	}
 
 	componentDidMount() {
 		window.scrollTo(0, 0);
-		axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
-			.then((res) => {
-				this.setState({
-					styles: { ...this.state.styles, ...res.data }
-				})
-			}
-			)
+		let email = this.props.location.email ? this.props.location.email : '';
+		this.setState({ email });
+		axios.get('http://34.253.224.180:18306/v1/uiobjects/styles').then(res => {
+			this.setState({
+				styles: { ...this.state.styles, ...res.data },
+			});
+		});
 	}
 
 	validateEmail(mail) {
@@ -71,10 +71,21 @@ class Signin extends Component {
 		window.sessionStorage.setItem('token', token);
 	};
 
+	handleInput = target => {
+		this.setState({ [target.name]: target.value });
+	};
+
+	handleShowPassword = () => {
+		this.setState(
+			{ isPasswordVisible: !this.state.isPasswordVisible },
+			() => () => console.log('d', this.state)
+		);
+	};
+
 	handleSubmit = e => {
 		e.preventDefault();
-		const email = this.emailRef.current.value;
-		const password = this.passwordRef.current.value;
+		const email = this.state.email;
+		const password = this.state.password;
 		/**
 		 * Two scenario for email validation.
 		 * - no email provided
@@ -111,6 +122,7 @@ class Signin extends Component {
 			password,
 		};
 		let tempEmail = email;
+
 		apiUrl
 			.post('/account/login', data)
 			.then(({ data, status }) => {
@@ -166,11 +178,12 @@ class Signin extends Component {
 					});
 			});
 	};
-	ResetPassword = (email) => {
+
+	ResetPassword = email => {
 		this.togglePopup();
-		window.sessionStorage.setItem('email', email)
-		this.props.history.push("/reset")
-	}
+		window.sessionStorage.setItem('email', email);
+		this.props.history.push('/reset');
+	};
 	renderErrorMessage = msg => {
 		if (!msg?.length) return null;
 		return <span style={{ color: 'red' }}>{msg}</span>;
@@ -188,33 +201,39 @@ class Signin extends Component {
 			/>
 		);
 	};
-
 	togglePopup = () => {
 		this.setState({ isPopupVisible: !this.state.isPopupVisible });
 	};
 	signup = () => {
-		window.sessionStorage.setItem('email', this.emailRef.current.value);
-		this.props.history.push("/signup")
-	}
-
+		this.props.history.push({ pathname: '/signup', email: this.state.email });
+	};
 	render() {
-		const title1_colour = "#009999";
-		const title1_font_size = "";
-		const title2_colour = "#000066";
-		const title2_font_size = "";
-		const error_text_colour = "#ff0000";
-		const label_text_colour = "#676767";
-		const button_colour = "#009999";
-		const button_text_colour = "#ffffff";
-		const reset_password_button_colour = "#479a99";
-		const input_font_size = "16px";
-		const button_text_font_size = "18";
-		const { handleSubmit, renderErrorMessage, emailRef, passwordRef } = this;
-		const { isPasswordVisible, errors } = this.state;
-		const passwordFieldName = isPasswordVisible ? 'text' : 'password';
-		const email = emailRef?.current?.value ? emailRef.current.value : null;
-		const { isPopupVisible } = this.state;
+		const title1_colour = '#009999';
+		const title1_font_size = '';
+		const title2_colour = '#000066';
+		const title2_font_size = '';
+		const error_text_colour = '#ff0000';
+		const label_text_colour = '#676767';
+		const button_colour = '#009999';
+		const button_text_colour = '#ffffff';
+		const reset_password_button_colour = '#479a99';
+		const input_font_size = '16px';
+		const button_text_font_size = '18';
 
+		const {
+			handleInput,
+			handleShowPassword,
+			handleSubmit,
+			renderErrorMessage,
+		} = this;
+		const {
+			isPasswordVisible,
+			errors,
+			email,
+			password,
+			isPopupVisible,
+		} = this.state;
+		const passwordFieldName = isPasswordVisible ? 'text' : 'password';
 
 		const Button = styled.button({
 			width: '100%',
@@ -229,31 +248,18 @@ class Signin extends Component {
 			fontWeight: 'bold',
 			cursor: 'pointer',
 		});
-
-		const Input = styled.input`
-	width: 100%;
-	border-radius: 5px;
-	height: 40px;
-	border: 1px solid #ccc;
-	padding: 0px;
-	outline: 0px;
-	font-size: 16px;
-	padding: 10px;
-	box-sizing: border-box;
-	margin-top: 3px;
-`;
-
 		const Label = styled.label`
-	display: flex;
-	color: ${label_text_colour};
-	justify-content: space-between;
-`;
+			display: flex;
+			color: ${label_text_colour};
+			justify-content: space-between;
+		`;
 		const PasswordLabel = styled.label`
-	display: flex;
-	justify-content: space-between;
-	color: ${label_text_colour};
-`;
+			display: flex;
+			justify-content: space-between;
+			color: ${label_text_colour};
+		`;
 		const width = window.innerWidth;
+
 		return (
 			<Styles theme={this.state.styles} width={width}>
 				<div className="logo-holder">
@@ -265,7 +271,13 @@ class Signin extends Component {
 					<form onSubmit={handleSubmit}>
 						<br />
 						<Label>Email {renderErrorMessage(errors.emailErrMsg)}</Label>
-						<Input type="text" name="email" ref={emailRef} />
+						<input
+							type="text"
+							name="email"
+							defaultValue={email}
+							autoComplete="off"
+							onChange={({ target }) => handleInput(target)}
+						/>
 						<br />
 						<br />
 						<PasswordLabel>
@@ -275,15 +287,16 @@ class Signin extends Component {
 								<FaEyeSlash
 									style={{ marginLeft: 5, cursor: 'pointer' }}
 									color={isPasswordVisible ? '#ccc' : ''}
-									onClick={() =>
-										this.setState({
-											isPasswordVisible: !isPasswordVisible,
-										})
-									}
+									onClick={handleShowPassword}
 								/>
 							</span>
 						</PasswordLabel>
-						<Input type={passwordFieldName} name="password" ref={passwordRef} />
+						<input
+							type={passwordFieldName}
+							name="password"
+							defaultValue={password}
+							onChange={({ target }) => handleInput(target)}
+						/>
 						<br />
 						<p className="reset-password-button" onClick={this.togglePopup}>
 							Forgot password ?
@@ -302,9 +315,18 @@ class Signin extends Component {
 						<Button>SIGN IN</Button>
 						<br />
 						Don't have an account ?
-						<Link style={{ color: '#009999', marginLeft: 5 }} onClick={this.signup}>
+						<span
+							style={{
+								color: '#009999',
+								marginLeft: 5,
+								cursor: 'pointer',
+								textDecoration: 'underline',
+							}}
+							to="/"
+							onClick={this.signup}
+						>
 							Sign up
-						</Link>
+						</span>
 					</form>
 				</div>
 
@@ -318,7 +340,7 @@ export default withRouter(Signin);
 
 const getResponsiveFontSize = (sizeinpx, width) => {
 	let fontSize = parseInt(sizeinpx.substr(0, 2));
-	let result = (fontSize / width * 80) + 'vw';
+	let result = (fontSize / width) * 80 + 'vw';
 	return result;
 };
 const Styles = styled.div`
@@ -335,7 +357,7 @@ const Styles = styled.div`
 		border: 1px solid ${props => props.theme.input_border_colour};
 		padding: 0px;
 		outline: 0px;
-		font-size:12px;
+		font-size: 16px;
 		padding: 10px;
 		box-sizing: border-box;
 		margin-top: 3px;
@@ -352,10 +374,7 @@ const Styles = styled.div`
 		margin: 0px auto;
 		.first-row-title {
 			font-size: ${props =>
-		getResponsiveFontSize(
-			props.theme.title1_font_size,
-			props.width
-		)};
+				getResponsiveFontSize(props.theme.title1_font_size, props.width)};
 			margin: 0;
 			font-weight: normal;
 			color: ${props => props.theme.title1_colour};
@@ -363,10 +382,7 @@ const Styles = styled.div`
 		.second-row-title {
 			margin: 0;
 			font-size: ${props =>
-		getResponsiveFontSize(
-			props.theme.title2_font_size,
-			props.width
-		)};
+				getResponsiveFontSize(props.theme.title2_font_size, props.width)};
 			color: ${props => props.theme.title2_colour};
 			font-weight: bolder;
 		}
@@ -402,22 +418,16 @@ const Styles = styled.div`
 			margin-top: 2em;
 			.first-row-title {
 				font-size: ${props =>
-		getResponsiveFontSize(
-			props.theme.title1_font_size,
-			props.width
-		)};
+					getResponsiveFontSize(props.theme.title1_font_size, props.width)};
 				margin: 0;
 				font-weight: normal;
-				color:${props => props.theme.title1_colour} ;
+				color: ${props => props.theme.title1_colour};
 			}
 			.second-row-title {
 				margin: 0;
 				font-size: ${props =>
-		getResponsiveFontSize(
-			props.theme.title2_font_size,
-			props.width
-		)};
-				color: ${props => props.theme.title2_colour} ;
+					getResponsiveFontSize(props.theme.title2_font_size, props.width)};
+				color: ${props => props.theme.title2_colour};
 				font-weight: bolder;
 			}
 			form {

@@ -34,8 +34,8 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 		setToggled(!toggled);
 	};
 
-	const getValueIfExists = (value, additional = null) => {
-		return value ? value + additional : null;
+	const getValueIfExists = (value, additional = '') => {
+		return value ? value + additional : '';
 	};
 
 	useEffect(() => {
@@ -158,8 +158,8 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 				>
 					<p>{persona ? persona.name : 'Welcome !'}</p>
 					<p>
-						{persona
-							? persona.email
+						{persona?.name
+							? 'Private'
 							: window.sessionStorage.getItem('email')
 							? window.sessionStorage.getItem('email')
 							: ''}
@@ -299,6 +299,7 @@ const TopMenuStyles = styled.div`
 						)};
 					color: ${props => props.theme.top_menu_button.passive_text_colour};
 					text-decoration: none;
+					margin-top: 5px;
 				}
 				.selectedLink {
 					font-size: ${props =>
@@ -446,6 +447,7 @@ const TopMenuStyles = styled.div`
 			.persona-bottom-links {
 				margin-top: 40px;
 				border-top: 1px solid #999;
+				list-style: none;
 				li {
 					button {
 						border: 0;
@@ -531,8 +533,14 @@ const TopMenuStyles = styled.div`
 					width: 100%;
 					justify-content: center;
 					display: none;
+					margin-top: 0;
 					&.toggled {
 						display: flex;
+					}
+				}
+				.selectedLink {
+					&:before {
+						display: none! important;
 					}
 				}
 				.help-icon-holder {
