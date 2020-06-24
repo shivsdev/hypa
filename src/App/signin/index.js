@@ -32,7 +32,7 @@ class Signin extends Component {
 				check_box_border_colour: "#009999",
 				button_bg_colour: "#009999",
 				button_text_colour: "#ffffff",
-				button_text_font: "18px",
+				button_text_font_size: "18px",
 				password_passive_colour: "#b3b3b3",
 				password_active_colour: "#33cc33",
 				password_error_colour: "#ff0000",
@@ -198,17 +198,7 @@ class Signin extends Component {
 	}
 
 	render() {
-		const title1_colour = "#009999";
-		const title1_font_size = "";
-		const title2_colour = "#000066";
-		const title2_font_size = "";
-		const error_text_colour = "#ff0000";
-		const label_text_colour = "#676767";
-		const button_colour = "#009999";
-		const button_text_colour = "#ffffff";
-		const reset_password_button_colour = "#479a99";
-		const input_font_size = "16px";
-		const button_text_font_size = "18";
+
 		const { handleSubmit, renderErrorMessage, emailRef, passwordRef } = this;
 		const { isPasswordVisible, errors } = this.state;
 		const passwordFieldName = isPasswordVisible ? 'text' : 'password';
@@ -220,12 +210,12 @@ class Signin extends Component {
 			width: '100%',
 			height: '40px',
 			borderRadius: 5,
-			backgroundColor: button_colour,
+			backgroundColor: this.state.styles.button_bg_colour,
 			borderWidth: 0,
 			marginTop: 5,
 			marginBottom: 20,
-			color: button_text_colour,
-			fontSize: button_text_font_size,
+			color: this.state.styles.button_text_colour,
+			fontSize: this.state.styles.button_text_font_size,
 			fontWeight: 'bold',
 			cursor: 'pointer',
 		});
@@ -245,13 +235,13 @@ class Signin extends Component {
 
 		const Label = styled.label`
 	display: flex;
-	color: ${label_text_colour};
+	color: ${this.state.styles.label_text_colour};
 	justify-content: space-between;
 `;
 		const PasswordLabel = styled.label`
 	display: flex;
 	justify-content: space-between;
-	color: ${label_text_colour};
+	color: ${this.state.styles.label_text_colour};
 `;
 		const width = window.innerWidth;
 		return (

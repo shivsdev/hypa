@@ -44,7 +44,7 @@ class Signup extends Component {
 				check_box_border_colour: "#009999",
 				button_bg_colour: "#009999",
 				button_text_colour: "#ffffff",
-				button_text_font: "18px",
+				button_text_font_size: "18px",
 				password_passive_colour: "#b3b3b3",
 				password_active_colour: "#33cc33",
 				password_error_colour: "#ff0000",
@@ -227,7 +227,7 @@ class Signup extends Component {
 			marginTop: 5,
 			marginBottom: 20,
 			color: this.state.styles.button_text_colour,
-			fontSize: 18,
+			fontSize: this.state.styles.button_text_font,
 			fontWeight: 'bold',
 			cursor: 'pointer',
 		});
