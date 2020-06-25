@@ -18,7 +18,6 @@ class Signin extends Component {
 				emailErrMsg: null,
 				passwordErrMsg: null,
 				loginErrMsg: null,
-				nAttempt: 0,
 			},
 			isPopupVisible: false,
 			styles: {
@@ -136,7 +135,6 @@ class Signin extends Component {
 									passwordErrMsg: null,
 									emailErrMsg: null,
 									loginErrMsg: null,
-									nAttempt: 0,
 								},
 							};
 						},
@@ -150,32 +148,17 @@ class Signin extends Component {
 				}
 			})
 			.catch(err => {
-				if (this.state.errors.nAttempt < 5)
-					this.setState(prevState => {
-						let attempt = prevState.errors.nAttempt + 1;
-						return {
-							...prevState,
-							errors: {
-								...prevState.errors,
-								passwordErrMsg: null,
-								emailErrMsg: null,
-								nAttempt: attempt,
-								loginErrMsg: `Email or Password incorrect, ${attempt} of 5 attempts remaining`,
-							},
-						};
-					});
-				else
-					this.setState(prevState => {
-						return {
-							...prevState,
-							errors: {
-								...prevState.errors,
-								passwordErrMsg: null,
-								emailErrMsg: null,
-								loginErrMsg: `Your account blocked for 5 min`,
-							},
-						};
-					});
+				this.setState(prevState => {
+					return {
+						...prevState,
+						errors: {
+							...prevState.errors,
+							passwordErrMsg: null,
+							emailErrMsg: null,
+							loginErrMsg: err.response.data.message,
+						},
+					};
+				});
 			});
 	};
 
