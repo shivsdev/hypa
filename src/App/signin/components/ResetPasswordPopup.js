@@ -19,7 +19,7 @@ export default function ViewProfile({
 	const handleSubmit = e => {
 		e.preventDefault();
 		let Data = {
-			"email": 'demo@mail.com'
+			"email": emailRef.current.value
 		}
 		apiUrl
 			.post('/account/forgotpassword', Data)

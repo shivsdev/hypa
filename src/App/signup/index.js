@@ -56,12 +56,16 @@ class Signup extends Component {
 			this.props.history.push('/dashboard');
 	}
 
-	componentWillMount() {
-		axios.get('http://34.253.224.180:18306/v1/uiobjects/styles').then(res => {
-			this.setState({
-				styles: { ...this.state.styles, ...res.data },
-			});
-		});
+
+	componentDidMount() {
+		axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
+			.then((res) => {
+				console.log("doneasdas")
+				this.setState({
+					styles: { ...this.state.styles, ...res.data }
+				})
+			}
+			)
 
 		window.scrollTo(0, 0);
 	}
@@ -298,7 +302,7 @@ class Signup extends Component {
 					<h1 className="first-row-title">Create a</h1>
 					<h1 className="second-row-title">Free Account</h1>
 					<p className="hypa-intro">
-						Hypal is a - multi line invitation text goes here, some nice words
+						HypaIQ is a - multi line invitation text goes here, some nice words
 						about us and what a great product this is. Get yours today!
 					</p>
 					<form onSubmit={this.handleSubmit} id="SIGINFORM">
@@ -334,11 +338,11 @@ class Signup extends Component {
 						>
 							<Label>Password</Label>
 							{this.state.uppError ||
-							this.state.numberError ||
-							this.state.SpecialError ||
-							this.state.lengthError ? (
-								<Errortext>Strong password required</Errortext>
-							) : null}
+								this.state.numberError ||
+								this.state.SpecialError ||
+								this.state.lengthError ? (
+									<Errortext>Strong password required</Errortext>
+								) : null}
 							<IconContext.Provider value={{ style: { fontSize: '15' } }}>
 								<div>
 									<FaEyeSlash
@@ -444,7 +448,7 @@ const Styles = styled.div`
 		margin: 0px auto;
 		.first-row-title {
 			font-size: ${props =>
-				getResponsiveFontSize(props.theme.title1_font_size, props.width)};
+		getResponsiveFontSize(props.theme.title1_font_size, props.width)};
 			margin: 0;
 			font-weight: normal;
 			color: ${props => props.theme.title1_colour};
@@ -452,7 +456,7 @@ const Styles = styled.div`
 		.second-row-title {
 			margin: 0;
 			font-size: ${props =>
-				getResponsiveFontSize(props.theme.title2_font_size, props.width)};
+		getResponsiveFontSize(props.theme.title2_font_size, props.width)};
 			color: ${props => props.theme.title2_colour};
 			font-weight: bolder;
 		}
@@ -488,7 +492,7 @@ const Styles = styled.div`
 			margin-top: 2em;
 			.first-row-title {
 				font-size: ${props =>
-					getResponsiveFontSize(props.theme.title1_font_size, props.width)};
+		getResponsiveFontSize(props.theme.title1_font_size, props.width)};
 				margin: 0;
 				font-weight: normal;
 				color: ${props => props.theme.title1_colour};
@@ -496,7 +500,7 @@ const Styles = styled.div`
 			.second-row-title {
 				margin: 0;
 				font-size: ${props =>
-					getResponsiveFontSize(props.theme.title2_font_size, props.width)};
+		getResponsiveFontSize(props.theme.title2_font_size, props.width)};
 				color: ${props => props.theme.title2_colour};
 				font-weight: bolder;
 			}
