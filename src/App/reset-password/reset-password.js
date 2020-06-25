@@ -6,8 +6,13 @@ import hypaiq from './../../exportables/hypaiq.png';
 import { FaEyeSlash } from "react-icons/fa";
 import { IconContext } from 'react-icons';
 import axios from 'axios';
+import { apiUrl } from '../calls/apis';
 import { device } from '../../exportables/exportables'
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const mail = urlParams.get("e");
+const token = urlParams.get('t');
 class Reset extends Component {
     constructor(props) {
         super(props);
@@ -113,38 +118,31 @@ class Reset extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        var err = false;
-        this.setState({
-            password: this.state.passwordRef.current.value
-        })
-        if (!err) {
-            var createCORSRequest = (method, url) => {
-                var xhr = new XMLHttpRequest();
-                if ("withCredentials" in xhr) {
-                    // Most browsers.
-                    xhr.open(method, url, true);
-                } else if (typeof window.XDomainRequest != "undefined") {
-                    // IE8 & IE9
-                    xhr = new window.XDomainRequest();
-                    xhr.open(method, url);
-                } else {
-                    // CORS not supported.
-                    xhr = null;
-                }
-                return xhr;
-            };
-            var url = 'http://34.253.224.180:18306/register/index';
-            var method = 'POST';
-            var xhr = createCORSRequest(method, url);
+        let err = false;
+        this.password();
 
-            xhr.onload = (res) => {
-                this.props.history.push("/")
-                console.log(res)
+        let password = this.state.passwordRef.current.value;
+
+        if (this.state.passwordRef.current.value === "") {
+            err = true
+        }
+        if (!this.state.passwordError & !err) {
+            let data = {
+                email: mail,
+                token: token,
+                password: password,
+
             };
-            xhr.onerror = function () {
-                // Error code goes here.
-            };
-            xhr.send({ email: 'demo@gmail.com', password: 'Demo@123' });
+            apiUrl
+                .post('/account/resetpassword', data)
+                .then(({ status, data }) => {
+                    if ((status === 200) & (data.status === 'success')) {
+                        this.props.history.push('/');
+                    }
+                })
+                .catch(err => {
+                    alert('Email ' + err.response.data.message);
+                });
         }
     }
     render() {
@@ -308,7 +306,7 @@ class Reset extends Component {
             color: error_text_colour,
             margin: 0,
         });
-        var email = sessionStorage.getItem('email')
+
         return (
             < Styles >
                 <div className="logo-holder">
@@ -316,7 +314,7 @@ class Reset extends Component {
                 </div>
                 <div className="content-box">
                     <BlueH1 >Password reset for</BlueH1>
-                    <GreenH1 >{email}</GreenH1>
+                    <GreenH1 >{mail}</GreenH1>
                     <br /> <br />  <br /> <br /> <br /><br />
                     <form
                         onSubmit={this.handleSubmit}
@@ -335,7 +333,7 @@ class Reset extends Component {
                         <Input
                             id="password"
                             ref={this.state.passwordRef}
-                            name="password" required
+                            name="password"
                             type={this.state.showpassword ? 'text' : 'password'}
                             onFocus={e => { this.state.focused = this.state.passwordRef }}
                             onChange={this.password}

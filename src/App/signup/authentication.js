@@ -5,8 +5,11 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { device } from '../../exportables/exportables'
 import Axios from 'axios';
 
-let emailValidate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const mail = urlParams.get("e");
+const token = urlParams.get('t');
 class Confirmation extends Component {
 	constructor(props) {
 		super(props);
@@ -18,9 +21,7 @@ class Confirmation extends Component {
 			styles: {}
 		}
 	}
-
-	componentDidUpdate() {
-		this.state.emailRef.current.value = this.state.email;
+	componentDidMount() {
 		Axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
 			.then((res) => {
 				this.setState({
@@ -130,7 +131,7 @@ class Confirmation extends Component {
 					<img src={hypaiq} alt="Hypaiq" />
 				</div>
 				<div className="content-box">
-					<h1 className="second-row-title">Account confirmation</h1>
+					<h1 className="second-row-title">Signup confirmation</h1>
 					<h1 className="first-row-title"></h1>
 					<p className="hypa-intro">
 						To complete your account verification, please click on the link which is sent to your mail.

@@ -8,6 +8,8 @@ import Reset from './reset-password/reset-password';
 import Home from './home';
 import Dashboard from './dashboard';
 import Confirmation from './signup/authentication';
+import VerifyEmail from './signup/verifyEmail';
+
 
 const authObj = {
 	isAuthenticated:
@@ -27,8 +29,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 			authObj.isAuthenticated === true ? (
 				<Component {...props} authObj={authObj} />
 			) : (
-				<Redirect to="/" />
-			)
+					<Redirect to="/" />
+				)
 		}
 	/>
 );
@@ -51,7 +53,7 @@ export default function App() {
 			<Route exact path="/reset-password" component={Reset} />
 			<Route exact path="/home" component={Home} />
 			<Route exact path="/email-verification" component={Confirmation} />
-			<Route exact path="/verify-email" component={Confirmation} />
+			<Route exact path="/verify-email" component={VerifyEmail} />
 			<PrivateRoute path="/dashboard" component={Dashboard} />
 		</div>
 	);
