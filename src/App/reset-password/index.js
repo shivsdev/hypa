@@ -21,7 +21,7 @@ class Reset extends Component {
 
 	componentDidUpdate() {
 		this.state.emailRef.current.value = this.state.email;
-		Axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
+		Axios.get("https://hypaiqauthapi.cyb.co.uk/v1/uiobjects/styles")
 			.then((res) => {
 				this.setState({
 					styles: res.data

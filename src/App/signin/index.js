@@ -52,7 +52,7 @@ class Signin extends Component {
 		window.scrollTo(0, 0);
 		let email = this.props.location.email ? this.props.location.email : '';
 		this.setState({ email });
-		axios.get('http://34.253.224.180:18306/v1/uiobjects/styles').then(res => {
+		axios.get('https://hypaiqauthapi.cyb.co.uk/v1/uiobjects/styles').then(res => {
 			this.setState({
 				styles: { ...this.state.styles, ...res.data },
 			});

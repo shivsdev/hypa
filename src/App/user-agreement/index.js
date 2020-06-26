@@ -9,7 +9,7 @@ class UserAgreement extends Component {
 
 	componentDidMount() {
 		window.scrollTo(0, 0);
-		axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
+		axios.get("https://hypaiqauthapi.cyb.co.ukhttp://34.253.224.180:18306/v1/uiobjects/styles")
 			.then((res) => {
 				this.setState({
 					styles: res.data

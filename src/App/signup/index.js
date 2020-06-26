@@ -58,7 +58,7 @@ class Signup extends Component {
 
 
 	componentDidMount() {
-		axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
+		axios.get("https://hypaiqauthapi.cyb.co.uk/v1/uiobjects/styles")
 			.then((res) => {
 				console.log("doneasdas")
 				this.setState({

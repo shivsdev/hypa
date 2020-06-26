@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-var url = 'http://34.253.224.180:18306/v1';
+var url = 'https://hypaiqauthapi.cyb.co.uk/v1';
 const apiUrl = Axios.create({
 	baseURL: url,
 });
