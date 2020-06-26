@@ -44,5 +44,5 @@
   },
   "devDependencies": {
     "redux-devtools": "^3.5.0"
-  },
+  }
 }

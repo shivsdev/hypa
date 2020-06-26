@@ -39,7 +39,7 @@ class Reset extends Component {
         if (this.state.focused.current) {
             this.state.focused.current.focus()
         }
-        axios.get("http://34.253.224.180:18306/v1/uiobjects/styles")
+        axios.get("https://hypaiqauthapi.cyb.co.uk/v1/uiobjects/styles")
             .then((res) => {
                 this.setState({
                     styles: res.data
