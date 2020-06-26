@@ -40,7 +40,7 @@ export default function ViewProfile({
 	const poup_body_bg_colour = "#FFFFFF";
 	const header_colour = "green";
 	const input_group_colour = "#4395a6";
-	const input_colour = "#ff0000";
+	const input_colour = "#000";
 	const reset_text_colour = "#999";
 	const reset_button_colour = "#4395a6";
 	const reset_button_text_colour = "#ffffff";
