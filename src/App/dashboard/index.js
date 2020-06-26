@@ -13,13 +13,13 @@ export default function Dashboard({ history, authObj, location }) {
 	let iframeUrl = '';
 	switch (path) {
 		case 'patients':
-			iframeUrl = 'http://hypaiq-patient.cyb.co.uk/';
+			iframeUrl = 'https://hypaiq-patient.cyb.co.uk/';
 			break;
 		case 'scheduler':
-			iframeUrl = 'http://hypa-scheduler.cyb.co.uk/';
+			iframeUrl = 'https://hypa-scheduler.cyb.co.uk/';
 			break;
 		case 'admin':
-			iframeUrl = 'http://hypaiq-admin.cyb.co.uk/';
+			iframeUrl = 'https://hypaiq-admin.cyb.co.uk/settings';
 			break;
 		default:
 			iframeUrl = '';
@@ -53,7 +53,8 @@ export default function Dashboard({ history, authObj, location }) {
 				<iframe
 					style={{ border: 0, height: 'calc(100vh - 70px)' }}
 					src={iframeUrl + `?token=${token}`}
-					width="100%"					
+					width="100%"		
+					title="microfrontend"			
 				/>
 			) : (
 				<NotFound />
