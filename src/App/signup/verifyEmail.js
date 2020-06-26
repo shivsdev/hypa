@@ -39,8 +39,8 @@ class VerifyEmail extends Component {
             email: mail,
             token: token,
         };
-        apiUrl
-            .post('/account/verifyemail', data)
+        Axios
+            .post('https://hypaiqauthapi.cyb.co.uk/v1/account/verifyemail', data)
             .then(({ status, data }) => {
                 if ((status === 200) & (data.status === 'success')) {
                     this.setState({

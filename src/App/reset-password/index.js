@@ -132,7 +132,6 @@ class Reset extends Component {
 						spam folder . The link is valid for 1 hr after which you will need to request another. alternatively
 						you may ignore the mail and continue to log in with current password.
 					</p>
-					{/* <Button onClick={this.resetpassword}>Reset Link</Button> */}
 				</div>
 			</Styles >
 		);

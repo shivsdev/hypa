@@ -34,11 +34,7 @@ class Reset extends Component {
             focused: React.createRef(),
         }
     }
-    componentDidUpdate() {
-        this.state.passwordRef.current.value = this.state.password;
-        if (this.state.focused.current) {
-            this.state.focused.current.focus()
-        }
+    componentDidMount() {
         axios.get("https://hypaiqauthapi.cyb.co.uk/v1/uiobjects/styles")
             .then((res) => {
                 this.setState({
@@ -46,6 +42,13 @@ class Reset extends Component {
                 })
             }
             )
+    }
+    componentDidUpdate() {
+        this.state.passwordRef.current.value = this.state.password;
+        if (this.state.focused.current) {
+            this.state.focused.current.focus()
+        }
+
     }
 
     showpassword = () => {
@@ -133,8 +136,8 @@ class Reset extends Component {
                 password: password,
 
             };
-            apiUrl
-                .post('/account/resetpassword', data)
+            axios
+                .post('https://hypaiqauthapi.cyb.co.uk/v1/account/resetpassword', data)
                 .then(({ status, data }) => {
                     if ((status === 200) & (data.status === 'success')) {
                         this.props.history.push('/');
