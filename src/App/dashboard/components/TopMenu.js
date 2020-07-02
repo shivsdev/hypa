@@ -1,234 +1,234 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import { GrHelp } from 'react-icons/gr';
-import { MdMenu, MdClose } from 'react-icons/md';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+import { GrHelp } from "react-icons/gr";
+import { MdMenu, MdClose } from "react-icons/md";
 
-import logo from '../../../assets/logo.png';
-import private_img from '../../../assets/user-profile.jpg';
-import { apiUrlWithToken } from '../../calls/apis';
-import { device, size } from '../../../exportables/exportables';
+import logo from "../../../assets/logo.png";
+import private_img from "../../../assets/user-profile.jpg";
+import { apiUrlWithToken } from "../../calls/apis";
+import { device, size } from "../../../exportables/exportables";
 
 function TopMenu({ theme, history, setIsLoading, authObj }) {
-	const [brandLinkWidth, setBrandLinkWidth] = useState(160);
-	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-	const [toggled, setToggled] = useState(false);
-	const [width, setWidth] = useState(window.innerWidth);
-	const [persona, setPersona] = useState(null);
+  const [brandLinkWidth, setBrandLinkWidth] = useState(160);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [toggled, setToggled] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
+  const [persona, setPersona] = useState(null);
+  console.log(theme);
+  const handleLogout = () => {
+    setIsLoading(true);
+    apiUrlWithToken
+      .post("/account/logout")
+      .then((res) => {
+        authObj.authenticate(false);
+        window.sessionStorage.clear();
+        history.push("/");
+      })
+      .catch((error) => {
+        alert(error.response.data.msg);
+      });
+  };
 
-	const handleLogout = () => {
-		setIsLoading(true);
-		apiUrlWithToken
-			.post('/account/logout')
-			.then(res => {
-				authObj.authenticate(false);
-				window.sessionStorage.clear();
-				history.push('/');
-			})
-			.catch(error => {
-				alert(error.response.data.msg);
-			});
-	};
+  const handleSideMenu = () => {
+    setToggled(!toggled);
+  };
 
-	const handleSideMenu = () => {
-		setToggled(!toggled);
-	};
+  const getValueIfExists = (value, additional = "") => {
+    return value ? value + additional : "";
+  };
 
-	const getValueIfExists = (value, additional = '') => {
-		return value ? value + additional : '';
-	};
+  useEffect(() => {
+    let email = window.sessionStorage.getItem("email");
+    apiUrlWithToken.get(`/account/find/${email}`).then(({ data }) => {
+      const profile = data.account[0];
+      if (profile?.personaldetails) {
+        const { personaldetails, email } = profile;
+        const { title, firstname, lastname } = personaldetails;
+        let name = `${getValueIfExists(title, ".")} ${getValueIfExists(
+          firstname
+        )} ${getValueIfExists(lastname)}`;
+        setPersona({ name, email });
+      }
+    });
+  }, []);
 
-	useEffect(() => {
-		let email = window.sessionStorage.getItem('email');
-		apiUrlWithToken.get(`/account/find/${email}`).then(({ data }) => {
-			const profile = data.account[0];
-			if (profile?.personaldetails) {
-				const { personaldetails, email } = profile;
-				const { title, firstname, lastname } = personaldetails;
-				let name = `${getValueIfExists(title, '.')} ${getValueIfExists(
-					firstname
-				)} ${getValueIfExists(lastname)}`;
-				setPersona({ name, email });
-			}
-		});
-	}, []);
-
-	/*
+  /*
 		corrections on style-api
 		main_menu.highlight_colour = #4395A6;
  */
 
-	return (
-		<TopMenuStyles theme={theme} brandLinkWidth={brandLinkWidth} width={width}>
-			<nav>
-				<ul className={`${toggled ? 'toggled' : ''}`}>
-					<li>
-						<NavLink
-							to="/dashboard"
-							className={`brand-link ${toggled ? 'toggled' : ''}`}
-							ref={el =>
-								setBrandLinkWidth(
-									el?.getBoundingClientRect().width > brandLinkWidth
-										? el?.getBoundingClientRect().width
-										: brandLinkWidth
-								)
-							}
-							onClick={() => setToggled(false)}
-						>
-							<div>
-								<img src={logo} alt=".." />
-								<strong>HUB</strong>
-								<span>0</span>
-							</div>
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							to="/dashboard/patients"
-							className={`link ${toggled ? 'toggled' : ''}`}
-							activeClassName="selectedLink"
-							onClick={() => setToggled(false)}
-						>
-							Patients
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							to="/dashboard/scheduler"
-							className={`link ${toggled ? 'toggled' : ''}`}
-							activeClassName="selectedLink"
-							onClick={() => setToggled(false)}
-						>
-							Scheduler
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							to="/dashboard/notes"
-							className={`link ${toggled ? 'toggled' : ''}`}
-							activeClassName="selectedLink"
-							onClick={() => setToggled(false)}
-						>
-							Notes
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							to="/dashboard/admin"
-							className={`link ${toggled ? 'toggled' : ''}`}
-							activeClassName="selectedLink"
-							onClick={() => setToggled(false)}
-						>
-							Admin
-						</NavLink>
-					</li>
-					<li>
-						<NavLink
-							to="/dashboard/content"
-							className={`link ${toggled ? 'toggled' : ''}`}
-							activeClassName="selectedLink"
-							onClick={() => setToggled(false)}
-						>
-							Content
-						</NavLink>
-					</li>
-					<li
-						className={`help-icon-holder ${toggled ? 'toggled' : ''}`}
-						onClick={() => setToggled(false)}
-					>
-						{/* <a href="javascript:void(0)"> */}
-						<span className="help-icon">
-							<GrHelp />
-						</span>
-						{/* </a> */}
-					</li>
-				</ul>
-				<span onClick={handleSideMenu}>
-					{toggled ? <MdClose /> : <MdMenu />}
-				</span>
-			</nav>
-			<div className="navbar-dropdown">
-				<div
-					className="profile-info"
-					onClick={() => {
-						setToggled(false);
-						setIsDropdownVisible(true);
-					}}
-				>
-					<p>{persona ? persona.name : 'Welcome !'}</p>
-					<p>
-						{persona?.name
-							? 'Private'
-							: window.sessionStorage.getItem('email')
-							? window.sessionStorage.getItem('email')
-							: ''}
-					</p>
-				</div>
-				<div
-					className="profile-picture"
-					onClick={() => {
-						setToggled(false);
-						setIsDropdownVisible(true);
-					}}
-				>
-					<span>
-						<img src={private_img} alt="..." />
-					</span>
-				</div>
-				{isDropdownVisible && (
-					<div
-						className="show-dropdown"
-						onMouseLeave={() => setIsDropdownVisible(false)}
-					>
-						<div className="profile-picture-block">
-							<span onClick={() => setIsDropdownVisible(false)}>X</span>
-							<span>
-								<img src={private_img} alt="..." />
-							</span>
-						</div>
-						<div className="persona-name">
-							<p>Private</p>
-						</div>
-						<div className="current-persona-info">
-							<p>{persona ? persona.name : 'username_temp'}</p>
-							<p>USER_ID 481490_temp</p>
-							<p>Last logged in @ 12/07/2019 - 12:05-temp</p>
-						</div>
-						<ul className="personas-container">
-							<li className="persona-item">
-								<span className="persona-item-image">
-									<img src={private_img} alt="..." />
-								</span>
-								<p className="persona-item-text">Private</p>
-							</li>
-						</ul>
-						<ul className="persona-bottom-links">
-							<li>
-								<button>Create new Group</button>
-							</li>
-							<li>
-								<button>Invite a user</button>
-							</li>
-							<li>
-								<button>Account info</button>
-							</li>
-							<li>
-								<button onClick={() => handleLogout()}>Log Out</button>
-							</li>
-						</ul>
-					</div>
-				)}
-			</div>
-		</TopMenuStyles>
-	);
+  return (
+    <TopMenuStyles theme={theme} brandLinkWidth={brandLinkWidth} width={width}>
+      <nav>
+        <ul className={`${toggled ? "toggled" : ""}`}>
+          <li>
+            <NavLink
+              to="/dashboard"
+              className={`brand-link ${toggled ? "toggled" : ""}`}
+              ref={(el) =>
+                setBrandLinkWidth(
+                  el?.getBoundingClientRect().width > brandLinkWidth
+                    ? el?.getBoundingClientRect().width
+                    : brandLinkWidth
+                )
+              }
+              onClick={() => setToggled(false)}
+            >
+              <div>
+                <img src={logo} alt=".." />
+                <strong>HUB</strong>
+                <span>0</span>
+              </div>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/patients"
+              className={`link ${toggled ? "toggled" : ""}`}
+              activeClassName="selectedLink"
+              onClick={() => setToggled(false)}
+            >
+              Patients
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/scheduler"
+              className={`link ${toggled ? "toggled" : ""}`}
+              activeClassName="selectedLink"
+              onClick={() => setToggled(false)}
+            >
+              Scheduler
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/notes"
+              className={`link ${toggled ? "toggled" : ""}`}
+              activeClassName="selectedLink"
+              onClick={() => setToggled(false)}
+            >
+              Notes
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/admin"
+              className={`link ${toggled ? "toggled" : ""}`}
+              activeClassName="selectedLink"
+              onClick={() => setToggled(false)}
+            >
+              Admin
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/content"
+              className={`link ${toggled ? "toggled" : ""}`}
+              activeClassName="selectedLink"
+              onClick={() => setToggled(false)}
+            >
+              Content
+            </NavLink>
+          </li>
+          <li
+            className={`help-icon-holder ${toggled ? "toggled" : ""}`}
+            onClick={() => setToggled(false)}
+          >
+            {/* <a href="javascript:void(0)"> */}
+            <span className="help-icon">
+              <GrHelp />
+            </span>
+            {/* </a> */}
+          </li>
+        </ul>
+        <span onClick={handleSideMenu}>
+          {toggled ? <MdClose /> : <MdMenu />}
+        </span>
+      </nav>
+      <div className="navbar-dropdown">
+        <div
+          className="profile-info"
+          onClick={() => {
+            setToggled(false);
+            setIsDropdownVisible(true);
+          }}
+        >
+          <p>{persona ? persona.name : "Welcome !"}</p>
+          <p>
+            {persona?.name
+              ? "Private"
+              : window.sessionStorage.getItem("email")
+              ? window.sessionStorage.getItem("email")
+              : ""}
+          </p>
+        </div>
+        <div
+          className="profile-picture"
+          onClick={() => {
+            setToggled(false);
+            setIsDropdownVisible(true);
+          }}
+        >
+          <span>
+            <img src={private_img} alt="..." />
+          </span>
+        </div>
+        {isDropdownVisible && (
+          <div
+            className="show-dropdown"
+            onMouseLeave={() => setIsDropdownVisible(false)}
+          >
+            <div className="profile-picture-block">
+              <span onClick={() => setIsDropdownVisible(false)}>X</span>
+              <span>
+                <img src={private_img} alt="..." />
+              </span>
+            </div>
+            <div className="persona-name">
+              <p>Private</p>
+            </div>
+            <div className="current-persona-info">
+              <p>{persona ? persona.name : "username_temp"}</p>
+              <p>USER_ID 481490_temp</p>
+              <p>Last logged in @ 12/07/2019 - 12:05-temp</p>
+            </div>
+            <ul className="personas-container">
+              <li className="persona-item">
+                <span className="persona-item-image">
+                  <img src={private_img} alt="..." />
+                </span>
+                <p className="persona-item-text">Private</p>
+              </li>
+            </ul>
+            <ul className="persona-bottom-links">
+              <li>
+                <button>Create new Group</button>
+              </li>
+              <li>
+                <button>Invite a user</button>
+              </li>
+              <li>
+                <button>Account info</button>
+              </li>
+              <li>
+                <button onClick={() => handleLogout()}>Log Out</button>
+              </li>
+            </ul>
+          </div>
+        )}
+      </div>
+    </TopMenuStyles>
+  );
 }
 
 export default TopMenu;
 
 const getResponsiveFontSize = (sizeinpx, width) => {
-	let fontSize = parseInt(sizeinpx.substr(0, 2));
-	let result = (fontSize / width) * 80 + 'vw';
-	return result;
+  let fontSize = parseInt(sizeinpx.substr(0, 2));
+  let result = (fontSize / width) * 80 + "vw";
+  return result;
 };
 
 const TopMenuStyles = styled.div`
@@ -236,7 +236,7 @@ const TopMenuStyles = styled.div`
 	/* margin-bottom: 30px; */
 	nav {
 		width: 77%;
-		background: ${props => props.theme.main_menu.background_colour};
+		background: ${(props) => props.theme.main_menu.background_colour};
 		> span {
 			display: none;
 		}
@@ -244,14 +244,14 @@ const TopMenuStyles = styled.div`
 			padding: 0;
 			margin: 0%;
 			border-bottom: 5px solid
-				${props => props.theme.main_menu.highlight_colour};
+				${(props) => props.theme.main_menu.highlight_colour};
 			position: relative;
 			white-space: nowrap;
 			li {
 				display: inline-flex;
-				background: ${props => props.theme.main_menu.background_colour};
+				background: ${(props) => props.theme.main_menu.background_colour};
 				:first-child {
-					width: ${props => props.brandLinkWidth + 15}px;
+					width: ${(props) => props.brandLinkWidth + 15}px;
 				}
 				.brand-link {
 					position: absolute;
@@ -259,7 +259,7 @@ const TopMenuStyles = styled.div`
 					left: 5px;
 					border: 1px solid white;
 					padding: 0;
-					background: ${props => props.theme.main_menu.passive_background_colour};
+					background: ${(props) => props.theme.main_menu.passive_background_colour};
 					div {
 						display: inline-flex;
 						align-items: center;
@@ -289,26 +289,26 @@ const TopMenuStyles = styled.div`
 				a {
 					display: inline-flex;
 					align-items: center;
-					background: ${props => props.theme.top_menu_button.passive_background_colour};
+					background: ${(props) => props.theme.top_menu_button.passive_background_colour};
 					padding: 0 50px;
 					height: 45px;
-					font-size: ${props =>
-						getResponsiveFontSize(
-							props.theme.top_menu_button.passive_text_size,
-							props.width
-						)};
-					color: ${props => props.theme.top_menu_button.passive_text_colour};
+					font-size: ${(props) =>
+            getResponsiveFontSize(
+              props.theme.top_menu_button.passive_text_size,
+              props.width
+            )};
+					color: ${(props) => props.theme.top_menu_button.passive_text_colour};
 					text-decoration: none;
 					margin-top: 5px;
 				}
 				.selectedLink {
-					font-size: ${props =>
-						getResponsiveFontSize(
-							props.theme.top_menu_button.active_text_size,
-							props.width
-						)};
-					color: ${props => props.theme.top_menu_button.active_text_colour};
-					background: ${props => props.theme.top_menu_button.active_background_colour};
+					font-size: ${(props) =>
+            getResponsiveFontSize(
+              props.theme.top_menu_button.active_text_size,
+              props.width
+            )};
+					color: ${(props) => props.theme.top_menu_button.active_text_colour};
+					background: ${(props) => props.theme.top_menu_button.active_background_colour};
 					position: relative;
 					&:before {
 						content: '';
@@ -343,7 +343,7 @@ const TopMenuStyles = styled.div`
 	> .navbar-dropdown {
 		display: flex;
 		width: 23%;
-		background: ${props => props.theme.top_menu_dropdown_bg_color};
+		background: ${(props) => props.theme.top_menu_dropdown_bg_color};
 		color: white;
 		align-items: center;
 		padding: 0 10px 0 30px;
@@ -367,7 +367,7 @@ const TopMenuStyles = styled.div`
 				width: 68px;
 				height: 68px;
 				border-radius: 50%;
-				border: 4px solid ${props => props.theme.top_menu_dropdown_bg_color};
+				border: 4px solid ${(props) => props.theme.top_menu_dropdown_bg_color};
 			}
 		}
 		.show-dropdown {
