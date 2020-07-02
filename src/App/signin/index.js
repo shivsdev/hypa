@@ -22,9 +22,9 @@ class Signin extends Component {
 			isPopupVisible: false,
 			styles: {
 				title1_colour: '#009999',
-				title1_font_size: '60px',
+				title1_font_size: '80px',
 				title2_colour: '#000066',
-				title2_font_size: '50px',
+				title2_font_size: '60px',
 				error_text_colour: '#ff0000',
 				label_text_colour: '#676767',
 				check_box_border_colour: '#009999',
@@ -39,6 +39,7 @@ class Signin extends Component {
 				input_font_size: '16px',
 				input_border_colour: '#ccc',
 				reset_password_button_colour: '#479a99',
+				label_text_colour: '#676767'
 			},
 			email: '',
 			password: '',
@@ -191,18 +192,6 @@ class Signin extends Component {
 		this.props.history.push({ pathname: '/signup', email: this.state.email });
 	};
 	render() {
-		const title1_colour = '#009999';
-		const title1_font_size = '';
-		const title2_colour = '#000066';
-		const title2_font_size = '';
-		const error_text_colour = '#ff0000';
-		const label_text_colour = '#676767';
-		const button_colour = '#009999';
-		const button_text_colour = '#ffffff';
-		const reset_password_button_colour = '#479a99';
-		const input_font_size = '16px';
-		const button_text_font_size = '18';
-
 		const {
 			handleInput,
 			handleShowPassword,
@@ -233,13 +222,13 @@ class Signin extends Component {
 		});
 		const Label = styled.label`
 			display: flex;
-			color: ${label_text_colour};
+			color:${this.state.styles.label_text_colour};
 			justify-content: space-between;
 		`;
 		const PasswordLabel = styled.label`
 			display: flex;
 			justify-content: space-between;
-			color: ${label_text_colour};
+			color: ${this.state.styles.label_text_colour};
 		`;
 		const width = window.innerWidth;
 
@@ -248,11 +237,13 @@ class Signin extends Component {
 				<div className="logo-holder">
 					<img src={hypaiq} alt="Hypaiq" />
 				</div>
+
 				<div className="content-box">
-					<h1 className="first-row-title">Sign into your</h1>
-					<h1 className="second-row-title">Account</h1>
+					<div className="title-box">
+						<h1 className="first-row-title">Sign into your</h1>
+						<h1 className="second-row-title">Account</h1>
+					</div>
 					<form onSubmit={handleSubmit}>
-						<br />
 						<Label>Email {renderErrorMessage(errors.emailErrMsg)}</Label>
 						<input
 							type="text"
@@ -352,22 +343,32 @@ const Styles = styled.div`
 			max-width: 150px;
 		}
 	}
+	
+	
 	.content-box {
 		max-width: 350px;
-		margin: 0px auto;
-		.first-row-title {
-			font-size: ${props =>
-				getResponsiveFontSize(props.theme.title1_font_size, props.width)};
-			margin: 0;
-			font-weight: normal;
-			color: ${props => props.theme.title1_colour};
-		}
-		.second-row-title {
-			margin: 0;
-			font-size: ${props =>
-				getResponsiveFontSize(props.theme.title2_font_size, props.width)};
-			color: ${props => props.theme.title2_colour};
-			font-weight: bolder;
+		margin:  0px auto;
+		padding-top:200px;
+		position:relative;
+		.title-box{
+			position:absolute;
+			margin:  0 auto;
+			width:500px;
+			top:0;
+			.first-row-title {
+				font-size: ${props =>
+		getResponsiveFontSize(props.theme.title1_font_size, props.width)};
+				margin: 0;
+				font-weight: normal;
+				color: ${props => props.theme.title1_colour};
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: ${props =>
+		getResponsiveFontSize(props.theme.title2_font_size, props.width)};
+				color: ${props => props.theme.title2_colour};
+				font-weight: bolder;
+			}
 		}
 		form {
 			margin: 50px 0;
@@ -395,26 +396,27 @@ const Styles = styled.div`
 				width: 35%;
 			}
 		}
+		
 		.content-box {
 			width: 85%;
 			margin: auto;
 			margin-top: 2em;
+			form {
+				margin: 50px 0;
+			}
+			.title-box{
+			width:300px;
 			.first-row-title {
-				font-size: ${props =>
-					getResponsiveFontSize(props.theme.title1_font_size, props.width)};
+				font-size: 40px;
 				margin: 0;
 				font-weight: normal;
 				color: ${props => props.theme.title1_colour};
 			}
 			.second-row-title {
 				margin: 0;
-				font-size: ${props =>
-					getResponsiveFontSize(props.theme.title2_font_size, props.width)};
+				font-size: 30px;
 				color: ${props => props.theme.title2_colour};
 				font-weight: bolder;
-			}
-			form {
-				margin: 50px 0;
 			}
 		}
 	}

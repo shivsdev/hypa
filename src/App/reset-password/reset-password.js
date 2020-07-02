@@ -11,7 +11,8 @@ import { device } from '../../exportables/exportables'
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const mail = urlParams.get("e");
+// const mail = urlParams.get("e");
+const mail="joel@mailinator.com"
 const token = urlParams.get('t');
 class Reset extends Component {
     constructor(props) {
@@ -201,18 +202,26 @@ class Reset extends Component {
 	}
 	.content-box {
 		max-width: 350px;
-		margin: 0px auto;
-		.first-row-title {
-			font-size: calc(1em + 2.5vw);
-			margin: 0;
-			font-weight: normal;
-			color: ${title1_colour};
-		}
-		.second-row-title {
-			margin: 0;
-			font-size: calc(1em + 2.5vw);
-			color: ${title2_colour};
-			font-weight: bolder;
+        margin: 0px auto;
+        padding-top:300px;
+		position:relative;
+		.title-box{
+			position:absolute;
+			margin:  0 auto;
+			width:600px;
+			top:0;
+			.first-row-title {
+				font-size:70px;
+				margin: 0;
+				font-weight: normal;
+				color: ${title2_colour};
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: 50px;
+				color: ${title1_colour};
+				font-weight: normal;
+			}
 		}
 		form {
 			margin-bottom: 50px;
@@ -236,19 +245,26 @@ class Reset extends Component {
 		.content-box {
 			width: 85%;
 			margin: auto;
-			margin-top: 2em;
-			.first-row-title {
-				font-size: 11vw;
-				margin: 0;
-				font-weight: normal;
-				color: ${title1_colour};
-			}
-			.second-row-title {
-				margin: 0;
-				font-size: 11vw;
-				color: ${title2_colour};
-				font-weight: bolder;
-			}
+            margin-top: 2em;
+            padding-top:200px;
+			.title-box{
+                position:absolute;
+                margin:  0 auto;
+                width:350px;
+                top:0;
+                .first-row-title {
+                    font-size:40px;
+                    margin: 0;
+                    font-weight: normal;
+                    color: ${title2_colour};
+                }
+                .second-row-title {
+                    margin: 0;
+                    font-size: 30px;
+                    color: ${title1_colour};
+                    font-weight: normal;
+                }
+            }
 			.terms-link {
 				display: block;
 				margin-left: 20px;
@@ -316,9 +332,10 @@ class Reset extends Component {
                     <img src={hypaiq} alt="Hypaiq" />
                 </div>
                 <div className="content-box">
-                    <BlueH1 >Password reset for</BlueH1>
-                    <GreenH1 >{mail}</GreenH1>
-                    <br /> <br />  <br /> <br /> <br /><br />
+                    <div className="title-box">
+                        <h1 className="first-row-title">Password reset for</h1>
+                        <h1 className="second-row-title">{mail}</h1>
+                    </div>
                     <form
                         onSubmit={this.handleSubmit}
                         id="RESTFORM"

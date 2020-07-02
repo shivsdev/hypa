@@ -30,8 +30,8 @@ class Reset extends Component {
 			)
 	}
 
-	resetpassword = () => {
-		this.props.history.push('/reset-password')
+	signIn = () => {
+		this.props.history.push('/')
 	}
 
 
@@ -113,7 +113,7 @@ class Reset extends Component {
 			borderRadius: 5,
 			backgroundColor: button_bg_colour,
 			borderWidth: 0,
-			marginTop: 20,
+			marginTop: "60px",
 			marginBottom: 20,
 			color: button_text_colour,
 			fontSize: "20px"
@@ -132,6 +132,7 @@ class Reset extends Component {
 						spam folder . The link is valid for 1 hr after which you will need to request another. alternatively
 						you may ignore the mail and continue to log in with current password.
 					</p>
+					<Button onClick={this.signIn}>Back to Sign In</Button>
 				</div>
 			</Styles >
 		);

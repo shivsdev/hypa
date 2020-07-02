@@ -298,11 +298,15 @@ class Signup extends Component {
 					<img src={hypaiq} alt="Hypaiq" />
 				</div>
 				<div className="content-box">
-					<h1 className="first-row-title">Create a</h1>
-					<h1 className="second-row-title">Free Account</h1>
-					<p className="hypa-intro">
-						HypaIQ is a great product in medical sector, Get yours today!
+					<div className="title-box">
+						<h1 className="first-row-title">Sign into your</h1>
+						<h1 className="second-row-title">Account</h1>
+						<p className="hypa-intro">
+							HypaIQ is a - multi line invitation text goes here, some nice words
+							about us and what a great product this is. Get yours today!
 					</p>
+					</div>
+
 					<form onSubmit={this.handleSubmit} id="SIGINFORM">
 						<br />
 						<div
@@ -444,19 +448,27 @@ const Styles = styled.div`
 	.content-box {
 		max-width: 350px;
 		margin: 0px auto;
-		.first-row-title {
-			font-size: ${props =>
+		padding-top:200px;
+		position:relative;
+		.title-box{
+			position:absolute;
+			margin:  0 auto;
+			width:450px;
+			top:0;
+			.first-row-title {
+				font-size: ${props =>
 		getResponsiveFontSize(props.theme.title1_font_size, props.width)};
-			margin: 0;
-			font-weight: normal;
-			color: ${props => props.theme.title1_colour};
-		}
-		.second-row-title {
-			margin: 0;
-			font-size: ${props =>
+				margin: 0;
+				font-weight: normal;
+				color: ${props => props.theme.title1_colour};
+			}
+			.second-row-title {
+				margin: 0;
+				font-size: ${props =>
 		getResponsiveFontSize(props.theme.title2_font_size, props.width)};
-			color: ${props => props.theme.title2_colour};
-			font-weight: bolder;
+				color: ${props => props.theme.title2_colour};
+				font-weight: bolder;
+			}
 		}
 		form {
 			.terms-content {
@@ -487,19 +499,20 @@ const Styles = styled.div`
 			width: 85%;
 			margin: auto;
 			margin-top: 2em;
-			.first-row-title {
-				font-size: ${props =>
-		getResponsiveFontSize(props.theme.title1_font_size, props.width)};
-				margin: 0;
-				font-weight: normal;
-				color: ${props => props.theme.title1_colour};
-			}
-			.second-row-title {
-				margin: 0;
-				font-size: ${props =>
-		getResponsiveFontSize(props.theme.title2_font_size, props.width)};
-				color: ${props => props.theme.title2_colour};
-				font-weight: bolder;
+			.title-box{
+				width:300px;
+				.first-row-title {
+					font-size: 40px;
+					margin: 0;
+					font-weight: normal;
+					color: ${props => props.theme.title1_colour};
+				}
+				.second-row-title {
+					margin: 0;
+					font-size: 30px;
+					color: ${props => props.theme.title2_colour};
+					font-weight: bolder;
+				}
 			}
 			.terms-link {
 				display: block;
