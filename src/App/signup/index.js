@@ -60,7 +60,6 @@ class Signup extends Component {
 	componentDidMount() {
 		axios.get("https://hypaiqauthapi.cyb.co.uk/v1/uiobjects/styles")
 			.then((res) => {
-				console.log("doneasdas")
 				this.setState({
 					styles: { ...this.state.styles, ...res.data }
 				})
@@ -302,8 +301,7 @@ class Signup extends Component {
 					<h1 className="first-row-title">Create a</h1>
 					<h1 className="second-row-title">Free Account</h1>
 					<p className="hypa-intro">
-						HypaIQ is a - multi line invitation text goes here, some nice words
-						about us and what a great product this is. Get yours today!
+						HypaIQ is a great product in medical sector, Get yours today!
 					</p>
 					<form onSubmit={this.handleSubmit} id="SIGINFORM">
 						<br />
@@ -440,7 +438,7 @@ const Styles = styled.div`
 		margin-bottom: 20px;
 		img {
 			width: 27.5%;
-			max-width: 250px;
+			max-width: 150px;
 		}
 	}
 	.content-box {
@@ -461,7 +459,6 @@ const Styles = styled.div`
 			font-weight: bolder;
 		}
 		form {
-			margin-bottom: 50px;
 			.terms-content {
 				display: flex;
 				align-items: center;

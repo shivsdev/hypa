@@ -53,7 +53,6 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
 		});
 	}, []);
 
-	console.log('theme', theme);
 	/*
 		corrections on style-api
 		main_menu.highlight_colour = #4395A6;
@@ -283,6 +282,7 @@ const TopMenuStyles = styled.div`
 							font-size: 10px;
 							top: 5%;
 							right: -5%;
+							display: none;
 						}
 					}
 				}

@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import hypaiq from './../../exportables/hypaiq.png';
 import { Link, withRouter } from 'react-router-dom';
 import { FaEyeSlash } from 'react-icons/fa';
+import axios from 'axios';
 
 import { device } from '../../exportables/exportables';
 import ResetPasswordPopup from './components/ResetPasswordPopup';
 import { apiUrl } from '../calls/apis';
-import axios from 'axios';
 
 class Signin extends Component {
 	constructor(props) {
@@ -349,7 +349,7 @@ const Styles = styled.div`
 		margin-bottom: 20px;
 		img {
 			width: 27.5%;
-			max-width: 250px;
+			max-width: 150px;
 		}
 	}
 	.content-box {
@@ -370,7 +370,7 @@ const Styles = styled.div`
 			font-weight: bolder;
 		}
 		form {
-			margin: 100px 0;
+			margin: 50px 0;
 			.reset-password-button {
 				display: inline-block;
 				padding: 0;

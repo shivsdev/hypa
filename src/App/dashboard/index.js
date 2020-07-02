@@ -10,6 +10,7 @@ export default function Dashboard({ history, authObj, location }) {
 	const [theme, setTheme] = useState(null);
 	const token = window.sessionStorage.getItem('token');
 	const path = location.pathname.split('/')[2];
+
 	let iframeUrl = '';
 	switch (path) {
 		case 'patients':
@@ -30,15 +31,15 @@ export default function Dashboard({ history, authObj, location }) {
 			top_menu_dropdown_bg_color: '#4395A6',
 			top_menu_dropdown_text_color: 'white',
 		};
-		apiUrl.get('/uiobjects/styles').then(res => {
-			setTheme({ ...theme_temp, ...res.data });
-			setIsLoading(false);
-		});
+		// apiUrl.get('/uiobjects/styles').then(res => {
+		// 	setTheme({ ...theme_temp, ...res.data });
+		// 	setIsLoading(false);
+		// });
 	}, []);
 
-	if (isLoading) {
-		return <Spinner msg="Loading ..." theme={theme} />;
-	}
+	// if (isLoading) {
+	// 	return <Spinner msg="Loading ..." theme={theme} />;
+	// }
 
 	return (
 		<>

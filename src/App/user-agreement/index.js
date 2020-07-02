@@ -32,10 +32,10 @@ class UserAgreement extends Component {
 		const Styles = styled.div`
 padding: 2% 5%;
 .logo-holder {
-	margin-bottom: 20px;
+	/* margin-bottom: 20px; */
 	img {
 		width: 27.5%;
-		max-width: 250px;
+		max-width: 150px;
 	}
 }
 .content-box {
@@ -48,7 +48,7 @@ padding: 2% 5%;
 	}
 }
 .scrollable-content {
-	max-height: 85vh;
+	max-height: 50vh;
 	overflow: auto;
 	width: 100%;
 	padding-right: 3%;
