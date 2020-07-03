@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import { GrHelp } from "react-icons/gr";
-import { MdMenu, MdClose } from "react-icons/md";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import { GrHelp } from 'react-icons/gr';
+import { MdMenu, MdClose } from 'react-icons/md';
 
-import logo from "../../../assets/logo.png";
-import private_img from "../../../assets/user-profile.jpg";
-import { apiUrlWithToken } from "../../calls/apis";
-import { device, size } from "../../../exportables/exportables";
+import logo from '../../../assets/logo.png';
+import private_img from '../../../assets/user-profile.jpg';
+import { apiUrlWithToken } from '../../calls/apis';
+import { device, size } from '../../../exportables/exportables';
 
 function TopMenu({ theme, history, setIsLoading, authObj }) {
   const [brandLinkWidth, setBrandLinkWidth] = useState(160);
@@ -19,11 +19,11 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
   const handleLogout = () => {
     setIsLoading(true);
     apiUrlWithToken
-      .post("/account/logout")
+      .post('/account/logout')
       .then((res) => {
         authObj.authenticate(false);
         window.sessionStorage.clear();
-        history.push("/");
+        history.push('/');
       })
       .catch((error) => {
         alert(error.response.data.msg);
@@ -34,18 +34,18 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
     setToggled(!toggled);
   };
 
-  const getValueIfExists = (value, additional = "") => {
-    return value ? value + additional : "";
+  const getValueIfExists = (value, additional = '') => {
+    return value ? value + additional : '';
   };
 
   useEffect(() => {
-    let email = window.sessionStorage.getItem("email");
+    let email = window.sessionStorage.getItem('email');
     apiUrlWithToken.get(`/account/find/${email}`).then(({ data }) => {
       const profile = data.account[0];
       if (profile?.personaldetails) {
         const { personaldetails, email } = profile;
         const { title, firstname, lastname } = personaldetails;
-        let name = `${getValueIfExists(title, ".")} ${getValueIfExists(
+        let name = `${getValueIfExists(title, '.')} ${getValueIfExists(
           firstname
         )} ${getValueIfExists(lastname)}`;
         setPersona({ name, email });
@@ -61,11 +61,11 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
   return (
     <TopMenuStyles theme={theme} brandLinkWidth={brandLinkWidth} width={width}>
       <nav>
-        <ul className={`${toggled ? "toggled" : ""}`}>
+        <ul className={`${toggled ? 'toggled' : ''}`}>
           <li>
             <NavLink
               to="/dashboard"
-              className={`brand-link ${toggled ? "toggled" : ""}`}
+              className={`brand-link ${toggled ? 'toggled' : ''}`}
               ref={(el) =>
                 setBrandLinkWidth(
                   el?.getBoundingClientRect().width > brandLinkWidth
@@ -85,7 +85,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
           <li>
             <NavLink
               to="/dashboard/patients"
-              className={`link ${toggled ? "toggled" : ""}`}
+              className={`link ${toggled ? 'toggled' : ''}`}
               activeClassName="selectedLink"
               onClick={() => setToggled(false)}
             >
@@ -95,7 +95,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
           <li>
             <NavLink
               to="/dashboard/scheduler"
-              className={`link ${toggled ? "toggled" : ""}`}
+              className={`link ${toggled ? 'toggled' : ''}`}
               activeClassName="selectedLink"
               onClick={() => setToggled(false)}
             >
@@ -105,7 +105,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
           <li>
             <NavLink
               to="/dashboard/notes"
-              className={`link ${toggled ? "toggled" : ""}`}
+              className={`link ${toggled ? 'toggled' : ''}`}
               activeClassName="selectedLink"
               onClick={() => setToggled(false)}
             >
@@ -115,7 +115,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
           <li>
             <NavLink
               to="/dashboard/admin"
-              className={`link ${toggled ? "toggled" : ""}`}
+              className={`link ${toggled ? 'toggled' : ''}`}
               activeClassName="selectedLink"
               onClick={() => setToggled(false)}
             >
@@ -125,7 +125,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
           <li>
             <NavLink
               to="/dashboard/content"
-              className={`link ${toggled ? "toggled" : ""}`}
+              className={`link ${toggled ? 'toggled' : ''}`}
               activeClassName="selectedLink"
               onClick={() => setToggled(false)}
             >
@@ -133,7 +133,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
             </NavLink>
           </li>
           <li
-            className={`help-icon-holder ${toggled ? "toggled" : ""}`}
+            className={`help-icon-holder ${toggled ? 'toggled' : ''}`}
             onClick={() => setToggled(false)}
           >
             {/* <a href="javascript:void(0)"> */}
@@ -155,13 +155,13 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
             setIsDropdownVisible(true);
           }}
         >
-          <p>{persona ? persona.name : "Welcome !"}</p>
+          <p>{persona ? persona.name : 'Welcome !'}</p>
           <p>
             {persona?.name
-              ? "Private"
-              : window.sessionStorage.getItem("email")
-              ? window.sessionStorage.getItem("email")
-              : ""}
+              ? 'Private'
+              : window.sessionStorage.getItem('email')
+              ? window.sessionStorage.getItem('email')
+              : ''}
           </p>
         </div>
         <div
@@ -190,7 +190,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
               <p>Private</p>
             </div>
             <div className="current-persona-info">
-              <p>{persona ? persona.name : "username_temp"}</p>
+              <p>{persona ? persona.name : 'username_temp'}</p>
               <p>USER_ID 481490_temp</p>
               <p>Last logged in @ 12/07/2019 - 12:05-temp</p>
             </div>
@@ -227,7 +227,7 @@ export default TopMenu;
 
 const getResponsiveFontSize = (sizeinpx, width) => {
   let fontSize = parseInt(sizeinpx.substr(0, 2));
-  let result = (fontSize / width) * 80 + "vw";
+  let result = (fontSize / width) * 80 + 'vw';
   return result;
 };
 
@@ -256,7 +256,7 @@ const TopMenuStyles = styled.div`
 				.brand-link {
 					position: absolute;
 					top: 15px;
-					left: 5px;
+					left: 20px;
 					border: 1px solid white;
 					padding: 0;
 					background: ${(props) => props.theme.main_menu.passive_background_colour};
@@ -396,9 +396,9 @@ const TopMenuStyles = styled.div`
 					}
 					&:last-child {
 						border-radius: 50%;
-						border: 3px solid #999;
-						width: 40px;
-						height: 40px;
+						border: 2px solid #9A958E;
+						width: 45px;
+						height: 45px;
 						overflow: hidden;
 						img {
 							width: 100%;
@@ -431,9 +431,9 @@ const TopMenuStyles = styled.div`
 					}
 					.persona-item-image {
 						border-radius: 50%;
-						border: 3px solid #999;
-						width: 40px;
-						height: 40px;
+						border: 2px solid #9A958E;
+						width: 45px;
+						height: 45px;
 						overflow: hidden;
 						img {
 							width: 100%;
