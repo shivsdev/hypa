@@ -155,8 +155,9 @@ class Signup extends Component {
       });
     }
     if (
-      this.state.passwordRef.current.value.search(/[!@#$%{^&*([)}_+;:'"<>/?]/) <
-      0
+      this.state.passwordRef.current.value.search(
+        /[\-\\!@#$%{^&*([)}_\+\=;:.,'"<>/?|\]]/
+      ) < 0
     ) {
       this.setState({
         passwordError: true,
