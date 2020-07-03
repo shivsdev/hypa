@@ -11,8 +11,7 @@ import { device } from '../../exportables/exportables'
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-// const mail = urlParams.get("e");
-const mail="joel@mailinator.com"
+const mail = urlParams.get("e");
 const token = urlParams.get('t');
 class Reset extends Component {
     constructor(props) {
