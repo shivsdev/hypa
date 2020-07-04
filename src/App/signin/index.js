@@ -324,7 +324,7 @@ export default withRouter(Signin);
 
 const getResponsiveFontSize = (sizeinpx, width) => {
   let fontSize = parseInt(sizeinpx.substr(0, 2));
-  let result = (fontSize / width) * 80 + "vw";
+  let result = (fontSize / width) * 60 + "vw";
   return result;
 };
 const Styles = styled.div`
@@ -358,7 +358,7 @@ const Styles = styled.div`
 	.content-box {
 		max-width: 350px;
 		margin:  0px auto;
-		padding-top:200px;
+		padding-top:130px;
 		position:relative;
 		.title-box{
 			position:absolute;
@@ -411,7 +411,7 @@ const Styles = styled.div`
 			width: 85%;
 			margin: auto;
       margin-top: 2em;
-      padding-top:100px;
+      padding-top: 50px;
 			form {
 				margin: 50px 0;
 			}

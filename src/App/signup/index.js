@@ -457,7 +457,7 @@ const Styles = styled.div`
   .content-box {
     max-width: 350px;
     margin: 0px auto;
-    padding-top: 200px;
+    padding-top: 160px;
     position: relative;
     .title-box {
       position: absolute;
@@ -489,9 +489,10 @@ const Styles = styled.div`
       }
     }
     .hypa-intro {
-      font-size: calc(1em + 0.3vw);
+      font-size: calc(1em + 0.2vw);
       color: #777;
       font-weight: 500;
+      margin-top: 10px;
     }
   }
 
