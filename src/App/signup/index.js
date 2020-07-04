@@ -156,7 +156,7 @@ class Signup extends Component {
     }
     if (
       this.state.passwordRef.current.value.search(
-        /[\-\\!@#$%{^&*([)}_\+\=;:.,'"<>/?|\]]/
+        /[\-\\!@~`#$%{^&*([)}_\+\=;:.,'"<>/?|\]]/
       ) < 0
     ) {
       this.setState({
