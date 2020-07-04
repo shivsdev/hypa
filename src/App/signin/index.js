@@ -172,7 +172,7 @@ class Signin extends Component {
   ResetPassword = (email) => {
     this.togglePopup();
     window.sessionStorage.setItem("email", email);
-    this.props.history.push("/reset");
+    this.props.history.push("/reset-password");
   };
   renderErrorMessage = (msg) => {
     if (!msg?.length) return null;

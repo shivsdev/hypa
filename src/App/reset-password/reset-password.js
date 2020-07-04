@@ -9,17 +9,20 @@ import axios from "axios";
 import { apiUrl } from "../calls/apis";
 import { device } from "../../exportables/exportables";
 
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const mail = urlParams.get("e");
-const token = urlParams.get("t");
+// const queryString = window.location.search;
+// const urlParams = new URLSearchParams(queryString);
+// const mail = urlParams.get("e");
+// const token = urlParams.get("t");
+let mail = sessionStorage.getItem("email");
 class Reset extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: this.props.match.params.email,
+      email: "",
       password: "",
+      code: "",
       passwordRef: React.createRef(),
+      codeRef: React.createRef(),
       lengthError: null,
       SpecialError: null,
       numberError: null,
@@ -45,6 +48,7 @@ class Reset extends Component {
   }
   componentDidUpdate() {
     this.state.passwordRef.current.value = this.state.password;
+    this.state.codeRef.current.value = this.state.code;
     if (this.state.focused.current) {
       this.state.focused.current.focus();
     }
@@ -54,11 +58,13 @@ class Reset extends Component {
     this.setState({
       showpassword: !this.state.showpassword,
       password: this.state.passwordRef.current.value,
+      code: this.state.codeRef.current.value,
     });
   };
   password = () => {
     this.setState({
       password: this.state.passwordRef.current.value,
+      code: this.state.codeRef.current.value,
     });
     if (this.state.passwordRef.current.value.length < 8) {
       this.setState({
@@ -124,18 +130,22 @@ class Reset extends Component {
     this.password();
 
     let password = this.state.passwordRef.current.value;
-
+    let code = this.state.codeRef.current.value;
+    if (code === "") {
+      err = true;
+      this.setState({ codeError: true });
+    }
     if (this.state.passwordRef.current.value === "") {
       err = true;
     }
     if (!this.state.passwordError & !err) {
       let data = {
         email: mail,
-        token: token,
+        confrimationcode: code,
         password: password,
       };
       axios
-        .post("https://hypaiqauthapi.cyb.co.uk/v1/account/resetpassword", data)
+        .post("https:hypaiqauthapi.cyb.co.uk/v1/auth/resetpassword", data)
         .then(({ status, data }) => {
           if ((status === 200) & (data.status === "success")) {
             this.props.history.push("/");
@@ -200,7 +210,7 @@ class Reset extends Component {
       .content-box {
         max-width: 350px;
         margin: 0px auto;
-        padding-top: 300px;
+        padding-top: 200px;
         position: relative;
         .title-box {
           position: absolute;
@@ -208,14 +218,14 @@ class Reset extends Component {
           width: 600px;
           top: 0;
           .first-row-title {
-            font-size: 70px;
+            font-size: 50px;
             margin: 0;
             font-weight: normal;
             color: ${title2_colour};
           }
           .second-row-title {
             margin: 0;
-            font-size: 50px;
+            font-size: 30px;
             color: ${title1_colour};
             font-weight: normal;
           }
@@ -281,6 +291,7 @@ class Reset extends Component {
       padding: 10px;
       box-sizing: border-box;
       margin-top: 3px;
+      margin-bottom: 5px;
     `;
 
     const Button = styled.button({
@@ -295,18 +306,6 @@ class Reset extends Component {
       fontSize: 18,
       fontWeight: "bold",
       cursor: "pointer",
-    });
-    const BlueH1 = styled.h1({
-      margin: 0,
-      fontSize: title1_font_size,
-      color: title2_colour,
-      fontWeight: "bolder",
-    });
-    const GreenH1 = styled.h1({
-      fontSize: title2_font_size,
-      margin: 0,
-      fontWeight: "bolder",
-      color: title1_colour,
     });
     const AgreeText = styled.p({
       fontSize: 12,
@@ -332,8 +331,19 @@ class Reset extends Component {
           <div className="title-box">
             <h1 className="first-row-title">Password reset for</h1>
             <h1 className="second-row-title">{mail}</h1>
+            <p className="hypa-intro">
+              Enter your new password and the Verification code which is sent to
+              your email
+            </p>
           </div>
           <form onSubmit={this.handleSubmit} id="RESTFORM">
+            <Label>Verification Code</Label>
+            <Input
+              ref={this.state.codeRef}
+              name="code"
+              id="code"
+              className="code"
+            />
             <div
               style={{
                 flexDirection: "row",

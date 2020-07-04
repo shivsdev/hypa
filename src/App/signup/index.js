@@ -457,7 +457,7 @@ const Styles = styled.div`
   .content-box {
     max-width: 350px;
     margin: 0px auto;
-    padding-top: 160px;
+    padding-top: 200px;
     position: relative;
     .title-box {
       position: absolute;
