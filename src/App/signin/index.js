@@ -381,7 +381,7 @@ const Styles = styled.div`
 			}
 		}
 		form {
-			margin: 50px 0;
+			margin:0;
 			.reset-password-button {
 				display: inline-block;
 				padding: 0;
@@ -410,7 +410,8 @@ const Styles = styled.div`
 		.content-box {
 			width: 85%;
 			margin: auto;
-			margin-top: 2em;
+      margin-top: 2em;
+      padding-top:100px;
 			form {
 				margin: 50px 0;
 			}

@@ -35,9 +35,9 @@ class Signup extends Component {
       passwordError: false,
       checkedError: false,
       styles: {
-        title1_colour: "#009999",
+        title1_colour: "#000066",
         title1_font_size: "60px",
-        title2_colour: "#000066",
+        title2_colour: "#009999",
         title2_font_size: "50px",
         error_text_colour: "#ff0000",
         label_text_colour: "#676767",
@@ -156,7 +156,7 @@ class Signup extends Component {
     }
     if (
       this.state.passwordRef.current.value.search(
-        /[\-\\!@#$%{^&*([)}_\+\=;:.,'"<>/?|\]]/
+        /[\-\\!@~`#$%{^&*([)}_\+\=;:.,'"<>/?|\]]/
       ) < 0
     ) {
       this.setState({
@@ -307,8 +307,9 @@ class Signup extends Component {
         </div>
         <div className="content-box">
           <div className="title-box">
-            <h1 className="first-row-title">Sign into your</h1>
-            <h1 className="second-row-title">Account</h1>
+            <h1 className="first-row-title">Create a</h1>
+            <h1 className="second-row-title">Free Account</h1>
+
             <p className="hypa-intro">
               HypaIQ is a - multi line invitation text goes here, some nice
               words about us and what a great product this is. Get yours today!
@@ -467,7 +468,7 @@ const Styles = styled.div`
         font-size: ${(props) =>
           getResponsiveFontSize(props.theme.title1_font_size, props.width)};
         margin: 0;
-        font-weight: normal;
+        font-weight: bolder;
         color: ${(props) => props.theme.title1_colour};
       }
       .second-row-title {
@@ -475,7 +476,7 @@ const Styles = styled.div`
         font-size: ${(props) =>
           getResponsiveFontSize(props.theme.title2_font_size, props.width)};
         color: ${(props) => props.theme.title2_colour};
-        font-weight: bolder;
+        font-weight: normal;
       }
     }
     form {
@@ -512,14 +513,14 @@ const Styles = styled.div`
         .first-row-title {
           font-size: 40px;
           margin: 0;
-          font-weight: normal;
+          font-weight: bolder;
           color: ${(props) => props.theme.title1_colour};
         }
         .second-row-title {
           margin: 0;
           font-size: 30px;
           color: ${(props) => props.theme.title2_colour};
-          font-weight: bolder;
+          font-weight: normal;
         }
       }
       .terms-link {
