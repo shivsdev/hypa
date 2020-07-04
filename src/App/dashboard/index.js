@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 import { apiUrl } from "../calls/apis";
 import TopMenu from "./components/TopMenu";
 import Spinner from "./components/Spinner";
@@ -31,10 +31,12 @@ export default function Dashboard({ history, authObj, location }) {
       top_menu_dropdown_bg_color: "#4395A6",
       top_menu_dropdown_text_color: "white",
     };
-    apiUrl.get("/uiobjects/styles").then((res) => {
-      setTheme({ ...theme_temp, ...res.data });
-      setIsLoading(false);
-    });
+    axios
+      .get("http://hypaiqstyles.cyb.co.uk:8080/uiobjects/styles")
+      .then((res) => {
+        setTheme({ ...theme_temp, ...res.data });
+        setIsLoading(false);
+      });
   }, []);
 
   if (isLoading) {
