@@ -130,7 +130,7 @@ class Signin extends Component {
     let tempEmail = email;
 
     apiUrl
-      .post("/account/login", data)
+      .post("/auth/login", data)
       .then(({ data, status }) => {
         if (status === 200 && data.token) {
           this.setState(

@@ -15,7 +15,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
   const [toggled, setToggled] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const [persona, setPersona] = useState(null);
-  console.log(theme);
+
   const handleLogout = () => {
     setIsLoading(true);
     apiUrlWithToken
@@ -251,7 +251,7 @@ const TopMenuStyles = styled.div`
 				display: inline-flex;
 				background: ${(props) => props.theme.main_menu.background_colour};
 				:first-child {
-					width: ${(props) => props.brandLinkWidth + 15}px;
+					width: ${(props) => props.brandLinkWidth + 25}px;
 				}
 				.brand-link {
 					position: absolute;
@@ -363,6 +363,20 @@ const TopMenuStyles = styled.div`
 			right: 20px;
 			bottom: -16px;
 			cursor: pointer;
+			span {
+				display: inline-block;
+				position: relative;
+				&:before {
+					content: '';
+					position: absolute;
+					display:block;
+					height: 10px;
+					width: 100%;					
+					background: ${(props) => props.theme.top_menu_dropdown_bg_color};
+					top: 0;
+					/* z-index: 1; */
+				}
+			}
 			img {
 				width: 68px;
 				height: 68px;

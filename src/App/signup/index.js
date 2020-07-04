@@ -212,7 +212,7 @@ class Signup extends Component {
           password: this.state.password,
         };
         apiUrl
-          .post("/account/register", data)
+          .post("/auth/register", data)
           .then(({ status, data }) => {
             if ((status === 200) & (data.status === "success")) {
               this.props.history.push("/email-verification");
@@ -440,7 +440,7 @@ class Signup extends Component {
 export default withRouter(Signup);
 const getResponsiveFontSize = (sizeinpx, width) => {
   let fontSize = parseInt(sizeinpx.substr(0, 2));
-  let result = (fontSize / width) * 80 + "vw";
+  let result = (fontSize / width) * 70 + "vw";
   return result;
 };
 const Styles = styled.div`
