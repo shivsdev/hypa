@@ -20,6 +20,11 @@ class Signin extends Component {
         loginErrMsg: null,
       },
       isPopupVisible: false,
+      style: {
+        main_body_text: {},
+        label_text: {},
+        link_menu_text: {},
+      },
       styles: {
         title1_colour: "#009999",
         title1_font_size: "80px",
@@ -50,6 +55,11 @@ class Signin extends Component {
   }
 
   componentDidMount() {
+    let styles = sessionStorage.getItem("styles");
+    let sty = JSON.parse(styles);
+    this.setState({
+      style: { ...sty },
+    });
     window.scrollTo(0, 0);
     let email = this.props.location.email ? this.props.location.email : "";
     this.setState({ email });
@@ -57,13 +67,6 @@ class Signin extends Component {
       ? this.props.location.password
       : "";
     this.setState({ password });
-    axios
-      .get("https://hypaiqauthapi.cyb.co.uk/v1/uiobjects/styles")
-      .then((res) => {
-        this.setState({
-          styles: { ...this.state.styles, ...res.data },
-        });
-      });
   }
 
   validateEmail(mail) {
@@ -187,7 +190,7 @@ class Signin extends Component {
         isPopupVisible={isVisible}
         togglePopup={this.togglePopup}
         resetPassword={this.ResetPassword}
-        styles={this.state.styles}
+        styles={this.state.style}
       />
     );
   };
@@ -216,7 +219,7 @@ class Signin extends Component {
       isPopupVisible,
     } = this.state;
     const passwordFieldName = isPasswordVisible ? "text" : "password";
-
+    console.log(this.state.style);
     const Button = styled.button({
       width: "100%",
       height: "40px",
@@ -231,19 +234,21 @@ class Signin extends Component {
       cursor: "pointer",
     });
     const Label = styled.label`
+      font-size:${this.state.style.label_text.font_size}
       display: flex;
       color: ${this.state.styles.label_text_colour};
       justify-content: space-between;
     `;
     const PasswordLabel = styled.label`
+    font-size:${this.state.style.label_text.font_size}
       display: flex;
       justify-content: space-between;
-      color: ${this.state.styles.label_text_colour};
+      color: ${this.state.style.label_text.font_colour};
     `;
     const width = window.innerWidth;
 
     return (
-      <Styles theme={this.state.styles} width={width}>
+      <Styles theme={this.state.styles} themes={this.state.style} width={width}>
         <div className="logo-holder">
           <img src={hypaiq} alt="Hypaiq" />
         </div>
@@ -301,7 +306,8 @@ class Signin extends Component {
             Don't have an account ?
             <span
               style={{
-                color: "#009999",
+                color: this.state.style.link_menu_text.font_colour,
+                fontSize: this.state.style.link_menu_text.font_size,
                 marginLeft: 5,
                 cursor: "pointer",
                 textDecoration: "underline",
@@ -389,8 +395,8 @@ const Styles = styled.div`
 				margin: 0;
 				background: transparent;
 				cursor: pointer;
-				color: ${(props) => props.theme.reset_password_button_colour};
-				font-size: 100%;
+				color: ${(props) => props.themes.link_menu_text.font_colour};
+				font-size:  ${(props) => props.themes.link_menu_text.font_size};
 				margin-top: 2px;
 				text-decoration: underline;
 			}

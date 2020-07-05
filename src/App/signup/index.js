@@ -34,6 +34,11 @@ class Signup extends Component {
       focused: React.createRef(),
       passwordError: false,
       checkedError: false,
+      style: {
+        main_body_text: {},
+        label_text: {},
+        link_menu_text: {},
+      },
       styles: {
         title1_colour: "#000066",
         title1_font_size: "60px",
@@ -57,24 +62,18 @@ class Signup extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get("https://hypaiqauthapi.cyb.co.uk/v1/uiobjects/styles")
-      .then((res) => {
-        this.setState({
-          styles: { ...this.state.styles, ...res.data },
-        });
-      });
-
-    window.scrollTo(0, 0);
-  }
-
-  componentDidMount() {
+    let styles = sessionStorage.getItem("styles");
+    let sty = JSON.parse(styles);
+    this.setState({
+      style: { ...sty },
+    });
     let email = this.props.location.email ? this.props.location.email : "";
     this.setState({ email });
     let password = this.props.location.password
       ? this.props.location.password
       : "";
     this.setState({ password });
+    window.scrollTo(0, 0);
   }
 
   componentDidUpdate(prevProps) {
@@ -289,7 +288,8 @@ class Signup extends Component {
 
     const Label = styled.p({
       margin: 0,
-      color: this.state.styles.label_text_colour,
+      color: this.state.style.label_text.font_colour,
+      fontSize: this.state.style.label_text.font_size,
     });
 
     const Errortext = styled.p({
@@ -299,9 +299,8 @@ class Signup extends Component {
     if (this.state.styles === null) {
       return <div></div>;
     }
-
     return (
-      <Styles theme={this.state.styles} width={width}>
+      <Styles theme={this.state.styles} themes={this.state.style} width={width}>
         <div className="logo-holder">
           <img src={hypaiq} alt="Hypaiq" />
         </div>
@@ -424,7 +423,8 @@ class Signup extends Component {
             <span>Already have an account ? </span>
             <span
               style={{
-                color: this.state.styles.green_text_colour,
+                color: this.state.style.link_menu_text.font_colour,
+                fontSize: this.state.style.link_menu_text.font_size,
                 textDecoration: "underline",
                 cursor: "pointer",
               }}
@@ -489,8 +489,8 @@ const Styles = styled.div`
       }
     }
     .hypa-intro {
-      font-size: calc(1em + 0.2vw);
-      color: #777;
+      font-size: ${(props) => props.themes.main_body_text.font_size};
+      color: ${(props) => props.themes.main_body_text.font_colour};
       font-weight: 500;
       margin-top: 10px;
     }

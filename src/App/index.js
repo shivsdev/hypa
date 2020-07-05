@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
+import axios from "axios";
 import Signin from "./signin";
 import Signup from "./signup";
 import Resetpassword from "./reset-password";
@@ -35,6 +36,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 
 export default function App() {
+  useEffect(() => {
+    axios
+      .get("https://hypaiqstyles.cyb.co.uk:8080/uiobjects/styles")
+      .then((res) => {
+        console.log(res.data);
+        window.sessionStorage.setItem("styles", JSON.stringify(res.data));
+      });
+  }, []);
   return (
     <div>
       <Route

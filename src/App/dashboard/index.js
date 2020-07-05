@@ -31,12 +31,9 @@ export default function Dashboard({ history, authObj, location }) {
       top_menu_dropdown_bg_color: "#4395A6",
       top_menu_dropdown_text_color: "white",
     };
-    axios
-      .get("http://hypaiqstyles.cyb.co.uk:8080/uiobjects/styles")
-      .then((res) => {
-        setTheme({ ...theme_temp, ...res.data });
-        setIsLoading(false);
-      });
+    let styles = sessionStorage.getItem("styles");
+    let sty = JSON.parse(styles);
+    setTheme({ ...theme_temp, ...sty });
   }, []);
 
   if (isLoading) {
