@@ -340,7 +340,6 @@ const TopMenuStyles = styled.div`
 	path {
 		stroke: white;
 	}
-
 	> .navbar-dropdown {
 		display: flex;
 		width: 23%;
