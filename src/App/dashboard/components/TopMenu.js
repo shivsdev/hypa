@@ -281,7 +281,7 @@ const TopMenuStyles = styled.div`
 	/* margin-bottom: 30px; */
 	nav {
 		width: 77%;
-		background: ${(props) => props.theme.main_menu.background_colour};
+		background:${(props) => props.theme.top_menu_button.passive_background_colour};
 		> span {
 			display: none;
 		}
@@ -289,12 +289,12 @@ const TopMenuStyles = styled.div`
 			padding: 0;
 			margin: 0%;
 			border-bottom: 5px solid
-				${(props) => props.theme.main_menu.highlight_colour};
+				${(props) => props.theme.top_menu_button.passive_border_colour};
 			position: relative;
 			white-space: nowrap;
 			li {
 				display: inline-flex;
-				background: ${(props) => props.theme.main_menu.background_colour};
+				background: ${(props) => props.theme.top_menu_button.passive_background_colour};
 				:first-child {
 					width: ${(props) => props.brandLinkWidth + 25}px;
 				}
@@ -304,7 +304,7 @@ const TopMenuStyles = styled.div`
 					left: 20px;
 					border: 1px solid white;
 					padding: 0;
-					background: ${(props) => props.theme.main_menu.passive_background_colour};
+					background: ${(props) => props.theme.top_menu_button.passive_background_colour};
 					div {
 						display: inline-flex;
 						align-items: center;
@@ -391,7 +391,7 @@ const TopMenuStyles = styled.div`
 	> .navbar-dropdown {
 		display: flex;
 		width: 23%;
-		background: ${(props) => props.theme.top_menu_dropdown_bg_color};
+		background:${(props) => props.theme.main_menu.highlight_colour};;
 		color: white;
 		align-items: center;
 		padding: 0 10px 0 30px;
@@ -420,7 +420,7 @@ const TopMenuStyles = styled.div`
 					display:block;
 					height: 10px;
 					width: 100%;					
-					background: ${(props) => props.theme.top_menu_dropdown_bg_color};
+					background:${(props) => props.theme.main_menu.highlight_colour};
 					top: 0;
 					/* z-index: 1; */
 				}
@@ -573,6 +573,8 @@ const TopMenuStyles = styled.div`
 					display: flex;
 					flex-direction: column;
 					position: absolute;
+					background:${(props) =>
+            props.theme.notification_button.active_background_colour};
 					top: 53px;
 				}
 
@@ -625,6 +627,7 @@ const TopMenuStyles = styled.div`
 			padding: 0%;
 			justify-content: center;
 			position: unset;
+			background:${(props) => props.theme.main_menu.highlight_colour};
 			.profile-info {
 				display: none;
 			}
