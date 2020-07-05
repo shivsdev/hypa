@@ -219,7 +219,6 @@ class Signin extends Component {
       isPopupVisible,
     } = this.state;
     const passwordFieldName = isPasswordVisible ? "text" : "password";
-    console.log(this.state.style);
     const Button = styled.button({
       width: "100%",
       height: "40px",
@@ -240,7 +239,7 @@ class Signin extends Component {
       justify-content: space-between;
     `;
     const PasswordLabel = styled.label`
-    font-size:${this.state.style.label_text.font_size}
+      font-size: ${this.state.style.label_text.font_size};
       display: flex;
       justify-content: space-between;
       color: ${this.state.style.label_text.font_colour};

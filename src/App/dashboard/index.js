@@ -34,6 +34,7 @@ export default function Dashboard({ history, authObj, location }) {
     let styles = sessionStorage.getItem("styles");
     let sty = JSON.parse(styles);
     setTheme({ ...theme_temp, ...sty });
+    setIsLoading(false);
   }, []);
 
   if (isLoading) {

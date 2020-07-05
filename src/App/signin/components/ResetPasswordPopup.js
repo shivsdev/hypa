@@ -61,16 +61,20 @@ export default function ViewProfile({
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: ${popup_header_bg_colour};
+        background: ${(props) =>
+          props.theme.popup.active_in_focus_banner_background_colour};
         color: white;
         padding: 5px 10px;
         border-radius: 5px 5px 0 0;
-        border: 1px solid ${popup_border_colour};
+        border: 1px solid
+          ${(props) => props.theme.popup.active_in_focus_border_colour};
         h3 {
           margin: 0;
           font-weight: 500;
           padding: 0;
           font-size: 100%;
+          color: ${(props) =>
+            props.theme.popup.active_in_focus_banner_text_colour};
         }
         .close {
           font-weight: bold;
@@ -79,7 +83,8 @@ export default function ViewProfile({
       }
       .popup-body {
         position: relative;
-        border: 1.5px solid ${popup_border_colour};
+        border: 1.5px solid
+          ${(props) => props.theme.popup.active_in_focus_border_colour};
         border-radius: 0 0 5px 5px;
         padding: 30px 15px;
         background: ${poup_body_bg_colour};
@@ -109,7 +114,7 @@ export default function ViewProfile({
         }
         .reset-text {
           font-size: 80%;
-          color: ${reset_text_colour};
+          color: ${(props) => props.theme.main_body_text.font_colour};
           font-style: italic;
         }
         .reset-button-holder {
@@ -131,7 +136,7 @@ export default function ViewProfile({
   `;
 
   return (
-    <Popup>
+    <Popup theme={styles}>
       <div className="popup">
         <div className="popup-header">
           <h3>Reset Password</h3>
