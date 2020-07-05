@@ -234,6 +234,7 @@ class Signup extends Component {
 
   render() {
     const { redirectToSignin } = this;
+    console.log("styles", this.state.styles)
     const width = window.innerWidth;
     const Button = styled.button({
       width: "100%",
