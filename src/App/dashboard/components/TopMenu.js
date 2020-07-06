@@ -19,14 +19,16 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
   const handleLogout = () => {
     setIsLoading(true);
     apiUrlWithToken
-      .post('/account/logout')
+      .post('/auth/logout')
       .then((res) => {
         authObj.authenticate(false);
-        window.sessionStorage.clear();
+				window.sessionStorage.removeItem('email')
+				window.sessionStorage.removeItem('token')
+				window.sessionStorage.removeItem('isAuthenticated')
         history.push('/');
       })
       .catch((error) => {
-        alert(error.response.data.msg);
+        console.log(error.response);
       });
   };
 
