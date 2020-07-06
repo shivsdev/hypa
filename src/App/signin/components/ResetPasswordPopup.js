@@ -15,7 +15,6 @@ export default function ViewProfile({
 
   useEffect(() => {
     emailRef.current.focus();
-
   }, []);
 
   const handleSubmit = (e) => {
@@ -51,7 +50,7 @@ export default function ViewProfile({
     bottom: 0;
     right: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0);
     display: flex;
     flex-direction: column;
     align-items: center;
