@@ -17,7 +17,7 @@ apiUrl.interceptors.request.use(function (config) {
 })
 
 apiUrlWithToken.interceptors.request.use(function (config) {
-  config.headers.accept = 'application/json';
+	config.headers.accept = 'application/json';
 	config.headers.Authorization = `Bearer ${token}`;
 	return config;
 });
