@@ -10,10 +10,12 @@ export default function ViewProfile({
   styles,
 }) {
   const [isSent, setisSent] = useState(false);
+  const [mail, setEmail] = useState("");
   const emailRef = useRef();
 
   useEffect(() => {
     emailRef.current.focus();
+
   }, []);
 
   const handleSubmit = (e) => {
