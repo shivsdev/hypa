@@ -44,6 +44,9 @@ class Reset extends Component {
         this.setState({
           styles: res.data,
         });
+      })
+      .catch((err) => {
+        alert(err);
       });
   }
   componentDidUpdate() {
