@@ -13,7 +13,7 @@ import { device } from "../../exportables/exportables";
 // const urlParams = new URLSearchParams(queryString);
 // const mail = urlParams.get("e");
 // const token = urlParams.get("t");
-let mail = sessionStorage.getItem("email");
+let mail = window.sessionStorage.getItem("email");
 class Reset extends Component {
   constructor(props) {
     super(props);
