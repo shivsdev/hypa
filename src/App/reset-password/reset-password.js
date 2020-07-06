@@ -204,7 +204,7 @@ class Reset extends Component {
         margin-bottom: 20px;
         img {
           width: 27.5%;
-          max-width: 250px;
+          max-width: 150px;
         }
       }
       .content-box {
@@ -343,6 +343,7 @@ class Reset extends Component {
               name="code"
               id="code"
               className="code"
+              defaultValue=""
             />
             <div
               style={{
