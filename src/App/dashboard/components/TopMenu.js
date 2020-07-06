@@ -36,8 +36,8 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
     setToggled(!toggled);
   };
 
-  const getValueIfExists = (value, additional = '') => {
-    return value ? value + additional : '';
+  const getValueIfExists = (value) => {
+    return value ? value : '';
   };
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function TopMenu({ theme, history, setIsLoading, authObj }) {
       if (profile?.personaldetails) {
         const { personaldetails, email } = profile;
         const { title, firstname, lastname } = personaldetails;
-        let name = `${getValueIfExists(title, '.')} ${getValueIfExists(
+        let name = `${getValueIfExists(title)} ${getValueIfExists(
           firstname
         )} ${getValueIfExists(lastname)}`;
         setPersona({ name, email });
