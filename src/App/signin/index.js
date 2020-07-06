@@ -235,7 +235,7 @@ class Signin extends Component {
     const Label = styled.label`
       font-size:${this.state.style.label_text?.font_size};
       display: flex;
-      color: ${this.state.styles.label_text_colour};
+      color: ${this.state.style.label_text.font_colour};
       justify-content: space-between;
     `;
     const PasswordLabel = styled.label`
