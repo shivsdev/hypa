@@ -32,7 +32,7 @@ export default function Dashboard({ history, authObj, location }) {
       iframeUrl =
         url === client
           ? 'https://hypaiq-admin.cyb.co.uk/settings'
-          : 'https://hypaiqdev-adimin.cyb.co.uk/settings';
+          : 'https://hypaiqdev-admin.cyb.co.uk/settings';
       break;
     default:
       iframeUrl = '';
