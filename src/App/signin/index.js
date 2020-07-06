@@ -233,16 +233,16 @@ class Signin extends Component {
       cursor: "pointer",
     });
     const Label = styled.label`
-      font-size:${this.state.style.label_text.font_size}
+      font-size:${this.state.style.label_text?.font_size};
       display: flex;
       color: ${this.state.styles.label_text_colour};
       justify-content: space-between;
     `;
     const PasswordLabel = styled.label`
-      font-size: ${this.state.style.label_text.font_size};
+      font-size: ${this.state.style.label_text?.font_size};
       display: flex;
       justify-content: space-between;
-      color: ${this.state.style.label_text.font_colour};
+      color: ${this.state.style.label_text?.font_colour};
     `;
     const width = window.innerWidth;
 
@@ -305,8 +305,8 @@ class Signin extends Component {
             Don't have an account ?
             <span
               style={{
-                color: this.state.style.link_menu_text.font_colour,
-                fontSize: this.state.style.link_menu_text.font_size,
+                color: this.state.style.link_menu_text?.font_colour,
+                fontSize: this.state.style.link_menu_text?.font_size,
                 marginLeft: 5,
                 cursor: "pointer",
                 textDecoration: "underline",
@@ -394,8 +394,8 @@ const Styles = styled.div`
 				margin: 0;
 				background: transparent;
 				cursor: pointer;
-				color: ${(props) => props.themes.link_menu_text.font_colour};
-				font-size:  ${(props) => props.themes.link_menu_text.font_size};
+				color: ${(props) => props.themes.link_menu_text?.font_colour};
+				font-size:  ${(props) => props.themes.link_menu_text?.font_size};
 				margin-top: 2px;
 				text-decoration: underline;
 			}
